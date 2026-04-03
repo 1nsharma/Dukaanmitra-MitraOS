@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { motion } from 'motion/react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 
 interface Grievance {
   id: string;
@@ -13,11 +14,36 @@ interface Grievance {
 const JanSunwaiPortal: React.FC = () => {
   const [view, setView] = useState<'home' | 'file' | 'track' | 'admin'>('home');
   const [trackingId, setTrackingId] = useState('');
+  const [tickerIndex, setTickerIndex] = useState(0);
   const [grievances, setGrievances] = useState<Grievance[]>([
     { id: 'JS-2024-001', category: 'Infrastructure', subject: 'Potholes on Main Road', status: 'In Progress', date: '2024-03-20', department: 'PWD' },
     { id: 'JS-2024-002', category: 'Sanitation', subject: 'Garbage collection delay', status: 'Resolved', date: '2024-03-18', department: 'Municipal Corp' },
     { id: 'JS-2024-003', category: 'Electricity', subject: 'Frequent power cuts', status: 'Pending', date: '2024-03-22', department: 'UPPCL' },
   ]);
+
+  const liveTicker = [
+    "JS-2024-882: New grievance filed in Sanitation (Lucknow)",
+    "JS-2024-879: Resolved: Pothole repair in Kanpur (PWD)",
+    "JS-2024-881: New grievance filed in Water (Delhi)",
+    "JS-2024-875: Resolved: Street light fix in Noida (Electricity)",
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTickerIndex((prev) => (prev + 1) % liveTicker.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const chartData = [
+    { name: 'Mon', value: 45 },
+    { name: 'Tue', value: 52 },
+    { name: 'Wed', value: 38 },
+    { name: 'Thu', value: 65 },
+    { name: 'Fri', value: 48 },
+    { name: 'Sat', value: 30 },
+    { name: 'Sun', value: 25 },
+  ];
 
   const stats = [
     { label: "Total Filed", value: "12,450", color: "indigo" },
@@ -40,7 +66,26 @@ const JanSunwaiPortal: React.FC = () => {
       {/* Header */}
       <header className="bg-indigo-900 text-white py-12 px-6 lg:px-20 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/3 h-full bg-white/5 skew-x-12 translate-x-1/2"></div>
-        <div className="max-w-7xl mx-auto relative z-10 space-y-6">
+        
+        {/* Live Ticker */}
+        <div className="absolute top-0 left-0 right-0 bg-emerald-500/20 backdrop-blur-sm border-b border-white/10 py-2 px-6 overflow-hidden">
+          <div className="max-w-7xl mx-auto flex items-center gap-4">
+            <span className="bg-emerald-500 text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full animate-pulse">Live</span>
+            <AnimatePresence mode="wait">
+              <motion.p 
+                key={tickerIndex}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="text-[10px] font-black uppercase tracking-widest text-emerald-400 italic"
+              >
+                {liveTicker[tickerIndex]}
+              </motion.p>
+            </AnimatePresence>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto relative z-10 space-y-6 mt-6">
           <div className="inline-flex items-center space-x-3 bg-white/20 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] backdrop-blur-md">
             JanSunwai 2.0 Powered by DukaanMitra
           </div>
@@ -92,6 +137,29 @@ const JanSunwaiPortal: React.FC = () => {
                 <div className="text-4xl">📊</div>
                 <h3 className="text-2xl font-black italic tracking-tighter uppercase">Real-time Tracking</h3>
                 <p className="text-slate-500 font-bold italic">Get instant updates on your grievance status via WhatsApp notifications.</p>
+              </div>
+            </div>
+
+            <div className="space-y-12">
+              <div className="text-center space-y-4">
+                <h2 className="text-4xl lg:text-6xl font-black italic tracking-tighter uppercase text-slate-900">Success Stories</h2>
+                <p className="text-emerald-600 font-black uppercase tracking-widest text-xs">Real impact on real citizens</p>
+              </div>
+              <div className="grid md:grid-cols-2 gap-8">
+                {[
+                  { name: "Amit K.", loc: "Kanpur", quote: "My transformer issue was resolved in 24 hours. AI routing is magic!", icon: "⚡" },
+                  { name: "Sita R.", loc: "Lucknow", quote: "Garbage collection was a mess. One WhatsApp message and it's fixed.", icon: "🧹" }
+                ].map((s, i) => (
+                  <div key={i} className="p-10 bg-indigo-600 text-white rounded-[3rem] shadow-2xl space-y-6 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                    <div className="text-4xl">{s.icon}</div>
+                    <p className="text-xl font-black italic tracking-tight leading-tight">"{s.quote}"</p>
+                    <div className="pt-6 border-t border-white/10">
+                      <p className="font-black italic tracking-tighter">{s.name}</p>
+                      <p className="text-[10px] font-black uppercase tracking-widest opacity-60">{s.loc}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -159,13 +227,25 @@ const JanSunwaiPortal: React.FC = () => {
 
         {view === 'admin' && (
           <div className="space-y-12">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-              {stats.map((s, i) => (
-                <div key={i} className={`p-8 rounded-[2.5rem] bg-white border border-slate-100 shadow-xl`}>
-                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">{s.label}</p>
-                  <p className={`text-4xl font-black italic tracking-tighter text-${s.color}-600`}>{s.value}</p>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2 grid grid-cols-2 gap-8">
+                {stats.map((s, i) => (
+                  <div key={i} className={`p-8 rounded-[2.5rem] bg-white border border-slate-100 shadow-xl`}>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">{s.label}</p>
+                    <p className={`text-4xl font-black italic tracking-tighter text-${s.color}-600`}>{s.value}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-xl">
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6">Weekly Activity</p>
+                <div className="h-40">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={chartData}>
+                      <Bar dataKey="value" fill="#4f46e5" radius={[4, 4, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
                 </div>
-              ))}
+              </div>
             </div>
 
             <div className="bg-white rounded-[4rem] shadow-2xl border border-slate-100 overflow-hidden">

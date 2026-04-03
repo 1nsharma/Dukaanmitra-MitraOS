@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { View } from '../types';
 import anime from 'animejs';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 
 interface LandingPageProps {
   setView: (view: View) => void;
@@ -11,6 +11,9 @@ interface LandingPageProps {
 const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
   const heroRef = useRef<HTMLDivElement>(null);
   const mockupRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll();
+  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
 
   useEffect(() => {
     const tl = (anime as any).timeline({
@@ -135,25 +138,48 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
 
       {/* Hero Section */}
       <section className="px-6 lg:px-20 py-24 lg:py-48 gradient-bg text-white relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+        <motion.div 
+          style={{ opacity, scale }}
+          className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none"
+        >
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-white rounded-full blur-[120px]"></div>
           <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-400 rounded-full blur-[120px]"></div>
-        </div>
+        </motion.div>
         <div className="max-w-[1600px] mx-auto grid lg:grid-cols-2 gap-24 items-center relative z-10">
           <div className="space-y-12 hero-text-container" ref={heroRef}>
-            <div className="hero-text inline-flex items-center space-x-3 bg-white/20 px-5 py-2 rounded-full border border-white/10 shadow-sm backdrop-blur-md">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="hero-text inline-flex items-center space-x-3 bg-white/20 px-5 py-2 rounded-full border border-white/10 shadow-sm backdrop-blur-md"
+            >
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
               <span className="text-[10px] font-black text-white uppercase tracking-[0.3em]">Aapka Digital Munim India #1</span>
-            </div>
-            <h1 className="hero-text text-8xl lg:text-[10rem] font-black text-white leading-[0.8] tracking-tighter italic">
+            </motion.div>
+            <motion.h1 
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4, type: "spring", stiffness: 100 }}
+              className="hero-text text-8xl lg:text-[10rem] font-black text-white leading-[0.8] tracking-tighter italic"
+            >
               Register Feko, <br/>
               <span className="text-emerald-400">WhatsApp</span> <br/>
               Chalao!
-            </h1>
-            <p className="hero-text text-2xl lg:text-3xl text-white/90 leading-relaxed max-w-xl font-bold uppercase tracking-tight">
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="hero-text text-2xl lg:text-3xl text-white/90 leading-relaxed max-w-xl font-bold uppercase tracking-tight"
+            >
               Transform your Kirana shop with India's first AI-powered WhatsApp Munim. No app downloads. Just message "Rahul 500" and you're done.
-            </p>
-            <div className="hero-text flex flex-col sm:flex-row gap-6">
+            </motion.p>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+              className="hero-text flex flex-col sm:flex-row gap-6"
+            >
               <button 
                 onClick={() => setView('shop_panel')}
                 className="bg-white text-indigo-900 px-12 py-6 rounded-[2.5rem] font-black text-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] hover:scale-105 hover:bg-slate-100 transition-all active:scale-[0.98] italic tracking-tighter"
@@ -163,9 +189,15 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
               <button className="bg-transparent border-[3px] border-white/30 px-12 py-6 rounded-[2.5rem] font-black text-2xl hover:bg-white/10 transition-all shadow-xl italic tracking-tighter">
                 Watch Demo 🎥
               </button>
-            </div>
+            </motion.div>
           </div>
-          <div className="relative" ref={mockupRef}>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
+            animate={{ opacity: 1, scale: 1, rotate: 2 }}
+            transition={{ delay: 0.5, duration: 1, type: "spring" }}
+            className="relative" 
+            ref={mockupRef}
+          >
             <div className="bg-slate-900 p-8 rounded-[4.5rem] shadow-[0_60px_120px_-30px_rgba(0,0,0,0.5)] border-[12px] border-slate-800 rotate-2 transform hover:rotate-0 transition-transform duration-1000 group">
                <div className="bg-[#efe7de] h-[550px] rounded-[3.5rem] overflow-hidden flex flex-col relative border border-slate-800/50">
                   <div className="bg-indigo-700 p-7 pt-12 text-white flex items-center space-x-4 shadow-xl z-10">
@@ -176,17 +208,32 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
                     </div>
                   </div>
                   <div className="flex-1 p-8 space-y-6 font-bold overflow-hidden relative">
-                    <div className="bg-white p-5 rounded-3xl rounded-tl-none shadow-xl text-sm self-start max-w-[85%]">
+                    <motion.div 
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 1.5 }}
+                      className="bg-white p-5 rounded-3xl rounded-tl-none shadow-xl text-sm self-start max-w-[85%]"
+                    >
                       Namaste Bhaiya! Aaj ka hisaab likhein? 🏠
-                    </div>
-                    <div className="bg-[#dcf8c6] p-5 rounded-3xl rounded-tr-none shadow-xl text-sm self-end ml-auto max-w-[85%]">
+                    </motion.div>
+                    <motion.div 
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 2.5 }}
+                      className="bg-[#dcf8c6] p-5 rounded-3xl rounded-tr-none shadow-xl text-sm self-end ml-auto max-w-[85%]"
+                    >
                       Rahul 500 udhaar chini
-                    </div>
-                    <div className="bg-white p-6 rounded-3xl rounded-tl-none shadow-2xl text-sm self-start max-w-[85%] border-l-[6px] border-indigo-600">
+                    </motion.div>
+                    <motion.div 
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 3.5 }}
+                      className="bg-white p-6 rounded-3xl rounded-tl-none shadow-2xl text-sm self-start max-w-[85%] border-l-[6px] border-indigo-600"
+                    >
                       <p className="font-black text-indigo-600 text-xs mb-1 uppercase tracking-widest">Entry Confirmed! ✅</p>
                       Rahul: ₹500 (Sugar) <br/>
                       Total Udhaari: <span className="text-emerald-600">₹1,250</span>
-                    </div>
+                    </motion.div>
                     <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#efe7de] to-transparent pointer-events-none"></div>
                   </div>
                   <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-40 h-7 bg-slate-900 rounded-full z-20 flex items-center justify-center">
@@ -194,7 +241,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
                   </div>
                </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -210,8 +257,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
             {features.map((f, i) => (
               <motion.div 
                 key={i}
-                whileHover={{ y: -10 }}
-                className="p-10 rounded-[3.5rem] bg-slate-50 border border-slate-100 shadow-xl shadow-slate-200/30 space-y-6 group hover:bg-indigo-600 transition-colors duration-500"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -10, scale: 1.02 }}
+                className="p-10 rounded-[3.5rem] bg-slate-50 border border-slate-100 shadow-xl shadow-slate-200/30 space-y-6 group hover:bg-indigo-600 transition-all duration-500"
               >
                 <div className="w-16 h-16 bg-white rounded-3xl flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform">
                   {f.icon}
@@ -242,7 +293,14 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
              <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500/0 via-indigo-500/50 to-indigo-500/0 -translate-y-1/2"></div>
              
              {dukaanFlow.map((step, i) => (
-               <div key={i} className="flow-step relative z-10 flex flex-col items-center text-center space-y-8">
+               <motion.div 
+                key={i} 
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.2 }}
+                className="flow-step relative z-10 flex flex-col items-center text-center space-y-8"
+               >
                   <div className={`w-24 h-24 rounded-[2.5rem] bg-${step.color}-600 shadow-2xl shadow-${step.color}-900/50 flex items-center justify-center text-4xl transform hover:scale-110 hover:rotate-6 transition-all duration-500`}>
                     {step.icon}
                   </div>
@@ -254,7 +312,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
                       {step.tech}
                     </span>
                   </div>
-               </div>
+               </motion.div>
              ))}
           </div>
           

@@ -11,16 +11,37 @@ interface ChatBotProps {
 const ChatBot: React.FC<ChatBotProps> = ({ role }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState<{ role: 'user' | 'bot'; text: string }[]>([
+  const [messages, setMessages] = useState<{ role: 'user' | 'bot'; text: string; logic?: string[] }[]>([
     { 
       role: 'bot', 
       text: role === 'ops' 
         ? `Munim Architect Mode v${SYSTEM_MANIFEST.version} Engaged. I have full knowledge of the DukaanMitra tech stack and JanSunwai 2.0 alignment. Ask me anything.` 
-        : "Namaste! I'm your Munim AI. I can help you manage your shop, track udhaar, or explain how DukaanMitra works for your Kirana business." 
+        : "Namaste! I'm your Munim AI. I can help you manage your shop, track udhaar, or explain how DukaanMitra works for your Kirana business.",
+      logic: ["INIT_SYSTEM", "LOAD_MANIFEST", "READY"]
     }
   ]);
   const [isTyping, setIsTyping] = useState(false);
+  const [thinkingStep, setThinkingStep] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const thinkingSteps = [
+    "Analyzing Ingress...",
+    "Parsing Natural Language...",
+    "Querying Manifest...",
+    "Synthesizing Response...",
+    "Optimizing for Bharat Context..."
+  ];
+
+  useEffect(() => {
+    if (isTyping) {
+      let i = 0;
+      const interval = setInterval(() => {
+        setThinkingStep(thinkingSteps[i % thinkingSteps.length]);
+        i++;
+      }, 800);
+      return () => clearInterval(interval);
+    }
+  }, [isTyping]);
 
   const infoChips = [
     { label: "🚀 Tech Stack", query: "What is the full technology stack of DukaanMitra?" },
@@ -44,7 +65,16 @@ const ChatBot: React.FC<ChatBotProps> = ({ role }) => {
     setIsTyping(true);
 
     const response = await generateAssistantResponse(userText, role, messages);
-    setMessages(prev => [...prev, { role: 'bot', text: response }]);
+    
+    // Simulate logic trace based on query
+    const logicTrace = [
+      `QUERY_TYPE: ${userText.length > 20 ? 'COMPLEX' : 'SIMPLE'}`,
+      `CONTEXT: ${role.toUpperCase()}`,
+      "GEMINI_3_PRO_REASONING",
+      "SUCCESS"
+    ];
+
+    setMessages(prev => [...prev, { role: 'bot', text: response, logic: logicTrace }]);
     setIsTyping(false);
   };
 
@@ -82,7 +112,7 @@ const ChatBot: React.FC<ChatBotProps> = ({ role }) => {
         {/* Chat Feed */}
         <div ref={scrollRef} className="flex-1 overflow-y-auto p-8 space-y-6 bg-slate-50/50 no-scrollbar">
           {messages.map((m, i) => (
-            <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+            <div key={i} className={`flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'}`}>
               <div className={`max-w-[90%] p-6 rounded-3xl shadow-sm text-sm leading-relaxed border ${
                 m.role === 'user' 
                   ? 'bg-indigo-600 text-white rounded-tr-none border-indigo-500 font-bold italic' 
@@ -90,6 +120,15 @@ const ChatBot: React.FC<ChatBotProps> = ({ role }) => {
               }`}>
                 <p className="whitespace-pre-wrap">{m.text}</p>
               </div>
+              {m.role === 'bot' && m.logic && (
+                <div className="mt-2 flex gap-2 px-2">
+                  {m.logic.map((l, li) => (
+                    <span key={li} className="text-[8px] font-black uppercase tracking-widest text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">
+                      {l}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
           {isTyping && (
@@ -100,7 +139,7 @@ const ChatBot: React.FC<ChatBotProps> = ({ role }) => {
                   <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce delay-100"></div>
                   <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce delay-200"></div>
                 </div>
-                <span className="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Parsing Manifest...</span>
+                <span className="text-[10px] font-black text-indigo-400 uppercase tracking-widest">{thinkingStep}</span>
               </div>
             </div>
           )}
