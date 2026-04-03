@@ -1,0 +1,9 @@
+{
+  "name": "DukaanMitra Mobile App",
+  "description": "A high-fidelity PWA for the DukaanMitra Kirana ledger system, featuring real-time AI parsing and vision-based billing.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}
