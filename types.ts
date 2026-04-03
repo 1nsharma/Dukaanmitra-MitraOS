@@ -177,4 +177,13 @@ export type View =
   | 'project_health'
   | 'project_detail'
   | 'product_strategy'
-  | 'jan_sunwai';
+  | 'jan_sunwai'
+  | 'store_dashboard'
+  | 'admin_dashboard'
+  | 'whatsapp_sim';
+
+export interface UserRole {
+  uid: string;
+  role: 'merchant' | 'superadmin';
+  storeId?: string;
+}

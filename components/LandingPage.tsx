@@ -1,612 +1,214 @@
+import React from 'react';
+import { ArrowRight, CheckCircle2, MessageSquare, TrendingUp, ShieldCheck, Zap, Smartphone, Users } from 'lucide-react';
+import { cn } from '../lib/utils';
 
-import React, { useEffect, useRef } from 'react';
-import { View } from '../types';
-import anime from 'animejs';
-import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
-
-interface LandingPageProps {
-  setView: (view: View) => void;
-}
-
-const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const mockupRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll();
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
-
-  useEffect(() => {
-    const tl = (anime as any).timeline({
-      easing: 'easeOutExpo',
-      duration: 1200
-    });
-
-    tl.add({
-      targets: '.hero-text',
-      translateY: [50, 0],
-      opacity: [0, 1],
-      delay: anime.stagger(150)
-    })
-    .add({
-      targets: mockupRef.current,
-      scale: [0.9, 1],
-      rotate: [5, 2],
-      opacity: [0, 1],
-      duration: 1500
-    }, '-=800');
-  }, []);
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "DukaanMitra",
-    "operatingSystem": "Any",
-    "applicationCategory": "BusinessApplication",
-    "description": "India's first AI-powered WhatsApp Munim for Kirana stores. Manage udhaar, sales, and inventory via WhatsApp.",
-    "softwareVersion": "2.0.0-JanSunwai",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "INR"
-    },
-    "author": {
-      "@type": "Person",
-      "name": "Amit Sharma"
-    },
-    "featureList": [
-      "WhatsApp-First Interface",
-      "AI-Powered Transaction Extraction",
-      "Automated Ledger Management",
-      "Real-time Udhaar Tracking",
-      "Daily Sales Reports",
-      "Retail Intelligence Insights"
-    ]
-  };
-
-  const faqs = [
-    { q: "How do I start using DukaanMitra?", a: "Simply send 'START' to our WhatsApp number +91 63937 41171. No app download is required." },
-    { q: "Is my data safe?", a: "Yes, we use enterprise-grade encryption and secure cloud storage (Firebase) to ensure your shop's data is always protected." },
-    { q: "Does it support local languages?", a: "Currently, we support Hindi and English, with more regional languages coming soon." },
-    { q: "How does the AI work?", a: "Our Munim AI uses advanced Natural Language Processing (NLP) to understand your messages like 'Rahul 500 Chini' and automatically updates your books." },
-  ];
-
-  const features = [
-    { title: "WhatsApp-First", desc: "Manage your entire shop via WhatsApp—no app needed.", benefit: "Zero learning curve, high adoption.", icon: "📱" },
-    { title: "AI-Powered Munim", desc: "Type 'Rahul 500 Chini' and let AI extract customer, amount, and item.", benefit: "Saves time, reduces errors.", icon: "🧠" },
-    { title: "Auto Ledger", desc: "Every transaction updates Google Sheets/SQL in real time.", benefit: "Always accurate books, no manual entry.", icon: "📑" },
-    { title: "Udhaar Tracking", desc: "Instant udhaar statements for customers.", benefit: "Reduces defaults, builds trust.", icon: "📄" },
-    { title: "Daily Reports", desc: "End-of-day sales, udhaar, and inventory summaries sent via WhatsApp.", benefit: "Stay informed without effort.", icon: "📊" },
-    { title: "Retail Intel", desc: "AI-driven insights on stock trends and customer behavior.", benefit: "Make data-backed decisions.", icon: "💡" },
-  ];
-
-  const dukaanFlow = [
-    { title: "Smart Ingress", desc: "Customer buys an item. Shopkeeper types 'Rahul 500 Chini' in WhatsApp.", icon: "📱", color: "indigo", tech: "WhatsApp API + NLP", detail: "99.9% extraction accuracy for Indian names and items." },
-    { title: "AI Reasoning", desc: "Munim AI parses the message: Customer, Amount, and Item extraction.", icon: "🧠", color: "emerald", tech: "Gemini / BERT", detail: "Context-aware parsing handles slang and local dialects." },
-    { title: "Ledger Update", desc: "Transaction is logged in Google Sheets or SQL DB automatically.", icon: "📑", color: "blue", tech: "Firebase + Sheets API", detail: "Real-time sync with 0.5s latency across all devices." },
-    { title: "Auto Statement", desc: "Customer gets receipt. Shopkeeper gets EOD report with sales & udhaar.", icon: "📄", color: "amber", tech: "Automated Triggers", detail: "Reduces manual calculation time by 95% daily." },
-  ];
-
-  const testimonials = [
-    { name: "Rajesh", shop: "Kirana Store Owner, Kanpur", quote: "DukaanMitra ne mere 4 ghante ka kaam 10 minute ka kar diya. Ab WhatsApp pe hi sab ho jaata hai!", icon: "👨‍🌾" },
-    { name: "Suresh", shop: "General Store, Lucknow", quote: "Udhaar mangne mein sharam aati thi, ab Munim AI apne aap reminder bhej deta hai. Paisa time pe mil raha hai.", icon: "🏪" },
-    { name: "Meena", shop: "Dairy Booth, Delhi", quote: "Inventory management ab bahut asaan hai. WhatsApp pe hi pata chal jata hai kya khatam ho raha hai.", icon: "🥛" },
-  ];
-
-  const pricing = [
-    { name: "Free Trial", price: "₹0", features: ["50 transactions", "Basic udhaar tracking", "WhatsApp reports"], bestFor: "New shops testing the waters." },
-    { name: "Starter", price: "₹199", features: ["500 transactions", "UPI Lite", "Inventory alerts", "Hindi/English support"], bestFor: "Small kiranas." },
-    { name: "Growth", price: "₹499", features: ["Unlimited transactions", "AI insights", "Multi-language", "SMS fallback"], bestFor: "Growing businesses." },
-    { name: "Enterprise", price: "Custom", features: ["API access", "Custom integrations", "Dedicated support", "Bulk broadcasting"], bestFor: "Chains/franchises." },
-  ];
-
+export const LandingPage: React.FC<{ onStart: () => void }> = ({ onStart }) => {
   return (
-    <div className="flex flex-col min-h-screen bg-white">
-      {/* Navbar */}
-      <nav className="px-6 lg:px-20 py-8 flex items-center justify-between sticky top-0 bg-white/90 backdrop-blur-xl z-[100] border-b border-slate-100 shadow-sm transition-all duration-500">
-        <div className="flex items-center gap-3 cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-          <div className="w-10 h-10 bg-indigo-600 rounded-[1.2rem] flex items-center justify-center shadow-lg shadow-indigo-200">
-             <span className="text-white text-xl font-black italic">D</span>
+    <div className="min-h-screen bg-white font-sans selection:bg-indigo-100 selection:text-indigo-600">
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200">
+              <TrendingUp size={24} />
+            </div>
+            <span className="text-2xl font-black text-gray-900 tracking-tighter italic">DukaanMitra</span>
           </div>
-          <h1 className="text-3xl font-black italic tracking-tighter text-slate-900">DukaanMitra</h1>
-        </div>
-        <div className="hidden lg:flex space-x-12 text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] items-center">
-          <a href="#features" className="hover:text-indigo-600 transition-colors">Features</a>
-          <a href="#flow" className="hover:text-indigo-600 transition-colors">How it Works</a>
-          <a href="#pricing" className="hover:text-indigo-600 transition-colors">Pricing</a>
-          <a href="#founder" className="hover:text-indigo-600 transition-colors">Founder</a>
+          <div className="hidden md:flex items-center gap-8 text-sm font-black uppercase tracking-widest text-gray-500">
+            <a href="#features" className="hover:text-indigo-600 transition-colors">Features</a>
+            <a href="#how-it-works" className="hover:text-indigo-600 transition-colors">How it Works</a>
+            <a href="#pricing" className="hover:text-indigo-600 transition-colors">Pricing</a>
+          </div>
           <button 
-            onClick={() => setView('jan_sunwai')}
-            className="text-emerald-600 font-black hover:opacity-70 transition-all"
+            onClick={onStart}
+            className="px-6 py-3 bg-indigo-600 text-white rounded-full text-sm font-black uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-95"
           >
-            Jan Sunwai
-          </button>
-          <button 
-            onClick={() => setView('blog_engine')}
-            className="text-slate-900 border-b-2 border-indigo-600 pb-0.5 hover:opacity-70 transition-all"
-          >
-            Insights Hub
+            Get Started
           </button>
         </div>
-        <button 
-          onClick={() => setView('shop_panel')}
-          className="bg-slate-900 text-white px-8 py-3 rounded-[1.5rem] font-black text-xs uppercase tracking-widest shadow-2xl hover:bg-indigo-600 transition-all active:scale-95 flex items-center gap-3"
-        >
-          <span>Go to App</span>
-          <span className="text-lg">➔</span>
-        </button>
       </nav>
 
       {/* Hero Section */}
-      <section className="px-6 lg:px-20 py-24 lg:py-48 gradient-bg text-white relative overflow-hidden">
-        <motion.div 
-          style={{ opacity, scale }}
-          className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none"
-        >
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-white rounded-full blur-[120px]"></div>
-          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-400 rounded-full blur-[120px]"></div>
-        </motion.div>
-        <div className="max-w-[1600px] mx-auto grid lg:grid-cols-2 gap-24 items-center relative z-10">
-          <div className="space-y-12 hero-text-container" ref={heroRef}>
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="hero-text inline-flex items-center space-x-3 bg-white/20 px-5 py-2 rounded-full border border-white/10 shadow-sm backdrop-blur-md"
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span className="text-[10px] font-black text-white uppercase tracking-[0.3em]">Aapka Digital Munim India #1</span>
-            </motion.div>
-            <motion.h1 
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4, type: "spring", stiffness: 100 }}
-              className="hero-text text-8xl lg:text-[10rem] font-black text-white leading-[0.8] tracking-tighter italic"
-            >
-              Register Feko, <br/>
-              <span className="text-emerald-400">WhatsApp</span> <br/>
-              Chalao!
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              className="hero-text text-2xl lg:text-3xl text-white/90 leading-relaxed max-w-xl font-bold uppercase tracking-tight"
-            >
-              Transform your Kirana shop with India's first AI-powered WhatsApp Munim. No app downloads. Just message "Rahul 500" and you're done.
-            </motion.p>
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-              className="hero-text flex flex-col sm:flex-row gap-6"
-            >
+      <section className="pt-40 pb-20 px-6 overflow-hidden">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+          <div className="space-y-10 relative z-10">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 text-indigo-600 rounded-full text-xs font-black uppercase tracking-widest">
+              <Zap size={14} />
+              <span>Aapka Digital Munim</span>
+            </div>
+            <h1 className="text-6xl lg:text-8xl font-black text-gray-900 tracking-tighter leading-[0.9] italic">
+              Digitize Your Shop via <span className="text-indigo-600">WhatsApp.</span>
+            </h1>
+            <p className="text-xl text-gray-500 font-medium max-w-lg leading-relaxed">
+              No complex apps. No training. Just chat with our AI Munim to manage sales, track udhaar, and recover credit 40% faster.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <button 
-                onClick={() => setView('shop_panel')}
-                className="bg-white text-indigo-900 px-12 py-6 rounded-[2.5rem] font-black text-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] hover:scale-105 hover:bg-slate-100 transition-all active:scale-[0.98] italic tracking-tighter"
+                onClick={onStart}
+                className="px-10 py-5 bg-indigo-600 text-white rounded-2xl text-lg font-black uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-2xl shadow-indigo-200 flex items-center justify-center gap-3 active:scale-95"
               >
-                Start Free Trial 🚀
+                Launch Your Digital Shop
+                <ArrowRight size={24} />
               </button>
-              <button className="bg-transparent border-[3px] border-white/30 px-12 py-6 rounded-[2.5rem] font-black text-2xl hover:bg-white/10 transition-all shadow-xl italic tracking-tighter">
-                Watch Demo 🎥
-              </button>
-            </motion.div>
-          </div>
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
-            animate={{ opacity: 1, scale: 1, rotate: 2 }}
-            transition={{ delay: 0.5, duration: 1, type: "spring" }}
-            className="relative" 
-            ref={mockupRef}
-          >
-            <div className="bg-slate-900 p-8 rounded-[4.5rem] shadow-[0_60px_120px_-30px_rgba(0,0,0,0.5)] border-[12px] border-slate-800 rotate-2 transform hover:rotate-0 transition-transform duration-1000 group">
-               <div className="bg-[#efe7de] h-[550px] rounded-[3.5rem] overflow-hidden flex flex-col relative border border-slate-800/50">
-                  <div className="bg-indigo-700 p-7 pt-12 text-white flex items-center space-x-4 shadow-xl z-10">
-                    <div className="w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center font-bold shadow-inner">DM</div>
-                    <div>
-                      <p className="font-black text-lg tracking-tight">Munim AI</p>
-                      <p className="text-[10px] opacity-70 font-black uppercase tracking-widest">Typing insights...</p>
-                    </div>
-                  </div>
-                  <div className="flex-1 p-8 space-y-6 font-bold overflow-hidden relative">
-                    <motion.div 
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 1.5 }}
-                      className="bg-white p-5 rounded-3xl rounded-tl-none shadow-xl text-sm self-start max-w-[85%]"
-                    >
-                      Namaste Bhaiya! Aaj ka hisaab likhein? 🏠
-                    </motion.div>
-                    <motion.div 
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 2.5 }}
-                      className="bg-[#dcf8c6] p-5 rounded-3xl rounded-tr-none shadow-xl text-sm self-end ml-auto max-w-[85%]"
-                    >
-                      Rahul 500 udhaar chini
-                    </motion.div>
-                    <motion.div 
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 3.5 }}
-                      className="bg-white p-6 rounded-3xl rounded-tl-none shadow-2xl text-sm self-start max-w-[85%] border-l-[6px] border-indigo-600"
-                    >
-                      <p className="font-black text-indigo-600 text-xs mb-1 uppercase tracking-widest">Entry Confirmed! ✅</p>
-                      Rahul: ₹500 (Sugar) <br/>
-                      Total Udhaari: <span className="text-emerald-600">₹1,250</span>
-                    </motion.div>
-                    <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#efe7de] to-transparent pointer-events-none"></div>
-                  </div>
-                  <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-40 h-7 bg-slate-900 rounded-full z-20 flex items-center justify-center">
-                    <div className="w-14 h-1 bg-slate-800 rounded-full"></div>
-                  </div>
-               </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Key Features Section */}
-      <section id="features" className="py-32 px-6 lg:px-20 bg-white">
-        <div className="max-w-[1600px] mx-auto space-y-24">
-          <div className="text-center space-y-6">
-            <h2 className="text-6xl lg:text-8xl font-black italic tracking-tighter uppercase leading-none text-slate-900">🌟 Key Features</h2>
-            <p className="text-xl text-indigo-600 font-bold tracking-widest uppercase">Designed for the Bharat Retail Ecosystem</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
-            {features.map((f, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -10, scale: 1.02 }}
-                className="p-10 rounded-[3.5rem] bg-slate-50 border border-slate-100 shadow-xl shadow-slate-200/30 space-y-6 group hover:bg-indigo-600 transition-all duration-500"
-              >
-                <div className="w-16 h-16 bg-white rounded-3xl flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform">
-                  {f.icon}
-                </div>
-                <div className="space-y-3">
-                  <h3 className="text-3xl font-black italic tracking-tighter uppercase text-slate-900 group-hover:text-white">{f.title}</h3>
-                  <p className="text-slate-500 font-bold leading-relaxed group-hover:text-indigo-100">{f.desc}</p>
-                  <div className="pt-4 border-t border-slate-200 group-hover:border-indigo-400">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-indigo-600 group-hover:text-white mb-1">Benefit</p>
-                    <p className="text-sm font-black italic text-slate-700 group-hover:text-white">{f.benefit}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Munim Flow Section */}
-      <section id="flow" className="py-32 px-6 lg:px-20 bg-slate-900 text-white overflow-hidden">
-        <div className="max-w-[1600px] mx-auto space-y-24">
-          <div className="text-center space-y-4">
-             <h2 className="text-6xl lg:text-8xl font-black italic tracking-tighter uppercase leading-none">The Munim Flow</h2>
-             <p className="text-xl text-indigo-400 font-bold tracking-widest uppercase">End-to-End Digital Transformation</p>
-          </div>
-
-          <div className="grid lg:grid-cols-4 gap-12 relative">
-             <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500/0 via-indigo-500/50 to-indigo-500/0 -translate-y-1/2"></div>
-             
-             {dukaanFlow.map((step, i) => (
-               <motion.div 
-                key={i} 
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.2 }}
-                className="flow-step relative z-10 flex flex-col items-center text-center space-y-8"
-               >
-                  <div className={`w-24 h-24 rounded-[2.5rem] bg-${step.color}-600 shadow-2xl shadow-${step.color}-900/50 flex items-center justify-center text-4xl transform hover:scale-110 hover:rotate-6 transition-all duration-500`}>
-                    {step.icon}
-                  </div>
-                  <div className="space-y-3 px-6">
-                    <h3 className="text-3xl font-black italic tracking-tighter uppercase">{step.title}</h3>
-                    <p className="text-slate-400 text-sm font-medium leading-relaxed italic mb-2">"{step.desc}"</p>
-                    <p className="text-emerald-400 text-[10px] font-black uppercase tracking-widest mb-2">{step.detail}</p>
-                    <span className="inline-block px-3 py-1 bg-white/10 rounded-full text-[9px] font-black uppercase tracking-widest text-indigo-300">
-                      {step.tech}
-                    </span>
-                  </div>
-               </motion.div>
-             ))}
-          </div>
-          
-          <div className="flex justify-center pt-12">
-            <div className="bg-white/5 border border-white/10 p-8 rounded-[3rem] max-w-3xl w-full text-center">
-              <p className="text-sm font-black uppercase tracking-[0.3em] text-indigo-400 mb-4">Visual Flow</p>
-              <p className="text-2xl font-black italic tracking-tight text-white">
-                Customer → WhatsApp Message → AI Parsing → Ledger Update → Auto-Receipt → EOD Report
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Section */}
-      <section id="pricing" className="py-32 px-6 lg:px-20 bg-white">
-        <div className="max-w-[1600px] mx-auto space-y-24">
-          <div className="text-center space-y-6">
-            <h2 className="text-6xl lg:text-8xl font-black italic tracking-tighter uppercase leading-none text-slate-900">💰 Simple Pricing</h2>
-            <p className="text-xl text-indigo-600 font-bold tracking-widest uppercase">Transparent & Scalable Plans</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {pricing.map((p, i) => (
-              <div key={i} className={`p-10 rounded-[3.5rem] border-2 flex flex-col ${p.name === 'Growth' ? 'bg-slate-900 text-white border-slate-900 scale-105 shadow-2xl z-10' : 'bg-white text-slate-900 border-slate-100 shadow-xl'}`}>
-                <div className="mb-8">
-                  <h3 className="text-2xl font-black italic tracking-tighter uppercase mb-2">{p.name}</h3>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-5xl font-black italic tracking-tighter">{p.price}</span>
-                    <span className="text-xs font-black uppercase tracking-widest opacity-60">/month</span>
-                  </div>
-                </div>
-                <div className="flex-1 space-y-4 mb-10">
-                  {p.features.map((feat, j) => (
-                    <div key={j} className="flex items-center gap-3">
-                      <span className="text-emerald-500">✔</span>
-                      <span className="text-sm font-bold opacity-80">{feat}</span>
+              <div className="flex items-center gap-4 px-6 py-4 bg-gray-50 rounded-2xl border border-gray-100">
+                <div className="flex -space-x-3">
+                  {[1, 2, 3].map(i => (
+                    <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-gray-200 overflow-hidden">
+                      <img src={`https://picsum.photos/seed/${i + 10}/100/100`} alt="user" referrerPolicy="no-referrer" />
                     </div>
                   ))}
                 </div>
-                <div className="space-y-6">
-                  <div className="p-4 bg-slate-100 rounded-2xl text-slate-900">
-                    <p className="text-[9px] font-black uppercase tracking-widest opacity-50 mb-1">Best For</p>
-                    <p className="text-xs font-bold italic">{p.bestFor}</p>
-                  </div>
-                  <button className={`w-full py-5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all ${p.name === 'Growth' ? 'bg-emerald-500 text-slate-900 hover:bg-emerald-400' : 'bg-slate-900 text-white hover:bg-indigo-600'}`}>
-                    Choose Plan
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-          <p className="text-center text-slate-400 font-bold italic">Note: All plans include free onboarding and 24/7 WhatsApp support.</p>
-        </div>
-      </section>
-
-      {/* Why DukaanMitra & JanSunwai Section */}
-      <section className="py-32 px-6 lg:px-20 bg-indigo-600 text-white overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-white/5 skew-x-12 translate-x-1/2"></div>
-        <div className="max-w-[1600px] mx-auto grid lg:grid-cols-2 gap-24 items-center relative z-10">
-          <div className="space-y-12">
-            <h2 className="text-6xl lg:text-8xl font-black italic tracking-tighter uppercase leading-none">🚀 Why DukaanMitra?</h2>
-            <div className="space-y-8">
-              <div className="flex gap-6">
-                <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-3xl shrink-0">⏰</div>
-                <div>
-                  <h4 className="text-2xl font-black italic tracking-tighter uppercase mb-2">Save 2+ Hours Daily</h4>
-                  <p className="text-indigo-100 font-bold opacity-80">Automate your bookkeeping and focus on growing your business.</p>
-                </div>
-              </div>
-              <div className="flex gap-6">
-                <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-3xl shrink-0">📉</div>
-                <div>
-                  <h4 className="text-2xl font-black italic tracking-tighter uppercase mb-2">Reduce Defaults by 40%</h4>
-                  <p className="text-indigo-100 font-bold opacity-80">Automated WhatsApp reminders ensure timely udhaar recovery.</p>
-                </div>
-              </div>
-              <div className="flex gap-6">
-                <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-3xl shrink-0">🧠</div>
-                <div>
-                  <h4 className="text-2xl font-black italic tracking-tighter uppercase mb-2">AI-Powered Insights</h4>
-                  <p className="text-indigo-100 font-bold opacity-80">Get retail intelligence to make data-backed stock decisions.</p>
+                <div className="text-xs font-black text-gray-400 uppercase tracking-widest">
+                  Trusted by <span className="text-gray-900">1,200+</span> Kirana Stores
                 </div>
               </div>
             </div>
           </div>
-          <div className="bg-white/10 backdrop-blur-xl p-12 rounded-[4rem] border border-white/20 space-y-8">
-            <div className="inline-flex items-center space-x-3 bg-white text-indigo-600 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em]">
-              JanSunwai 2.0 Alignment
-            </div>
-            <h3 className="text-4xl font-black italic tracking-tighter uppercase">Beyond Retail: Grievance Redressal</h3>
-            <p className="text-xl font-bold italic text-indigo-50 leading-relaxed">
-              DukaanMitra's core architecture powers JanSunwai 2.0. The same WhatsApp-first, multi-tenant system helps citizens submit grievances that AI categorizes and routes to officials in real-time.
-            </p>
-            <ul className="space-y-4 text-sm font-black uppercase tracking-widest text-indigo-200 mb-8">
-              <li className="flex items-center gap-3"><span>➔</span> AI-Driven Categorization</li>
-              <li className="flex items-center gap-3"><span>➔</span> Real-time Official Dashboards</li>
-              <li className="flex items-center gap-3"><span>➔</span> Automated Status Updates</li>
-            </ul>
-            <button 
-              onClick={() => setView('jan_sunwai')}
-              className="w-full py-6 bg-emerald-500 text-slate-900 rounded-[2rem] font-black text-sm uppercase tracking-widest hover:bg-emerald-400 transition-all shadow-xl shadow-emerald-900/20"
-            >
-              Explore JanSunwai Portal ➔
-            </button>
-          </div>
-        </div>
-      </section>
 
-      {/* Testimonial Section */}
-      <section className="py-32 px-6 lg:px-20 bg-slate-50">
-        <div className="max-w-[1600px] mx-auto space-y-24">
-          <div className="text-center space-y-6">
-            <h2 className="text-6xl lg:text-7xl font-black italic tracking-tighter uppercase leading-none text-slate-900">🗣️ Shopkeeper Stories</h2>
-            <p className="text-xl text-indigo-600 font-bold tracking-widest uppercase">Trusted by 10,000+ Kirana Stores</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-12">
-            {testimonials.map((t, i) => (
-              <div key={i} className="bg-white p-12 rounded-[4rem] shadow-xl shadow-slate-200/50 border border-white space-y-8 relative group hover:scale-105 transition-all duration-500">
-                <div className="text-6xl text-indigo-100 absolute top-8 left-8 opacity-50 group-hover:opacity-100 transition-opacity">“</div>
-                <p className="text-2xl font-black italic tracking-tight text-slate-900 leading-tight relative z-10 pt-8">
-                  {t.quote}
-                </p>
-                <div className="flex items-center gap-4 pt-8 border-t border-slate-100">
-                  <div className="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center text-2xl">
-                    {t.icon}
-                  </div>
-                  <div>
-                    <p className="text-lg font-black italic tracking-tight text-slate-900">{t.name}</p>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">{t.shop}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Founder Section */}
-      <section id="founder" className="py-32 px-6 lg:px-20 bg-white">
-        <div className="max-w-[1600px] mx-auto grid lg:grid-cols-2 gap-24 items-center">
           <div className="relative">
-            <div className="w-full aspect-video bg-slate-900 rounded-[4rem] flex items-center justify-center shadow-2xl border-8 border-white rotate-3 overflow-hidden group">
-              <div className="text-center space-y-6 p-12">
-                <div className="w-24 h-24 bg-indigo-600 rounded-full mx-auto flex items-center justify-center text-4xl shadow-xl group-hover:scale-110 transition-transform">
-                  ✍️
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-indigo-50 rounded-full blur-3xl opacity-50" />
+            <div className="relative bg-white p-4 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] border border-gray-100 transform rotate-3 hover:rotate-0 transition-transform duration-700">
+              <div className="bg-[#e5ddd5] rounded-[2.5rem] overflow-hidden border border-gray-200 h-[600px] flex flex-col">
+                <div className="bg-[#075e54] p-6 flex items-center gap-4 text-white">
+                  <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl backdrop-blur-md">🤖</div>
+                  <div>
+                    <h4 className="font-black text-lg">Munim AI</h4>
+                    <p className="text-xs opacity-70">Aapka Digital Munim</p>
+                  </div>
                 </div>
-                <h3 className="text-3xl font-black italic text-white tracking-tighter uppercase">A Message from the Founder</h3>
-                <div className="w-20 h-1 bg-emerald-500 mx-auto"></div>
+                <div className="flex-1 p-6 space-y-6 overflow-y-auto">
+                  <div className="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm max-w-[80%] space-y-2">
+                    <p className="text-sm font-bold text-gray-800">Namaste! Ramesh ji. Aaj ki sales kya rahi?</p>
+                    <p className="text-[10px] text-gray-400">10:45 AM</p>
+                  </div>
+                  <div className="bg-[#dcf8c6] p-4 rounded-2xl rounded-tr-none shadow-sm max-w-[80%] ml-auto space-y-2">
+                    <p className="text-sm font-bold text-gray-800 italic">Sold 2kg sugar for 100, and gave 500 udhaar to Rahul.</p>
+                    <p className="text-[10px] text-gray-400">10:46 AM</p>
+                  </div>
+                  <div className="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm max-w-[80%] space-y-2">
+                    <p className="text-sm font-bold text-gray-800">Got it! Logged ₹100 sale and ₹500 udhaar for Rahul. Daily summary will be sent at 8 PM.</p>
+                    <p className="text-[10px] text-gray-400">10:46 AM</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="absolute -bottom-10 -right-10 bg-indigo-600 text-white p-10 rounded-[3rem] shadow-2xl -rotate-3">
-              <p className="text-4xl font-black italic tracking-tighter">Amit Sharma</p>
-              <p className="text-sm font-black uppercase tracking-widest opacity-70">Founder, DukaanMitra</p>
-            </div>
           </div>
-          <div className="space-y-10">
-            <div className="inline-flex items-center space-x-3 bg-indigo-100 text-indigo-700 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em]">
-              Meet the Visionary
-            </div>
-            <h2 className="text-6xl lg:text-8xl font-black text-slate-900 tracking-tighter italic leading-none">Empowering Bharat's Retailers</h2>
-            <p className="text-2xl text-slate-500 font-bold italic leading-relaxed">
-              "My mission is to bring the power of AI to every Kirana store in India. No complex apps, just the simplicity of WhatsApp to manage your business with intelligence."
+        </div>
+      </section>
+
+      {/* Features */}
+      <section id="features" className="py-32 px-6 bg-gray-50">
+        <div className="max-w-7xl mx-auto space-y-20">
+          <div className="text-center space-y-6 max-w-3xl mx-auto">
+            <h2 className="text-5xl lg:text-7xl font-black text-gray-900 tracking-tighter italic uppercase">
+              Built for the <span className="text-indigo-600">Real Bharat.</span>
+            </h2>
+            <p className="text-xl text-gray-500 font-medium">
+              We understand the unique challenges of local shopkeepers. No complex interfaces, just results.
             </p>
-            <div className="grid grid-cols-2 gap-8">
-              <div className="space-y-2">
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Contact</p>
-                <p className="text-xl font-black italic text-slate-900">+91 63937 41171</p>
-              </div>
-              <div className="space-y-2">
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Email</p>
-                <p className="text-xl font-black italic text-slate-900">amit@dukaanmitra.in</p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <a href="https://linkedin.com/in/amitsharma" className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all">in</a>
-              <a href="https://twitter.com/amitsharma" className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all">𝕏</a>
-            </div>
           </div>
-        </div>
-      </section>
 
-      {/* Insights Section */}
-      <section className="py-32 px-6 lg:px-20 bg-slate-50">
-        <div className="max-w-[1600px] mx-auto space-y-20">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 border-b border-slate-200 pb-12">
-            <div className="space-y-4">
-               <div className="inline-flex items-center space-x-3 bg-indigo-100 text-indigo-700 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em]">
-                  Retail Intelligence
-               </div>
-               <h2 className="text-5xl lg:text-7xl font-black text-slate-900 tracking-tighter italic">The Bharat Retail Feed</h2>
-            </div>
-            <button 
-              onClick={() => setView('blog_engine')}
-              className="text-indigo-600 font-black text-xl uppercase tracking-tighter italic hover:underline"
-            >
-              Explore Daily Insights ➔
-            </button>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { title: "UPI Lite: The Game Changer for Small Kiranas", tag: "Tech", excerpt: "How low-latency payments are reducing queue times in Delhi's busy markets." },
-              { title: "Managing Winter Stocks in Northern India", tag: "Inventory", excerpt: "Strategic stock management for Tier-2 cities during the coldest months." },
-              { title: "Building Trust with Digital Udhaar Reminders", tag: "Retention", excerpt: "Data shows 40% faster recovery when reminders are sent via WhatsApp." }
-            ].map((b, i) => (
-              <div key={i} className="bg-white p-10 rounded-[3.5rem] shadow-xl shadow-slate-200/50 border border-white hover:border-indigo-200 hover:scale-105 transition-all duration-500 group">
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] group-hover:text-indigo-600 transition-colors">{b.tag}</span>
-                <h3 className="text-2xl font-black text-slate-900 mt-4 mb-6 italic tracking-tight leading-tight group-hover:text-indigo-600 transition-colors">{b.title}</h3>
-                <p className="text-slate-500 font-bold opacity-80 leading-relaxed mb-8 italic">"{b.excerpt}"</p>
-                <button 
-                   onClick={() => setView('blog_engine')}
-                   className="text-[11px] font-black uppercase tracking-widest text-slate-900 pb-1 border-b-4 border-emerald-400 group-hover:border-indigo-600 transition-all"
-                >
-                  Read Analysis
-                </button>
+              { 
+                title: "WhatsApp First", 
+                desc: "No new app to download. Manage everything through the app you already use every day.", 
+                icon: <MessageSquare className="text-emerald-500" size={32} />,
+                color: "bg-emerald-50"
+              },
+              { 
+                title: "AI Munim", 
+                desc: "Our AI understands Hindi, English, and Hinglish. Just talk to it like a real accountant.", 
+                icon: <Zap className="text-indigo-500" size={32} />,
+                color: "bg-indigo-50"
+              },
+              { 
+                title: "Auto-Reminders", 
+                desc: "Polite, automated WhatsApp reminders to customers who owe you money. Recover credit faster.", 
+                icon: <Smartphone className="text-rose-500" size={32} />,
+                color: "bg-rose-50"
+              }
+            ].map((f, i) => (
+              <div key={i} className="bg-white p-10 rounded-[3rem] shadow-sm border border-gray-100 space-y-6 hover:shadow-xl transition-all duration-500 group">
+                <div className={cn("w-16 h-16 rounded-3xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500", f.color)}>
+                  {f.icon}
+                </div>
+                <h3 className="text-2xl font-black text-gray-900 tracking-tight italic uppercase">{f.title}</h3>
+                <p className="text-gray-500 font-medium leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-32 px-6 lg:px-20 bg-white">
-        <div className="max-w-4xl mx-auto space-y-20">
-          <div className="text-center space-y-6">
-            <h2 className="text-6xl lg:text-7xl font-black italic tracking-tighter uppercase leading-none text-slate-900">🤔 Common Questions</h2>
-            <p className="text-xl text-indigo-600 font-bold tracking-widest uppercase">Everything you need to know</p>
-          </div>
-          <div className="space-y-8">
-            {faqs.map((faq, i) => (
-              <div key={i} className="p-8 rounded-[2.5rem] bg-slate-50 border border-slate-100 space-y-4">
-                <h4 className="text-2xl font-black italic tracking-tighter text-slate-900 uppercase">Q: {faq.q}</h4>
-                <p className="text-slate-600 font-bold leading-relaxed italic">A: {faq.a}</p>
+      {/* How it Works */}
+      <section id="how-it-works" className="py-32 px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+          <div className="relative">
+            <div className="absolute top-0 left-0 w-full h-full bg-indigo-600 rounded-[4rem] rotate-3" />
+            <div className="relative bg-slate-900 p-12 rounded-[4rem] space-y-10 text-white overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
+              <div className="space-y-4">
+                <h3 className="text-4xl font-black italic tracking-tighter uppercase">Daily Ledger</h3>
+                <p className="text-indigo-300 font-medium">Your Munim works 24/7</p>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section id="contact" className="py-32 px-6 lg:px-20 bg-slate-900 text-white rounded-[6rem] mx-4 lg:mx-10 my-20 relative overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)]">
-        <div className="max-w-5xl mx-auto text-center space-y-16 relative z-10">
-          <div className="space-y-6">
-            <h2 className="text-7xl lg:text-9xl font-black italic tracking-tighter leading-none">Ready to digitize your dhanda?</h2>
-            <p className="text-2xl font-bold italic text-indigo-400">Aapka Kirana, Ab Digital. Bas WhatsApp Chalana Hai!</p>
-          </div>
-          <div className="flex flex-col items-center justify-center gap-12">
-            <div className="grid sm:grid-cols-2 gap-8 w-full max-w-3xl">
-              <div className="bg-white/5 p-8 rounded-[3rem] border border-white/10 space-y-4">
-                <p className="text-[10px] font-black uppercase tracking-widest text-emerald-400">Step 1</p>
-                <h4 className="text-2xl font-black italic tracking-tighter uppercase">Start Free Trial</h4>
-                <p className="text-sm font-bold opacity-60">Just WhatsApp "START" to +91 63937 41171</p>
-              </div>
-              <div className="bg-white/5 p-8 rounded-[3rem] border border-white/10 space-y-4">
-                <p className="text-[10px] font-black uppercase tracking-widest text-indigo-400">Step 2</p>
-                <h4 className="text-2xl font-black italic tracking-tighter uppercase">Watch Demo</h4>
-                <p className="text-sm font-bold opacity-60">See Munim in Action (2-minute video)</p>
+              <div className="space-y-6">
+                {[
+                  { label: "Total Sales Today", val: "₹4,250", color: "text-emerald-400" },
+                  { label: "New Udhaar", val: "₹1,100", color: "text-rose-400" },
+                  { label: "Recovered", val: "₹800", color: "text-indigo-400" }
+                ].map((s, i) => (
+                  <div key={i} className="flex items-center justify-between p-6 bg-white/5 rounded-3xl border border-white/10">
+                    <span className="text-sm font-black uppercase tracking-widest opacity-60">{s.label}</span>
+                    <span className={cn("text-2xl font-black italic tracking-tighter", s.color)}>{s.val}</span>
+                  </div>
+                ))}
               </div>
             </div>
-            <button className="w-full md:w-auto px-16 py-8 bg-emerald-500 text-slate-900 rounded-[3rem] font-black text-3xl hover:bg-emerald-400 transition-all shadow-2xl active:scale-95 italic tracking-tighter">
-              Call Us: +91 63937 41171
-            </button>
+          </div>
+
+          <div className="space-y-12">
+            <h2 className="text-5xl lg:text-7xl font-black text-gray-900 tracking-tighter italic uppercase leading-none">
+              Simple 3-Step <span className="text-indigo-600">Setup.</span>
+            </h2>
+            <div className="space-y-8">
+              {[
+                { step: "01", title: "Register Your Shop", desc: "Sign up with your WhatsApp number and shop name." },
+                { step: "02", title: "Chat with Munim", desc: "Start logging sales and udhaar via WhatsApp messages." },
+                { step: "03", title: "Grow Your Business", desc: "Get daily reports and automated credit recovery." }
+              ].map((s, i) => (
+                <div key={i} className="flex gap-8 group">
+                  <div className="text-4xl font-black text-indigo-100 group-hover:text-indigo-600 transition-colors duration-500">{s.step}</div>
+                  <div className="space-y-2">
+                    <h4 className="text-xl font-black text-gray-900 tracking-tight italic uppercase">{s.title}</h4>
+                    <p className="text-gray-500 font-medium leading-relaxed">{s.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Footer Marquee */}
-      <footer className="bg-slate-900 text-white py-10 overflow-hidden">
-        <div className="marquee whitespace-nowrap text-4xl font-black italic tracking-widest uppercase opacity-20">
-          DukaanMitra • Aapka Digital Munim • JanSunwai 2.0 • AI-Powered WhatsApp Munim • No App Downloads • Just WhatsApp • DukaanMitra • Aapka Digital Munim • JanSunwai 2.0 • AI-Powered WhatsApp Munim • No App Downloads • Just WhatsApp
-        </div>
-        <div className="mt-10 text-center text-xs font-black uppercase tracking-widest opacity-40">
-          © 2024 DukaanMitra. All Rights Reserved. Aligned with JanSunwai 2.0 Initiative.
+      {/* Footer */}
+      <footer className="py-20 px-6 bg-slate-900 text-white">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
+          <div className="flex items-center gap-2">
+            <div className="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center">
+              <TrendingUp size={24} />
+            </div>
+            <span className="text-2xl font-black tracking-tighter italic">DukaanMitra</span>
+          </div>
+          <div className="flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
+            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-white transition-colors">Contact Us</a>
+          </div>
+          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
+            © 2024 DukaanMitra. All Rights Reserved.
+          </div>
         </div>
       </footer>
-
-      {/* WhatsApp Floating Button */}
-      <a 
-        href="https://wa.me/916393741171?text=START" 
-        target="_blank" 
-        rel="noopener noreferrer"
-        className="whatsapp-float bg-emerald-500 text-white w-20 h-20 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all active:scale-95 group"
-      >
-        <span className="text-4xl group-hover:rotate-12 transition-transform">📱</span>
-        <div className="absolute -top-12 right-0 bg-white text-slate-900 px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-          Chat with Munim AI
-        </div>
-      </a>
-      <script type="application/ld+json">
-        {JSON.stringify(jsonLd)}
-      </script>
     </div>
   );
 };
-
-export default LandingPage;

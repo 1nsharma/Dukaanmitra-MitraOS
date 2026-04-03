@@ -1,0 +1,125 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: stores
+    // Document ID: storeId
+    // Fields:
+    //   - id: string (required)
+    //   - name: string (required)
+    //   - ownerUid: string (required, immutable)
+    //   - whatsappNumber: string (required)
+    //   - createdAt: timestamp (required)
+    //   - totalSales: number
+    //   - totalUdhaar: number
+    //
+    // Collection: stores/{storeId}/transactions
+    // Document ID: transactionId
+    // Fields:
+    //   - id: string (required)
+    //   - storeId: string (required)
+    //   - customerId: string (optional)
+    //   - type: string (required, enum: ["sale", "udhaar", "payment"])
+    //   - amount: number (required)
+    //   - description: string
+    //   - timestamp: timestamp (required)
+    //
+    // Collection: stores/{storeId}/customers
+    // Document ID: customerId
+    // Fields:
+    //   - id: string (required)
+    //   - storeId: string (required)
+    //   - name: string (required)
+    //   - whatsappNumber: string
+    //   - balance: number
+    //   - lastTransactionAt: timestamp
+    //
+    // Collection: admins
+    // Document ID: adminUid
+    // Fields:
+    //   - uid: string (required)
+    //   - email: string (required)
+    //   - role: string (required, enum: ["superadmin"])
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(ownerUid) {
+      return isAuthenticated() && request.auth.uid == ownerUid;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+        (get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role == 'superadmin' ||
+         (request.auth.token.email == "AMITSHARMA99976@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    function isStoreOwner(storeId) {
+      return isAuthenticated() && get(/databases/$(database)/documents/stores/$(storeId)).data.ownerUid == request.auth.uid;
+    }
+
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+
+    function isValidStore(data) {
+      return data.name is string && data.name.size() > 0 && data.name.size() < 100 &&
+             data.whatsappNumber is string && data.whatsappNumber.size() >= 10 && data.whatsappNumber.size() <= 15;
+    }
+
+    function isValidTransaction(data) {
+      return data.type in ["sale", "udhaar", "payment"] &&
+             data.amount is number && data.amount > 0 &&
+             data.timestamp is timestamp;
+    }
+
+    function isValidCustomer(data) {
+      return data.name is string && data.name.size() > 0 && data.name.size() < 100;
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    // Stores
+    match /stores/{storeId} {
+      allow read: if isOwner(resource.data.ownerUid) || isAdmin();
+      allow create: if isAuthenticated() && isValidStore(request.resource.data) && (request.resource.data.ownerUid == request.auth.uid || isAdmin());
+      allow update: if (isOwner(resource.data.ownerUid) || isAdmin()) && isValidStore(request.resource.data) && request.resource.data.ownerUid == resource.data.ownerUid;
+      allow delete: if isAdmin();
+
+      // Transactions
+      match /transactions/{transactionId} {
+        allow read: if isStoreOwner(storeId) || isAdmin();
+        allow create: if isStoreOwner(storeId) && isValidTransaction(request.resource.data) || isAdmin();
+        allow update: if isAdmin();
+        allow delete: if isAdmin();
+      }
+
+      // Customers
+      match /customers/{customerId} {
+        allow read: if isStoreOwner(storeId) || isAdmin();
+        allow create: if isStoreOwner(storeId) && isValidCustomer(request.resource.data) || isAdmin();
+        allow update: if (isStoreOwner(storeId) || isAdmin()) && isValidCustomer(request.resource.data);
+        allow delete: if isAdmin();
+      }
+    }
+
+    // Admins
+    match /admins/{adminUid} {
+      allow read: if isAuthenticated() && (request.auth.uid == adminUid || isAdmin());
+      allow write: if isAdmin();
+    }
+  }
+}

@@ -1,184 +1,182 @@
+import React, { useState, useEffect } from 'react';
+import { auth, db } from './firebase';
+import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
+import { doc, getDoc, setDoc, collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { LandingPage } from './components/LandingPage';
+import { StoreDashboard } from './components/StoreDashboard';
+import { AdminDashboard } from './components/AdminDashboard';
+import { WhatsAppSimulation } from './components/WhatsAppSimulation';
+import { View, UserRole } from './types';
+import { ShieldCheck, Store, LogOut, MessageSquare, LayoutDashboard } from 'lucide-react';
+import { cn } from './lib/utils';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { auth } from './firebase';
-import Layout from './components/Layout';
-import LandingPage from './components/LandingPage';
-import Dashboard from './components/Dashboard';
-import CustomerList from './components/CustomerList';
-import TransactionList from './components/TransactionList';
-import ShopPanel from './components/ShopPanel';
-import SuperAdmin from './components/SuperAdmin';
-import SystemLogs from './components/SystemLogs';
-import ArchitectureGuide from './components/ArchitectureGuide';
-import SheetsDatabase from './components/SheetsDatabase';
-import TrainingCenter from './components/TrainingCenter';
-import BlogEngine from './components/BlogEngine';
-import ChatBot from './components/ChatBot';
-import Auth from './components/Auth';
-import AiTools from './components/AiTools';
-import CustomerPortal from './components/CustomerPortal';
-import ProjectDetail from './components/ProjectDetail';
-import ProductStrategy from './components/ProductStrategy';
-import JanSunwaiPortal from './components/JanSunwaiPortal';
-import { INITIAL_CUSTOMERS, INITIAL_TRANSACTIONS, INITIAL_LOGS } from './constants';
-import { Customer, Transaction, SystemLog, View, ChatMessage, AppliedPatch, ShardHealth } from './types';
-import anime from 'animejs';
-
-const App: React.FC = () => {
-  const [activeView, setActiveView] = useState<View>('landing');
-  const [user, setUser] = useState<any | null>(null);
-  const [authLoading, setAuthLoading] = useState(true);
-  const [notification, setNotification] = useState<{ message: string, type: 'success' | 'alert' } | null>(null);
-  const notificationRef = useRef<HTMLDivElement>(null);
-  
-  // SHARED MUNIM INFRASTRUCTURE STATE
-  const [appliedPatches, setAppliedPatches] = useState<AppliedPatch[]>([]);
-  const [shards, setShards] = useState<ShardHealth[]>([
-    { id: 'MAH-01', region: 'Maharashtra', load: 45, latency: 140, status: 'Healthy', color: 'bg-emerald-500' },
-    { id: 'DEL-04', region: 'Delhi NCR', load: 92, latency: 480, status: 'Hot', color: 'bg-rose-500' },
-    { id: 'KAR-02', region: 'Karnataka', load: 22, latency: 95, status: 'Idle', color: 'bg-blue-500' },
-    { id: 'UP-09', region: 'Uttar Pradesh', load: 61, latency: 210, status: 'Warning', color: 'bg-amber-500' },
-  ]);
-
-  const [customers, setCustomers] = useState<Customer[]>(() => {
-    const saved = localStorage.getItem('dm_customers');
-    return saved ? JSON.parse(saved) : INITIAL_CUSTOMERS;
-  });
-  const [transactions, setTransactions] = useState<Transaction[]>(() => {
-    const saved = localStorage.getItem('dm_transactions');
-    return saved ? JSON.parse(saved) : INITIAL_TRANSACTIONS;
-  });
-  const [logs, setLogs] = useState<SystemLog[]>(INITIAL_LOGS);
-
-  const [mitraChat, setMitraChat] = useState<ChatMessage[]>(() => {
-    const saved = localStorage.getItem('dm_mitra_chat');
-    return saved ? JSON.parse(saved) : [{ sender: 'bot', text: "Namaste Mitra! Munim AI Active. 🧠 Aapka Digital Munim ready hai.", timestamp: "00:00" }];
-  });
-  const [grahakChat, setGrahakChat] = useState<ChatMessage[]>(() => {
-    const saved = localStorage.getItem('dm_grahak_chat');
-    return saved ? JSON.parse(saved) : [{ sender: 'system', text: "Swagat hai!", timestamp: "00:00" }];
-  });
-
-  const checkIsOpsTeam = (email?: string | null) => {
-    if (!email) return false;
-    const lowerEmail = email.toLowerCase();
-    return lowerEmail.includes('admin') || lowerEmail.includes('ops') || lowerEmail.includes('test');
-  };
+export default function App() {
+  const [view, setView] = useState<View>('landing');
+  const [user, setUser] = useState<any>(null);
+  const [role, setRole] = useState<UserRole | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
-      setUser(currentUser);
-      setAuthLoading(false);
-      
-      if (currentUser) {
-        const isOps = checkIsOpsTeam(currentUser.email);
-        if (activeView === 'landing') {
-          setActiveView(isOps ? 'dashboard' : 'shop_panel');
+    const unsubscribe = onAuthStateChanged(auth, async (u) => {
+      setUser(u);
+      if (u) {
+        // Check role
+        const adminDoc = await getDoc(doc(db, 'admins', u.uid));
+        if (adminDoc.exists()) {
+          setRole({ uid: u.uid, role: 'superadmin' });
+          setView('admin_dashboard');
+        } else {
+          // Check if merchant has a store
+          const merchantDoc = await getDoc(doc(db, 'merchants', u.uid));
+          if (merchantDoc.exists()) {
+            const storeId = merchantDoc.data().storeId;
+            setRole({ uid: u.uid, role: 'merchant', storeId });
+            setView('store_dashboard');
+          } else {
+            // New user, create a default store for demo
+            const storeRef = await addDoc(collection(db, 'stores'), {
+              name: `${u.displayName}'s Kirana Store`,
+              ownerUid: u.uid,
+              whatsappNumber: "+91 98765 43210",
+              createdAt: serverTimestamp(),
+              totalSales: 0,
+              totalUdhaar: 0
+            });
+            await setDoc(doc(db, 'merchants', u.uid), { storeId: storeRef.id });
+            setRole({ uid: u.uid, role: 'merchant', storeId: storeRef.id });
+            setView('store_dashboard');
+          }
         }
+      } else {
+        setRole(null);
+        setView('landing');
       }
+      setLoading(false);
     });
+
     return () => unsubscribe();
-  }, [activeView]);
+  }, []);
 
-  useEffect(() => {
-    localStorage.setItem('dm_customers', JSON.stringify(customers));
-    localStorage.setItem('dm_transactions', JSON.stringify(transactions));
-    localStorage.setItem('dm_mitra_chat', JSON.stringify(mitraChat));
-    localStorage.setItem('dm_grahak_chat', JSON.stringify(grahakChat));
-  }, [customers, transactions, mitraChat, grahakChat]);
-
-  // Global Notification Monitor with anime.js
-  useEffect(() => {
-    if (notification && notificationRef.current) {
-      (anime as any)({
-        targets: notificationRef.current,
-        translateY: [0, 20],
-        opacity: [0, 1],
-        easing: 'easeOutElastic(1, .6)',
-        duration: 800
-      });
-
-      const timer = setTimeout(() => {
-        if (notificationRef.current) {
-          (anime as any)({
-            targets: notificationRef.current,
-            translateY: [20, 0],
-            opacity: [1, 0],
-            easing: 'easeInQuad',
-            duration: 300,
-            complete: () => setNotification(null)
-          });
-        }
-      }, 4000);
-      return () => clearTimeout(timer);
-    }
-  }, [notification]);
-
-  if (authLoading) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-950 text-indigo-400">
-        <div className="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mb-6 shadow-[0_0_20px_rgba(79,70,229,0.4)]"></div>
-        <p className="font-black uppercase tracking-[0.4em] text-[10px] animate-pulse">Establishing Munim Link...</p>
-      </div>
-    );
-  }
-
-  const isOpsTeam = checkIsOpsTeam(user?.email);
-  const isPremium = customers.some(c => c.paidStatus === 'Active');
-  const isProtectedView = activeView !== 'landing' && activeView !== 'blog_engine' && activeView !== 'customer_portal';
-  
-  if (isProtectedView && !user) return <Auth onSuccess={() => {}} />;
-
-  const renderView = () => {
-    switch (activeView) {
-      case 'landing': return <LandingPage setView={setActiveView} />;
-      case 'blog_engine': return <BlogEngine />;
-      case 'customer_portal': return <CustomerPortal grahakChat={grahakChat} setGrahakChat={setGrahakChat} />;
-      case 'shop_panel': return <ShopPanel customers={customers} setCustomers={setCustomers} transactions={transactions} setTransactions={setTransactions} logs={logs} setLogs={setLogs} mitraChat={mitraChat} setMitraChat={setMitraChat} grahakChat={grahakChat} setGrahakChat={setGrahakChat} setView={setActiveView} />;
-      case 'ai_tools': return <AiTools isPremium={isPremium} />;
-      case 'dashboard': return <Dashboard customers={customers} transactions={transactions} shards={shards} setShards={setShards} appliedPatches={appliedPatches} setAppliedPatches={setAppliedPatches} setView={setActiveView} />;
-      case 'superadmin': return <SuperAdmin customers={customers} transactions={transactions} logs={logs} shards={shards} appliedPatches={appliedPatches} setAppliedPatches={setAppliedPatches} setView={setActiveView} />;
-      case 'logs': return <SystemLogs logs={logs} />;
-      case 'architecture': return <ArchitectureGuide />;
-      case 'sheets_db': return <SheetsDatabase customers={customers} transactions={transactions} />;
-      case 'customers': return <CustomerList customers={customers} transactions={transactions} />;
-      case 'transactions': return <TransactionList transactions={transactions} />;
-      case 'training': return <TrainingCenter />;
-      case 'project_detail': return <ProjectDetail />;
-      case 'product_strategy': return <ProductStrategy />;
-      case 'jan_sunwai': return <JanSunwaiPortal />;
-      default: return <LandingPage setView={setActiveView} />;
+  const handleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (error) {
+      console.error("Login failed:", error);
     }
   };
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    setView('landing');
+  };
+
+  if (loading) return (
+    <div className="h-screen flex flex-col items-center justify-center bg-slate-50">
+      <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+      <p className="text-indigo-600 font-black uppercase tracking-widest text-xs">Initialising Munim...</p>
+    </div>
+  );
 
   return (
-    <Layout activeView={activeView} setView={setActiveView} isPremium={isPremium} isAdmin={isOpsTeam}>
-      {notification && (
-        <div 
-          ref={notificationRef}
-          className="fixed top-24 left-1/2 -translate-x-1/2 z-[200] w-full max-w-md px-6 opacity-0"
-        >
-           <div className={`p-5 rounded-[2rem] shadow-2xl backdrop-blur-xl border flex items-center gap-4 ${
-             notification.type === 'success' ? 'bg-emerald-600/90 border-emerald-400 text-white' : 'bg-rose-600/90 border-rose-400 text-white'
-           }`}>
-              <div className="w-10 h-10 bg-white/20 rounded-2xl flex items-center justify-center text-xl">
-                 {notification.type === 'success' ? '⚡' : '⚠️'}
+    <div className="min-h-screen bg-slate-50 font-sans">
+      {view === 'landing' ? (
+        <LandingPage onStart={handleLogin} />
+      ) : (
+        <div className="flex h-screen overflow-hidden">
+          {/* Sidebar */}
+          <aside className="w-72 bg-slate-900 text-white flex flex-col shrink-0 border-r border-white/5">
+            <div className="p-10 border-b border-white/10">
+              <h1 className="text-3xl font-black tracking-tighter italic text-white group cursor-pointer" onClick={() => setView('landing')}>
+                DukaanMitra
+              </h1>
+              <div className="mt-2 inline-flex items-center px-2 py-0.5 bg-indigo-500/20 text-indigo-400 rounded text-[8px] font-black uppercase tracking-[0.2em] border border-indigo-500/30">
+                {role?.role === 'superadmin' ? '🛡️ Infrastructure Ops' : '🏪 Retail Merchant'}
               </div>
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-widest opacity-60 leading-none mb-1">Munim Update</p>
-                <p className="font-bold text-sm italic tracking-tight">{notification.message}</p>
+            </div>
+            
+            <nav className="flex-1 p-6 space-y-2 overflow-y-auto no-scrollbar">
+              <div className="px-3 mb-3 mt-2 text-[10px] font-black uppercase tracking-widest text-slate-500 flex items-center justify-between">
+                <span>Management</span>
+                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
               </div>
-           </div>
+
+              {role?.role === 'superadmin' ? (
+                <button 
+                  onClick={() => setView('admin_dashboard')}
+                  className={cn(
+                    "w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all duration-300",
+                    view === 'admin_dashboard' ? "bg-indigo-600 text-white shadow-xl shadow-indigo-900/40" : "text-slate-400 hover:bg-white/5 hover:text-white"
+                  )}
+                >
+                  <ShieldCheck size={20} />
+                  <span className="font-bold text-[13px] uppercase tracking-tight">Platform Dashboard</span>
+                </button>
+              ) : (
+                <>
+                  <button 
+                    onClick={() => setView('store_dashboard')}
+                    className={cn(
+                      "w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all duration-300",
+                      view === 'store_dashboard' ? "bg-indigo-600 text-white shadow-xl shadow-indigo-100" : "text-slate-400 hover:bg-slate-50 hover:text-slate-900"
+                    )}
+                  >
+                    <LayoutDashboard size={20} />
+                    <span className="font-bold text-[13px] uppercase tracking-tight">Shop Ledger</span>
+                  </button>
+                  <button 
+                    onClick={() => setView('whatsapp_sim')}
+                    className={cn(
+                      "w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all duration-300",
+                      view === 'whatsapp_sim' ? "bg-indigo-600 text-white shadow-xl shadow-indigo-100" : "text-slate-400 hover:bg-slate-50 hover:text-slate-900"
+                    )}
+                  >
+                    <MessageSquare size={20} />
+                    <span className="font-bold text-[13px] uppercase tracking-tight">WhatsApp Munim</span>
+                  </button>
+                </>
+              )}
+            </nav>
+
+            <div className="p-6 border-t border-white/10 bg-black/20">
+              <div className="flex items-center gap-4 mb-6 px-4">
+                <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center font-black text-white shadow-lg">
+                  {user?.displayName?.[0]}
+                </div>
+                <div className="overflow-hidden">
+                  <p className="text-xs font-black truncate">{user?.displayName}</p>
+                  <p className="text-[10px] text-slate-500 truncate font-medium">{user?.email}</p>
+                </div>
+              </div>
+              <button 
+                onClick={handleLogout}
+                className="w-full flex items-center justify-center gap-3 py-4 bg-white/5 hover:bg-rose-500/10 text-slate-400 hover:text-rose-400 rounded-2xl transition-all font-black text-[10px] uppercase tracking-widest border border-transparent hover:border-rose-500/20"
+              >
+                <LogOut size={16} />
+                End Session
+              </button>
+            </div>
+          </aside>
+
+          {/* Main Content */}
+          <main className="flex-1 overflow-y-auto bg-slate-50 relative">
+            <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-indigo-50/50 to-transparent pointer-events-none" />
+            <div className="relative z-10">
+              {view === 'store_dashboard' && role?.storeId && <StoreDashboard storeId={role.storeId} />}
+              {view === 'admin_dashboard' && <AdminDashboard />}
+              {view === 'whatsapp_sim' && role?.storeId && (
+                <div className="p-10 flex flex-col items-center justify-center min-h-screen">
+                  <div className="text-center mb-10 space-y-4">
+                    <h2 className="text-4xl font-black text-gray-900 tracking-tighter italic uppercase">WhatsApp Munim AI</h2>
+                    <p className="text-gray-500 font-medium max-w-md mx-auto">Simulate your WhatsApp chat with the Munim AI. Try logging a sale or udhaar below.</p>
+                  </div>
+                  <WhatsAppSimulation storeId={role.storeId} />
+                </div>
+              )}
+            </div>
+          </main>
         </div>
       )}
-
-      {renderView()}
-      
-      {user && activeView !== 'landing' && activeView !== 'customer_portal' && (
-        <ChatBot role={isOpsTeam ? 'ops' : 'merchant'} />
-      )}
-    </Layout>
+    </div>
   );
-};
-
-export default App;
+}
