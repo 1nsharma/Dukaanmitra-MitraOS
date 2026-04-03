@@ -19,6 +19,7 @@ import AiTools from './components/AiTools';
 import CustomerPortal from './components/CustomerPortal';
 import ProjectDetail from './components/ProjectDetail';
 import ProductStrategy from './components/ProductStrategy';
+import JanSunwaiPortal from './components/JanSunwaiPortal';
 import { INITIAL_CUSTOMERS, INITIAL_TRANSACTIONS, INITIAL_LOGS } from './constants';
 import { Customer, Transaction, SystemLog, View, ChatMessage, AppliedPatch, ShardHealth } from './types';
 import anime from 'animejs';
@@ -51,7 +52,7 @@ const App: React.FC = () => {
 
   const [mitraChat, setMitraChat] = useState<ChatMessage[]>(() => {
     const saved = localStorage.getItem('dm_mitra_chat');
-    return saved ? JSON.parse(saved) : [{ sender: 'bot', text: "Namaste Mitra! AI Munim Active. 🧠", timestamp: "00:00" }];
+    return saved ? JSON.parse(saved) : [{ sender: 'bot', text: "Namaste Mitra! Munim AI Active. 🧠 Aapka Digital Munim ready hai.", timestamp: "00:00" }];
   });
   const [grahakChat, setGrahakChat] = useState<ChatMessage[]>(() => {
     const saved = localStorage.getItem('dm_grahak_chat');
@@ -145,6 +146,7 @@ const App: React.FC = () => {
       case 'training': return <TrainingCenter />;
       case 'project_detail': return <ProjectDetail />;
       case 'product_strategy': return <ProductStrategy />;
+      case 'jan_sunwai': return <JanSunwaiPortal />;
       default: return <LandingPage setView={setActiveView} />;
     }
   };

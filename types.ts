@@ -176,4 +176,5 @@ export type View =
   | 'customer_portal'
   | 'project_health'
   | 'project_detail'
-  | 'product_strategy';
+  | 'product_strategy'
+  | 'jan_sunwai';

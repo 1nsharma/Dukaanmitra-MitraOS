@@ -15,19 +15,20 @@ const ChatBot: React.FC<ChatBotProps> = ({ role }) => {
     { 
       role: 'bot', 
       text: role === 'ops' 
-        ? `Munim Architect Mode v${SYSTEM_MANIFEST.version} Engaged. I have full knowledge of our Tech Stack, Database Schema, and AI Reasoning logic. Ask me anything.` 
-        : "Namaste! I'm your DukaanMitra guide. I can explain our features, app flow, or how our AI helps your business." 
+        ? `Munim Architect Mode v${SYSTEM_MANIFEST.version} Engaged. I have full knowledge of the DukaanMitra tech stack and JanSunwai 2.0 alignment. Ask me anything.` 
+        : "Namaste! I'm your Munim AI. I can help you manage your shop, track udhaar, or explain how DukaanMitra works for your Kirana business." 
     }
   ]);
   const [isTyping, setIsTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const infoChips = [
-    { label: "🚀 Tech Stack", query: "What is the full technology stack (frontend, backend, database) of DukaanMitra?" },
-    { label: "📑 Database", query: "Explain the database strategy. How is data stored for MVP and how will it scale?" },
-    { label: "🧠 Munim AI", query: "How does the Munim AI reasoning work? Explain Bayesian inference usage." },
-    { label: "🎨 UI Design", query: "What are the core design principles and theme of DukaanMitra?" },
-    { label: "💳 Services", query: "List and explain all key services like recovery, billing, and creative studio." }
+    { label: "🚀 Tech Stack", query: "What is the full technology stack of DukaanMitra?" },
+    { label: "🧠 Munim AI", query: "How does the Munim AI reasoning work for Kirana stores?" },
+    { label: "📄 Udhaar Tracking", query: "How does DukaanMitra help in recovering udhaar 40% faster?" },
+    { label: "🏛️ JanSunwai 2.0", query: "How is DukaanMitra aligned with JanSunwai 2.0?" },
+    { label: "📝 File Grievance", query: "How can I file a public grievance using JanSunwai 2.0?" },
+    { label: "💰 Pricing", query: "What are the pricing plans for DukaanMitra?" }
   ];
 
   useEffect(() => {
@@ -68,10 +69,10 @@ const ChatBot: React.FC<ChatBotProps> = ({ role }) => {
               {role === 'ops' ? '🧠' : '✨'}
             </div>
             <div>
-              <h3 className="font-black text-lg tracking-tight leading-none uppercase italic">System Architect</h3>
+              <h3 className="font-black text-lg tracking-tight leading-none uppercase italic">Munim AI</h3>
               <div className="flex items-center space-x-2 mt-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span className="text-[10px] font-black uppercase tracking-widest opacity-70">Manifest v{SYSTEM_MANIFEST.version}</span>
+                <span className="text-[10px] font-black uppercase tracking-widest opacity-70">Aapka Digital Munim v{SYSTEM_MANIFEST.version}</span>
               </div>
             </div>
           </div>

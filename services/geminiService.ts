@@ -16,7 +16,8 @@ DETAILED ARCHITECTURE:
 3. DATABASE: Hybrid strategy. MVP uses Google Sheets (Sheet 1: Customers, Sheet 2: Ledger, Sheet 3: Logs). Scaling phase uses Supabase (PostgreSQL).
 4. AI ENGINE: Powered by Gemini 3 Pro (Reasoning) and Gemini 2.5 Flash (Vision/Video).
 5. SERVICES: Smart Billing, Smart Recovery, Creative Studio, EOD Reports.
-6. UI DESIGN: "Munim Aesthetic" - High-fidelity slate, indigo, and emerald themes. Bharat-centric.
+6. JAN SUNWAI 2.0: A government-grade public grievance redressal system. Users can file grievances via WhatsApp or the portal. AI categorizes (Infrastructure, Sanitation, Electricity, etc.) and routes them to departments (PWD, Municipal Corp, UPPCL).
+7. UI DESIGN: "Munim Aesthetic" - High-fidelity slate, indigo, and emerald themes. Bharat-centric.
 
 Task: Answer all technical and functional questions about the system based on this manifest. If asked about version, refer to the manifest.version.
 `;

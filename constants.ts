@@ -2,9 +2,9 @@
 import { Customer, Transaction, SystemLog, SystemManifest } from './types';
 
 export const SYSTEM_MANIFEST: SystemManifest = {
-  version: "1.0.4-Stable",
-  codename: "Munim Pulse",
-  lastUpdated: "2025-12-25T10:00:00Z",
+  version: "2.0.0-JanSunwai",
+  codename: "JanSunwai 2.0",
+  lastUpdated: "2026-04-03T10:00:00Z",
   techStack: {
     frontend: ["React 19", "Tailwind CSS", "Anime.js", "Recharts", "Lucide Icons"],
     backend: ["Make.com (Workflow Orchestration)", "Gupshup (WhatsApp Business API)", "Firebase Auth"],
@@ -12,10 +12,10 @@ export const SYSTEM_MANIFEST: SystemManifest = {
     ai: ["Gemini 3 Pro (Reasoning)", "Gemini 2.5 Flash (Vision)", "Veo 3.1 (Video Gen)"]
   },
   services: [
-    { name: "Smart Ingress", description: "Natural language parsing of Hinglish messages.", protocol: "Bayesian-LLM" },
-    { name: "Smart Recovery", description: "Debt recovery via account statement generation.", protocol: "Nudge-Theory" },
-    { name: "Creative Studio", description: "AI-generated marketing posters and tutorials.", protocol: "Multimodal-Gen" },
-    { name: "EOD Auto-Summary", description: "Nightly financial reports sent via WhatsApp.", protocol: "Scheduled-Aggregator" }
+    { name: "WhatsApp Munim", description: "Natural language parsing of Hinglish messages via WhatsApp.", protocol: "Bayesian-LLM" },
+    { name: "Smart Recovery", description: "Debt recovery via automated WhatsApp account statements.", protocol: "Nudge-Theory" },
+    { name: "JanSunwai 2.0", description: "Grievance management and local governance integration.", protocol: "Public-Service-API" },
+    { name: "Creative Studio", description: "AI-generated marketing posters for Kirana stores.", protocol: "Multimodal-Gen" }
   ],
   designSystem: {
     theme: "Munim High-Fidelity",

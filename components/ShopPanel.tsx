@@ -117,7 +117,7 @@ const ShopPanel: React.FC<ShopPanelProps> = (props) => {
           <div className="space-y-1">
             <h2 className="text-5xl font-black text-slate-900 tracking-tighter italic leading-none uppercase">Command Center</h2>
             <div className="flex items-center gap-3">
-              <span className="bg-emerald-500/10 text-emerald-600 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-emerald-500/20">Munim v1.0M Active</span>
+              <span className="bg-emerald-500/10 text-emerald-600 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-emerald-500/20">Munim v2.0 Active</span>
               <span className="text-slate-400 font-bold">•</span>
               <span className="text-slate-500 font-bold uppercase text-[10px] tracking-widest italic">{qrShopName}</span>
             </div>

@@ -98,7 +98,7 @@ const DeploymentGuide: React.FC = () => {
                 <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold shrink-0">1</div>
                 <div>
                   <h4 className="font-bold text-slate-900">Sandbox Setup</h4>
-                  <p className="text-sm text-slate-500">Go to Gupshup Console > WhatsApp Dashboard > Create App. Select 'Service' as the type.</p>
+                  <p className="text-sm text-slate-500">Go to Gupshup Console &gt; WhatsApp Dashboard &gt; Create App. Select 'Service' as the type.</p>
                 </div>
               </div>
               <div className="flex items-start space-x-4">

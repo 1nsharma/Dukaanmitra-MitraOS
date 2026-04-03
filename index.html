@@ -7,7 +7,18 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="manifest" href="/manifest.json">
-    <title>DukaanMitra</title>
+    <title>DukaanMitra | Aapka Digital Munim | India #1 WhatsApp AI for Kirana Stores</title>
+    <meta name="description" content="Transform your Kirana shop with DukaanMitra—India’s first AI-powered WhatsApp Munim. No app downloads. Just message and you’re done!">
+    <meta name="keywords" content="Kirana Store, WhatsApp Munim, AI Ledger, Digital Munim, Udhaar Tracking, India Retail, JanSunwai 2.0">
+    <meta property="og:title" content="DukaanMitra | Aapka Digital Munim">
+    <meta property="og:description" content="India's first AI-powered WhatsApp Munim for Kirana stores. Manage your shop without any app.">
+    <meta property="og:image" content="https://picsum.photos/seed/dukaanmitra/1200/630">
+    <meta property="og:url" content="https://dukaanmitra.in">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DukaanMitra | Aapka Digital Munim">
+    <meta name="twitter:description" content="Manage your Kirana shop via WhatsApp with AI.">
+    <meta name="twitter:image" content="https://picsum.photos/seed/dukaanmitra/1200/630">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 <script type="importmap">
 {
@@ -36,6 +47,7 @@
     overflow: hidden;
   }
   body {
+    font-family: 'Poppins', sans-serif;
     -webkit-tap-highlight-color: transparent;
     overscroll-behavior-y: contain;
     display: flex;
@@ -58,6 +70,11 @@
     padding-bottom: env(safe-area-inset-bottom);
   }
   
+  .gradient-bg { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #06b6d4 100%); }
+  .whatsapp-float { position: fixed; bottom: 20px; right: 20px; z-index: 100; }
+  .marquee { animation: scroll 20s linear infinite; }
+  @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
   /* Advanced Multi-Device Resizer Frame */
   .device-frame {
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);

@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { View } from '../types';
 import anime from 'animejs';
+import { motion } from 'motion/react';
 
 interface LandingPageProps {
   setView: (view: View) => void;
@@ -12,7 +13,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
   const mockupRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Cast anime to any to fix timeline access error
     const tl = (anime as any).timeline({
       easing: 'easeOutExpo',
       duration: 1200
@@ -33,11 +33,67 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
     }, '-=800');
   }, []);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "DukaanMitra",
+    "operatingSystem": "Any",
+    "applicationCategory": "BusinessApplication",
+    "description": "India's first AI-powered WhatsApp Munim for Kirana stores. Manage udhaar, sales, and inventory via WhatsApp.",
+    "softwareVersion": "2.0.0-JanSunwai",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "INR"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Amit Sharma"
+    },
+    "featureList": [
+      "WhatsApp-First Interface",
+      "AI-Powered Transaction Extraction",
+      "Automated Ledger Management",
+      "Real-time Udhaar Tracking",
+      "Daily Sales Reports",
+      "Retail Intelligence Insights"
+    ]
+  };
+
+  const faqs = [
+    { q: "How do I start using DukaanMitra?", a: "Simply send 'START' to our WhatsApp number +91 63937 41171. No app download is required." },
+    { q: "Is my data safe?", a: "Yes, we use enterprise-grade encryption and secure cloud storage (Firebase) to ensure your shop's data is always protected." },
+    { q: "Does it support local languages?", a: "Currently, we support Hindi and English, with more regional languages coming soon." },
+    { q: "How does the AI work?", a: "Our Munim AI uses advanced Natural Language Processing (NLP) to understand your messages like 'Rahul 500 Chini' and automatically updates your books." },
+  ];
+
+  const features = [
+    { title: "WhatsApp-First", desc: "Manage your entire shop via WhatsApp—no app needed.", benefit: "Zero learning curve, high adoption.", icon: "📱" },
+    { title: "AI-Powered Munim", desc: "Type 'Rahul 500 Chini' and let AI extract customer, amount, and item.", benefit: "Saves time, reduces errors.", icon: "🧠" },
+    { title: "Auto Ledger", desc: "Every transaction updates Google Sheets/SQL in real time.", benefit: "Always accurate books, no manual entry.", icon: "📑" },
+    { title: "Udhaar Tracking", desc: "Instant udhaar statements for customers.", benefit: "Reduces defaults, builds trust.", icon: "📄" },
+    { title: "Daily Reports", desc: "End-of-day sales, udhaar, and inventory summaries sent via WhatsApp.", benefit: "Stay informed without effort.", icon: "📊" },
+    { title: "Retail Intel", desc: "AI-driven insights on stock trends and customer behavior.", benefit: "Make data-backed decisions.", icon: "💡" },
+  ];
+
   const dukaanFlow = [
-    { title: "Smart Ingress", desc: "Customer buys item. Shopkeeper types 'Rahul 500 Milk' in WhatsApp.", icon: "📱", color: "indigo" },
-    { title: "AI Reasoning", desc: "Munim AI (Gemini) extracts intent, amount, and items instantly.", icon: "🧠", color: "emerald" },
-    { title: "Ledger Update", desc: "Google Sheets or SQL DB updated automatically in the background.", icon: "📑", color: "blue" },
-    { title: "Auto Statement", desc: "Customer gets instant receipt. WhatsApp EOD reports sent to Owner.", icon: "📄", color: "amber" },
+    { title: "Smart Ingress", desc: "Customer buys an item. Shopkeeper types 'Rahul 500 Chini' in WhatsApp.", icon: "📱", color: "indigo", tech: "WhatsApp API + NLP", detail: "99.9% extraction accuracy for Indian names and items." },
+    { title: "AI Reasoning", desc: "Munim AI parses the message: Customer, Amount, and Item extraction.", icon: "🧠", color: "emerald", tech: "Gemini / BERT", detail: "Context-aware parsing handles slang and local dialects." },
+    { title: "Ledger Update", desc: "Transaction is logged in Google Sheets or SQL DB automatically.", icon: "📑", color: "blue", tech: "Firebase + Sheets API", detail: "Real-time sync with 0.5s latency across all devices." },
+    { title: "Auto Statement", desc: "Customer gets receipt. Shopkeeper gets EOD report with sales & udhaar.", icon: "📄", color: "amber", tech: "Automated Triggers", detail: "Reduces manual calculation time by 95% daily." },
+  ];
+
+  const testimonials = [
+    { name: "Rajesh", shop: "Kirana Store Owner, Kanpur", quote: "DukaanMitra ne mere 4 ghante ka kaam 10 minute ka kar diya. Ab WhatsApp pe hi sab ho jaata hai!", icon: "👨‍🌾" },
+    { name: "Suresh", shop: "General Store, Lucknow", quote: "Udhaar mangne mein sharam aati thi, ab Munim AI apne aap reminder bhej deta hai. Paisa time pe mil raha hai.", icon: "🏪" },
+    { name: "Meena", shop: "Dairy Booth, Delhi", quote: "Inventory management ab bahut asaan hai. WhatsApp pe hi pata chal jata hai kya khatam ho raha hai.", icon: "🥛" },
+  ];
+
+  const pricing = [
+    { name: "Free Trial", price: "₹0", features: ["50 transactions", "Basic udhaar tracking", "WhatsApp reports"], bestFor: "New shops testing the waters." },
+    { name: "Starter", price: "₹199", features: ["500 transactions", "UPI Lite", "Inventory alerts", "Hindi/English support"], bestFor: "Small kiranas." },
+    { name: "Growth", price: "₹499", features: ["Unlimited transactions", "AI insights", "Multi-language", "SMS fallback"], bestFor: "Growing businesses." },
+    { name: "Enterprise", price: "Custom", features: ["API access", "Custom integrations", "Dedicated support", "Bulk broadcasting"], bestFor: "Chains/franchises." },
   ];
 
   return (
@@ -54,6 +110,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
           <a href="#features" className="hover:text-indigo-600 transition-colors">Features</a>
           <a href="#flow" className="hover:text-indigo-600 transition-colors">How it Works</a>
           <a href="#pricing" className="hover:text-indigo-600 transition-colors">Pricing</a>
+          <a href="#founder" className="hover:text-indigo-600 transition-colors">Founder</a>
+          <button 
+            onClick={() => setView('jan_sunwai')}
+            className="text-emerald-600 font-black hover:opacity-70 transition-all"
+          >
+            Jan Sunwai
+          </button>
           <button 
             onClick={() => setView('blog_engine')}
             className="text-slate-900 border-b-2 border-indigo-600 pb-0.5 hover:opacity-70 transition-all"
@@ -71,29 +134,33 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
       </nav>
 
       {/* Hero Section */}
-      <section className="px-6 lg:px-20 py-24 lg:py-40 bg-gradient-to-br from-indigo-50/30 via-white to-emerald-50/20 relative overflow-hidden">
+      <section className="px-6 lg:px-20 py-24 lg:py-48 gradient-bg text-white relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-white rounded-full blur-[120px]"></div>
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-400 rounded-full blur-[120px]"></div>
+        </div>
         <div className="max-w-[1600px] mx-auto grid lg:grid-cols-2 gap-24 items-center relative z-10">
           <div className="space-y-12 hero-text-container" ref={heroRef}>
-            <div className="hero-text inline-flex items-center space-x-3 bg-white px-5 py-2 rounded-full border border-slate-100 shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">Aapka Digital Munim India #1</span>
+            <div className="hero-text inline-flex items-center space-x-3 bg-white/20 px-5 py-2 rounded-full border border-white/10 shadow-sm backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span className="text-[10px] font-black text-white uppercase tracking-[0.3em]">Aapka Digital Munim India #1</span>
             </div>
-            <h1 className="hero-text text-7xl lg:text-9xl font-black text-slate-900 leading-[0.85] tracking-tighter italic">
+            <h1 className="hero-text text-8xl lg:text-[10rem] font-black text-white leading-[0.8] tracking-tighter italic">
               Register Feko, <br/>
-              <span className="text-indigo-600">WhatsApp</span> <br/>
+              <span className="text-emerald-400">WhatsApp</span> <br/>
               Chalao!
             </h1>
-            <p className="hero-text text-2xl text-slate-500 leading-relaxed max-w-xl font-bold opacity-80 uppercase tracking-tight">
+            <p className="hero-text text-2xl lg:text-3xl text-white/90 leading-relaxed max-w-xl font-bold uppercase tracking-tight">
               Transform your Kirana shop with India's first AI-powered WhatsApp Munim. No app downloads. Just message "Rahul 500" and you're done.
             </p>
             <div className="hero-text flex flex-col sm:flex-row gap-6">
               <button 
                 onClick={() => setView('shop_panel')}
-                className="bg-indigo-600 text-white px-12 py-6 rounded-[2.5rem] font-black text-2xl shadow-[0_25px_60px_-15px_rgba(79,70,229,0.4)] hover:scale-105 hover:bg-indigo-700 transition-all active:scale-[0.98] italic tracking-tighter"
+                className="bg-white text-indigo-900 px-12 py-6 rounded-[2.5rem] font-black text-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] hover:scale-105 hover:bg-slate-100 transition-all active:scale-[0.98] italic tracking-tighter"
               >
                 Start Free Trial 🚀
               </button>
-              <button className="bg-white border-[3px] border-slate-100 px-12 py-6 rounded-[2.5rem] font-black text-2xl hover:bg-slate-50 transition-all shadow-xl shadow-slate-100/50 italic tracking-tighter">
+              <button className="bg-transparent border-[3px] border-white/30 px-12 py-6 rounded-[2.5rem] font-black text-2xl hover:bg-white/10 transition-all shadow-xl italic tracking-tighter">
                 Watch Demo 🎥
               </button>
             </div>
@@ -131,6 +198,38 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
         </div>
       </section>
 
+      {/* Key Features Section */}
+      <section id="features" className="py-32 px-6 lg:px-20 bg-white">
+        <div className="max-w-[1600px] mx-auto space-y-24">
+          <div className="text-center space-y-6">
+            <h2 className="text-6xl lg:text-8xl font-black italic tracking-tighter uppercase leading-none text-slate-900">🌟 Key Features</h2>
+            <p className="text-xl text-indigo-600 font-bold tracking-widest uppercase">Designed for the Bharat Retail Ecosystem</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+            {features.map((f, i) => (
+              <motion.div 
+                key={i}
+                whileHover={{ y: -10 }}
+                className="p-10 rounded-[3.5rem] bg-slate-50 border border-slate-100 shadow-xl shadow-slate-200/30 space-y-6 group hover:bg-indigo-600 transition-colors duration-500"
+              >
+                <div className="w-16 h-16 bg-white rounded-3xl flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform">
+                  {f.icon}
+                </div>
+                <div className="space-y-3">
+                  <h3 className="text-3xl font-black italic tracking-tighter uppercase text-slate-900 group-hover:text-white">{f.title}</h3>
+                  <p className="text-slate-500 font-bold leading-relaxed group-hover:text-indigo-100">{f.desc}</p>
+                  <div className="pt-4 border-t border-slate-200 group-hover:border-indigo-400">
+                    <p className="text-[10px] font-black uppercase tracking-widest text-indigo-600 group-hover:text-white mb-1">Benefit</p>
+                    <p className="text-sm font-black italic text-slate-700 group-hover:text-white">{f.benefit}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Munim Flow Section */}
       <section id="flow" className="py-32 px-6 lg:px-20 bg-slate-900 text-white overflow-hidden">
         <div className="max-w-[1600px] mx-auto space-y-24">
@@ -149,10 +248,191 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
                   </div>
                   <div className="space-y-3 px-6">
                     <h3 className="text-3xl font-black italic tracking-tighter uppercase">{step.title}</h3>
-                    <p className="text-slate-400 text-sm font-medium leading-relaxed italic">"{step.desc}"</p>
+                    <p className="text-slate-400 text-sm font-medium leading-relaxed italic mb-2">"{step.desc}"</p>
+                    <p className="text-emerald-400 text-[10px] font-black uppercase tracking-widest mb-2">{step.detail}</p>
+                    <span className="inline-block px-3 py-1 bg-white/10 rounded-full text-[9px] font-black uppercase tracking-widest text-indigo-300">
+                      {step.tech}
+                    </span>
                   </div>
                </div>
              ))}
+          </div>
+          
+          <div className="flex justify-center pt-12">
+            <div className="bg-white/5 border border-white/10 p-8 rounded-[3rem] max-w-3xl w-full text-center">
+              <p className="text-sm font-black uppercase tracking-[0.3em] text-indigo-400 mb-4">Visual Flow</p>
+              <p className="text-2xl font-black italic tracking-tight text-white">
+                Customer → WhatsApp Message → AI Parsing → Ledger Update → Auto-Receipt → EOD Report
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-32 px-6 lg:px-20 bg-white">
+        <div className="max-w-[1600px] mx-auto space-y-24">
+          <div className="text-center space-y-6">
+            <h2 className="text-6xl lg:text-8xl font-black italic tracking-tighter uppercase leading-none text-slate-900">💰 Simple Pricing</h2>
+            <p className="text-xl text-indigo-600 font-bold tracking-widest uppercase">Transparent & Scalable Plans</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {pricing.map((p, i) => (
+              <div key={i} className={`p-10 rounded-[3.5rem] border-2 flex flex-col ${p.name === 'Growth' ? 'bg-slate-900 text-white border-slate-900 scale-105 shadow-2xl z-10' : 'bg-white text-slate-900 border-slate-100 shadow-xl'}`}>
+                <div className="mb-8">
+                  <h3 className="text-2xl font-black italic tracking-tighter uppercase mb-2">{p.name}</h3>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-5xl font-black italic tracking-tighter">{p.price}</span>
+                    <span className="text-xs font-black uppercase tracking-widest opacity-60">/month</span>
+                  </div>
+                </div>
+                <div className="flex-1 space-y-4 mb-10">
+                  {p.features.map((feat, j) => (
+                    <div key={j} className="flex items-center gap-3">
+                      <span className="text-emerald-500">✔</span>
+                      <span className="text-sm font-bold opacity-80">{feat}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="space-y-6">
+                  <div className="p-4 bg-slate-100 rounded-2xl text-slate-900">
+                    <p className="text-[9px] font-black uppercase tracking-widest opacity-50 mb-1">Best For</p>
+                    <p className="text-xs font-bold italic">{p.bestFor}</p>
+                  </div>
+                  <button className={`w-full py-5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all ${p.name === 'Growth' ? 'bg-emerald-500 text-slate-900 hover:bg-emerald-400' : 'bg-slate-900 text-white hover:bg-indigo-600'}`}>
+                    Choose Plan
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="text-center text-slate-400 font-bold italic">Note: All plans include free onboarding and 24/7 WhatsApp support.</p>
+        </div>
+      </section>
+
+      {/* Why DukaanMitra & JanSunwai Section */}
+      <section className="py-32 px-6 lg:px-20 bg-indigo-600 text-white overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-white/5 skew-x-12 translate-x-1/2"></div>
+        <div className="max-w-[1600px] mx-auto grid lg:grid-cols-2 gap-24 items-center relative z-10">
+          <div className="space-y-12">
+            <h2 className="text-6xl lg:text-8xl font-black italic tracking-tighter uppercase leading-none">🚀 Why DukaanMitra?</h2>
+            <div className="space-y-8">
+              <div className="flex gap-6">
+                <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-3xl shrink-0">⏰</div>
+                <div>
+                  <h4 className="text-2xl font-black italic tracking-tighter uppercase mb-2">Save 2+ Hours Daily</h4>
+                  <p className="text-indigo-100 font-bold opacity-80">Automate your bookkeeping and focus on growing your business.</p>
+                </div>
+              </div>
+              <div className="flex gap-6">
+                <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-3xl shrink-0">📉</div>
+                <div>
+                  <h4 className="text-2xl font-black italic tracking-tighter uppercase mb-2">Reduce Defaults by 40%</h4>
+                  <p className="text-indigo-100 font-bold opacity-80">Automated WhatsApp reminders ensure timely udhaar recovery.</p>
+                </div>
+              </div>
+              <div className="flex gap-6">
+                <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-3xl shrink-0">🧠</div>
+                <div>
+                  <h4 className="text-2xl font-black italic tracking-tighter uppercase mb-2">AI-Powered Insights</h4>
+                  <p className="text-indigo-100 font-bold opacity-80">Get retail intelligence to make data-backed stock decisions.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="bg-white/10 backdrop-blur-xl p-12 rounded-[4rem] border border-white/20 space-y-8">
+            <div className="inline-flex items-center space-x-3 bg-white text-indigo-600 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em]">
+              JanSunwai 2.0 Alignment
+            </div>
+            <h3 className="text-4xl font-black italic tracking-tighter uppercase">Beyond Retail: Grievance Redressal</h3>
+            <p className="text-xl font-bold italic text-indigo-50 leading-relaxed">
+              DukaanMitra's core architecture powers JanSunwai 2.0. The same WhatsApp-first, multi-tenant system helps citizens submit grievances that AI categorizes and routes to officials in real-time.
+            </p>
+            <ul className="space-y-4 text-sm font-black uppercase tracking-widest text-indigo-200 mb-8">
+              <li className="flex items-center gap-3"><span>➔</span> AI-Driven Categorization</li>
+              <li className="flex items-center gap-3"><span>➔</span> Real-time Official Dashboards</li>
+              <li className="flex items-center gap-3"><span>➔</span> Automated Status Updates</li>
+            </ul>
+            <button 
+              onClick={() => setView('jan_sunwai')}
+              className="w-full py-6 bg-emerald-500 text-slate-900 rounded-[2rem] font-black text-sm uppercase tracking-widest hover:bg-emerald-400 transition-all shadow-xl shadow-emerald-900/20"
+            >
+              Explore JanSunwai Portal ➔
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonial Section */}
+      <section className="py-32 px-6 lg:px-20 bg-slate-50">
+        <div className="max-w-[1600px] mx-auto space-y-24">
+          <div className="text-center space-y-6">
+            <h2 className="text-6xl lg:text-7xl font-black italic tracking-tighter uppercase leading-none text-slate-900">🗣️ Shopkeeper Stories</h2>
+            <p className="text-xl text-indigo-600 font-bold tracking-widest uppercase">Trusted by 10,000+ Kirana Stores</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-12">
+            {testimonials.map((t, i) => (
+              <div key={i} className="bg-white p-12 rounded-[4rem] shadow-xl shadow-slate-200/50 border border-white space-y-8 relative group hover:scale-105 transition-all duration-500">
+                <div className="text-6xl text-indigo-100 absolute top-8 left-8 opacity-50 group-hover:opacity-100 transition-opacity">“</div>
+                <p className="text-2xl font-black italic tracking-tight text-slate-900 leading-tight relative z-10 pt-8">
+                  {t.quote}
+                </p>
+                <div className="flex items-center gap-4 pt-8 border-t border-slate-100">
+                  <div className="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center text-2xl">
+                    {t.icon}
+                  </div>
+                  <div>
+                    <p className="text-lg font-black italic tracking-tight text-slate-900">{t.name}</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">{t.shop}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Founder Section */}
+      <section id="founder" className="py-32 px-6 lg:px-20 bg-white">
+        <div className="max-w-[1600px] mx-auto grid lg:grid-cols-2 gap-24 items-center">
+          <div className="relative">
+            <div className="w-full aspect-video bg-slate-900 rounded-[4rem] flex items-center justify-center shadow-2xl border-8 border-white rotate-3 overflow-hidden group">
+              <div className="text-center space-y-6 p-12">
+                <div className="w-24 h-24 bg-indigo-600 rounded-full mx-auto flex items-center justify-center text-4xl shadow-xl group-hover:scale-110 transition-transform">
+                  ✍️
+                </div>
+                <h3 className="text-3xl font-black italic text-white tracking-tighter uppercase">A Message from the Founder</h3>
+                <div className="w-20 h-1 bg-emerald-500 mx-auto"></div>
+              </div>
+            </div>
+            <div className="absolute -bottom-10 -right-10 bg-indigo-600 text-white p-10 rounded-[3rem] shadow-2xl -rotate-3">
+              <p className="text-4xl font-black italic tracking-tighter">Amit Sharma</p>
+              <p className="text-sm font-black uppercase tracking-widest opacity-70">Founder, DukaanMitra</p>
+            </div>
+          </div>
+          <div className="space-y-10">
+            <div className="inline-flex items-center space-x-3 bg-indigo-100 text-indigo-700 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em]">
+              Meet the Visionary
+            </div>
+            <h2 className="text-6xl lg:text-8xl font-black text-slate-900 tracking-tighter italic leading-none">Empowering Bharat's Retailers</h2>
+            <p className="text-2xl text-slate-500 font-bold italic leading-relaxed">
+              "My mission is to bring the power of AI to every Kirana store in India. No complex apps, just the simplicity of WhatsApp to manage your business with intelligence."
+            </p>
+            <div className="grid grid-cols-2 gap-8">
+              <div className="space-y-2">
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Contact</p>
+                <p className="text-xl font-black italic text-slate-900">+91 63937 41171</p>
+              </div>
+              <div className="space-y-2">
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Email</p>
+                <p className="text-xl font-black italic text-slate-900">amit@dukaanmitra.in</p>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <a href="https://linkedin.com/in/amitsharma" className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all">in</a>
+              <a href="https://twitter.com/amitsharma" className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all">𝕏</a>
+            </div>
           </div>
         </div>
       </section>
@@ -197,17 +477,76 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="py-32 px-6 lg:px-20 bg-white">
+        <div className="max-w-4xl mx-auto space-y-20">
+          <div className="text-center space-y-6">
+            <h2 className="text-6xl lg:text-7xl font-black italic tracking-tighter uppercase leading-none text-slate-900">🤔 Common Questions</h2>
+            <p className="text-xl text-indigo-600 font-bold tracking-widest uppercase">Everything you need to know</p>
+          </div>
+          <div className="space-y-8">
+            {faqs.map((faq, i) => (
+              <div key={i} className="p-8 rounded-[2.5rem] bg-slate-50 border border-slate-100 space-y-4">
+                <h4 className="text-2xl font-black italic tracking-tighter text-slate-900 uppercase">Q: {faq.q}</h4>
+                <p className="text-slate-600 font-bold leading-relaxed italic">A: {faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section id="contact" className="py-32 px-6 lg:px-20 bg-slate-900 text-white rounded-[6rem] mx-4 lg:mx-10 my-20 relative overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)]">
         <div className="max-w-5xl mx-auto text-center space-y-16 relative z-10">
-          <h2 className="text-7xl lg:text-9xl font-black italic tracking-tighter leading-none">Ready to digitize your dhanda?</h2>
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8">
+          <div className="space-y-6">
+            <h2 className="text-7xl lg:text-9xl font-black italic tracking-tighter leading-none">Ready to digitize your dhanda?</h2>
+            <p className="text-2xl font-bold italic text-indigo-400">Aapka Kirana, Ab Digital. Bas WhatsApp Chalana Hai!</p>
+          </div>
+          <div className="flex flex-col items-center justify-center gap-12">
+            <div className="grid sm:grid-cols-2 gap-8 w-full max-w-3xl">
+              <div className="bg-white/5 p-8 rounded-[3rem] border border-white/10 space-y-4">
+                <p className="text-[10px] font-black uppercase tracking-widest text-emerald-400">Step 1</p>
+                <h4 className="text-2xl font-black italic tracking-tighter uppercase">Start Free Trial</h4>
+                <p className="text-sm font-bold opacity-60">Just WhatsApp "START" to +91 63937 41171</p>
+              </div>
+              <div className="bg-white/5 p-8 rounded-[3rem] border border-white/10 space-y-4">
+                <p className="text-[10px] font-black uppercase tracking-widest text-indigo-400">Step 2</p>
+                <h4 className="text-2xl font-black italic tracking-tighter uppercase">Watch Demo</h4>
+                <p className="text-sm font-bold opacity-60">See Munim in Action (2-minute video)</p>
+              </div>
+            </div>
             <button className="w-full md:w-auto px-16 py-8 bg-emerald-500 text-slate-900 rounded-[3rem] font-black text-3xl hover:bg-emerald-400 transition-all shadow-2xl active:scale-95 italic tracking-tighter">
-              Call Us: +91 9876543210
+              Call Us: +91 63937 41171
             </button>
           </div>
         </div>
       </section>
+
+      {/* Footer Marquee */}
+      <footer className="bg-slate-900 text-white py-10 overflow-hidden">
+        <div className="marquee whitespace-nowrap text-4xl font-black italic tracking-widest uppercase opacity-20">
+          DukaanMitra • Aapka Digital Munim • JanSunwai 2.0 • AI-Powered WhatsApp Munim • No App Downloads • Just WhatsApp • DukaanMitra • Aapka Digital Munim • JanSunwai 2.0 • AI-Powered WhatsApp Munim • No App Downloads • Just WhatsApp
+        </div>
+        <div className="mt-10 text-center text-xs font-black uppercase tracking-widest opacity-40">
+          © 2024 DukaanMitra. All Rights Reserved. Aligned with JanSunwai 2.0 Initiative.
+        </div>
+      </footer>
+
+      {/* WhatsApp Floating Button */}
+      <a 
+        href="https://wa.me/916393741171?text=START" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="whatsapp-float bg-emerald-500 text-white w-20 h-20 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all active:scale-95 group"
+      >
+        <span className="text-4xl group-hover:rotate-12 transition-transform">📱</span>
+        <div className="absolute -top-12 right-0 bg-white text-slate-900 px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+          Chat with Munim AI
+        </div>
+      </a>
+      <script type="application/ld+json">
+        {JSON.stringify(jsonLd)}
+      </script>
     </div>
   );
 };

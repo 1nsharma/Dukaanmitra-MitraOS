@@ -26,6 +26,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeView, setView, isPremiu
     { id: 'ai_tools', label: 'AI HUB', icon: '✨', premium: true },
     { id: 'blog_engine', label: 'MARKET NEWS', icon: '📰' },
     { id: 'training', label: 'TUTORIALS', icon: '🎓' },
+    { id: 'jan_sunwai', label: 'JAN SUNWAI', icon: '🏛️' },
   ];
 
   // OPS NAV
@@ -37,6 +38,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeView, setView, isPremiu
     { id: 'transactions', label: 'GLOBAL LEDGER', icon: '📁' },
     { id: 'logs', label: 'AUDIT LOGS', icon: '💾' },
     { id: 'architecture', label: 'BRIDGE', icon: '🏗️' },
+    { id: 'jan_sunwai', label: 'PUBLIC GRIEVANCE', icon: '🏛️' },
   ];
 
   const handleLogout = async () => {
