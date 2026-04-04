@@ -93,9 +93,9 @@ export default function App() {
       ) : view === 'terms' ? (
         <TermsOfService onBack={() => setView('landing')} />
       ) : (
-        <div className="flex h-screen overflow-hidden">
+        <div className="flex min-h-screen">
           {/* Sidebar */}
-          <aside className="w-72 bg-slate-900 text-white flex flex-col shrink-0 border-r border-white/5">
+          <aside className="w-72 bg-slate-900 text-white flex flex-col shrink-0 border-r border-white/5 sticky top-0 h-screen">
             <div className="p-10 border-b border-white/10">
               <h1 className="text-3xl font-black tracking-tighter italic text-white group cursor-pointer" onClick={() => setView('landing')}>
                 DukaanMitra
@@ -169,7 +169,7 @@ export default function App() {
           </aside>
 
           {/* Main Content */}
-          <main className="flex-1 overflow-y-auto bg-slate-50 relative">
+          <main className="flex-1 bg-slate-50 relative min-h-screen">
             <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-indigo-50/50 to-transparent pointer-events-none" />
             <div className="relative z-10">
               {view === 'store_dashboard' && role?.storeId && <StoreDashboard storeId={role.storeId} />}
