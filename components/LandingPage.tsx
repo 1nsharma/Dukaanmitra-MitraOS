@@ -1,8 +1,10 @@
-import React from 'react';
-import { ArrowRight, CheckCircle2, MessageSquare, TrendingUp, ShieldCheck, Zap, Smartphone, Users } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowRight, CheckCircle2, MessageSquare, TrendingUp, ShieldCheck, Zap, Smartphone, Users, Menu, X } from 'lucide-react';
 import { cn } from '../lib/utils';
 
-export const LandingPage: React.FC<{ onStart: () => void }> = ({ onStart }) => {
+export const LandingPage: React.FC<{ onStart: () => void, onNavigate: (view: 'privacy' | 'terms') => void, isLoggedIn?: boolean }> = ({ onStart, onNavigate, isLoggedIn }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-white font-sans selection:bg-indigo-100 selection:text-indigo-600">
       {/* Navigation */}
@@ -19,13 +21,37 @@ export const LandingPage: React.FC<{ onStart: () => void }> = ({ onStart }) => {
             <a href="#how-it-works" className="hover:text-indigo-600 transition-colors">How it Works</a>
             <a href="#pricing" className="hover:text-indigo-600 transition-colors">Pricing</a>
           </div>
-          <button 
-            onClick={onStart}
-            className="px-6 py-3 bg-indigo-600 text-white rounded-full text-sm font-black uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-95"
-          >
-            Get Started
-          </button>
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={onStart}
+              className="hidden md:block px-6 py-3 bg-indigo-600 text-white rounded-full text-sm font-black uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-95"
+            >
+              {isLoggedIn ? 'Go to Dashboard' : 'Login with Google'}
+            </button>
+            <button 
+              className="md:hidden p-2 text-gray-600"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden absolute top-20 left-0 right-0 bg-white border-b border-gray-100 p-6 flex flex-col gap-4 shadow-xl">
+            <a href="#features" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-black uppercase tracking-widest text-gray-600">Features</a>
+            <a href="#how-it-works" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-black uppercase tracking-widest text-gray-600">How it Works</a>
+            <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-black uppercase tracking-widest text-gray-600">Pricing</a>
+            <button 
+              onClick={() => { setIsMobileMenuOpen(false); onStart(); }}
+              className="w-full px-6 py-3 bg-indigo-600 text-white rounded-full text-sm font-black uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 active:scale-95 mt-2"
+            >
+              {isLoggedIn ? 'Go to Dashboard' : 'Login with Google'}
+            </button>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
@@ -47,19 +73,19 @@ export const LandingPage: React.FC<{ onStart: () => void }> = ({ onStart }) => {
                 onClick={onStart}
                 className="px-10 py-5 bg-indigo-600 text-white rounded-2xl text-lg font-black uppercase tracking-widest hover:bg-indigo-700 transition-all shadow-2xl shadow-indigo-200 flex items-center justify-center gap-3 active:scale-95"
               >
-                Launch Your Digital Shop
+                {isLoggedIn ? 'Go to Dashboard' : 'Login with Google'}
                 <ArrowRight size={24} />
               </button>
               <div className="flex items-center gap-4 px-6 py-4 bg-gray-50 rounded-2xl border border-gray-100">
                 <div className="flex -space-x-3">
-                  {[1, 2, 3].map(i => (
-                    <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-gray-200 overflow-hidden">
-                      <img src={`https://picsum.photos/seed/${i + 10}/100/100`} alt="user" referrerPolicy="no-referrer" />
+                  {['R', 'S', 'A'].map((initial, i) => (
+                    <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-sm">
+                      {initial}
                     </div>
                   ))}
                 </div>
                 <div className="text-xs font-black text-gray-400 uppercase tracking-widest">
-                  Trusted by <span className="text-gray-900">1,200+</span> Kirana Stores
+                  Join our growing <span className="text-gray-900">Community</span>
                 </div>
               </div>
             </div>
@@ -68,7 +94,7 @@ export const LandingPage: React.FC<{ onStart: () => void }> = ({ onStart }) => {
           <div className="relative">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-indigo-50 rounded-full blur-3xl opacity-50" />
             <div className="relative bg-white p-4 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] border border-gray-100 transform rotate-3 hover:rotate-0 transition-transform duration-700">
-              <div className="bg-[#e5ddd5] rounded-[2.5rem] overflow-hidden border border-gray-200 h-[600px] flex flex-col">
+              <div className="bg-[#e5ddd5] rounded-[2.5rem] overflow-hidden border border-gray-200 h-[500px] sm:h-[600px] max-h-[80vh] flex flex-col">
                 <div className="bg-[#075e54] p-6 flex items-center gap-4 text-white">
                   <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl backdrop-blur-md">🤖</div>
                   <div>
@@ -190,6 +216,43 @@ export const LandingPage: React.FC<{ onStart: () => void }> = ({ onStart }) => {
         </div>
       </section>
 
+      {/* Pricing Section */}
+      <section id="pricing" className="py-32 px-6 bg-white">
+        <div className="max-w-7xl mx-auto space-y-20">
+          <div className="text-center space-y-6 max-w-3xl mx-auto">
+            <h2 className="text-5xl lg:text-7xl font-black text-gray-900 tracking-tighter italic uppercase">
+              Simple <span className="text-indigo-600">Pricing.</span>
+            </h2>
+            <p className="text-xl text-gray-500 font-medium">
+              Start for free, upgrade when you need more power.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="bg-gray-50 p-10 rounded-[3rem] border border-gray-100 space-y-6">
+              <h3 className="text-2xl font-black text-gray-900 tracking-tight italic uppercase">Starter</h3>
+              <div className="text-4xl font-black text-indigo-600">Free</div>
+              <ul className="space-y-4 text-gray-500 font-medium">
+                <li className="flex items-center gap-3"><CheckCircle2 className="text-emerald-500" size={20} /> Up to 50 customers</li>
+                <li className="flex items-center gap-3"><CheckCircle2 className="text-emerald-500" size={20} /> Basic WhatsApp logging</li>
+                <li className="flex items-center gap-3"><CheckCircle2 className="text-emerald-500" size={20} /> Daily summaries</li>
+              </ul>
+              <button onClick={onStart} className="w-full py-4 bg-white text-indigo-600 border border-indigo-100 rounded-2xl font-black uppercase tracking-widest hover:bg-indigo-50 transition-colors">Start Free</button>
+            </div>
+            <div className="bg-slate-900 p-10 rounded-[3rem] border border-slate-800 space-y-6 text-white shadow-2xl shadow-indigo-900/20 relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-indigo-600 text-xs font-black uppercase tracking-widest py-2 px-6 rounded-bl-2xl">Popular</div>
+              <h3 className="text-2xl font-black tracking-tight italic uppercase">Pro</h3>
+              <div className="text-4xl font-black text-indigo-400">₹499<span className="text-lg text-slate-500">/mo</span></div>
+              <ul className="space-y-4 text-slate-300 font-medium">
+                <li className="flex items-center gap-3"><CheckCircle2 className="text-emerald-400" size={20} /> Unlimited customers</li>
+                <li className="flex items-center gap-3"><CheckCircle2 className="text-emerald-400" size={20} /> Auto-reminders</li>
+                <li className="flex items-center gap-3"><CheckCircle2 className="text-emerald-400" size={20} /> Advanced analytics</li>
+              </ul>
+              <button onClick={onStart} className="w-full py-4 bg-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-indigo-700 transition-colors">Upgrade to Pro</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="py-20 px-6 bg-slate-900 text-white">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
@@ -200,12 +263,12 @@ export const LandingPage: React.FC<{ onStart: () => void }> = ({ onStart }) => {
             <span className="text-2xl font-black tracking-tighter italic">DukaanMitra</span>
           </div>
           <div className="flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-white transition-colors">Contact Us</a>
+            <button onClick={() => onNavigate('privacy')} className="hover:text-white transition-colors">Privacy Policy</button>
+            <button onClick={() => onNavigate('terms')} className="hover:text-white transition-colors">Terms of Service</button>
+            <a href="mailto:support@dukaanmitra.com" className="hover:text-white transition-colors">Contact Us</a>
           </div>
           <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
-            © 2024 DukaanMitra. All Rights Reserved.
+            © {new Date().getFullYear()} DukaanMitra. All Rights Reserved.
           </div>
         </div>
       </footer>

@@ -1,16 +1,26 @@
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
+import { validateEnv } from './lib/env';
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
+    
+    // Validate environment variables at build/dev startup
+    try {
+      validateEnv(env);
+    } catch (error) {
+      console.warn('⚠️ Environment validation failed. Some features may not work.');
+    }
+
     return {
-      base: '/Dukaanmitra-MitraOS/',
+      base: '/',
       server: {
         port: 3000,
         host: '0.0.0.0',
       },
-      plugins: [react()],
+      plugins: [react(), tailwindcss()],
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
         'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)

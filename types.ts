@@ -150,6 +150,8 @@ export type DeviceType = 'mobile' | 'tablet' | 'desktop';
 
 export type View = 
   | 'landing' 
+  | 'privacy'
+  | 'terms'
   | 'superadmin' 
   | 'shop_panel' 
   | 'dashboard' 

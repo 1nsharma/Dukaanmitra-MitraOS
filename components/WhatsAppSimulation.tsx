@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, User, Bot, Check, Clock, AlertCircle } from 'lucide-react';
 import { parseWhatsAppMessage, ParsedTransaction } from '../services/geminiService';
-import { db, auth } from '../firebase';
-import { collection, addDoc, serverTimestamp, doc, updateDoc, increment, getDocs, query, where } from 'firebase/firestore';
+import { logTransaction } from '../services/storeService';
 import { cn } from '../lib/utils';
 
 interface Message {
@@ -56,7 +55,7 @@ export const WhatsAppSimulation: React.FC<{ storeId: string }> = ({ storeId }) =
     if (parsed) {
       // Log to Firestore
       try {
-        await logTransaction(parsed);
+        await logTransaction(storeId, parsed);
         
         const botMessage: Message = {
           id: (Date.now() + 1).toString(),
@@ -90,53 +89,10 @@ export const WhatsAppSimulation: React.FC<{ storeId: string }> = ({ storeId }) =
     }
   };
 
-  const logTransaction = async (parsed: ParsedTransaction) => {
-    const storeRef = doc(db, 'stores', storeId);
-    const transactionsRef = collection(storeRef, 'transactions');
-    const customersRef = collection(storeRef, 'customers');
 
-    let customerId = '';
-    if (parsed.customerName) {
-      // Find or create customer
-      const q = query(customersRef, where('name', '==', parsed.customerName));
-      const querySnapshot = await getDocs(q);
-      
-      if (!querySnapshot.empty) {
-        customerId = querySnapshot.docs[0].id;
-        const customerRef = doc(customersRef, customerId);
-        await updateDoc(customerRef, {
-          balance: increment(parsed.type === 'udhaar' ? parsed.amount : parsed.type === 'payment' ? -parsed.amount : 0),
-          lastTransactionAt: serverTimestamp()
-        });
-      } else {
-        const newCustomer = await addDoc(customersRef, {
-          storeId,
-          name: parsed.customerName,
-          balance: parsed.type === 'udhaar' ? parsed.amount : parsed.type === 'payment' ? -parsed.amount : 0,
-          lastTransactionAt: serverTimestamp()
-        });
-        customerId = newCustomer.id;
-      }
-    }
-
-    await addDoc(transactionsRef, {
-      storeId,
-      customerId,
-      type: parsed.type,
-      amount: parsed.amount,
-      description: parsed.description || '',
-      timestamp: serverTimestamp()
-    });
-
-    // Update store totals
-    await updateDoc(storeRef, {
-      totalSales: increment(parsed.type === 'sale' ? parsed.amount : 0),
-      totalUdhaar: increment(parsed.type === 'udhaar' ? parsed.amount : parsed.type === 'payment' ? -parsed.amount : 0)
-    });
-  };
 
   return (
-    <div className="flex flex-col h-[600px] w-full max-w-md mx-auto bg-[#e5ddd5] rounded-xl overflow-hidden shadow-2xl border border-gray-300">
+    <div className="flex flex-col h-[500px] sm:h-[600px] max-h-[80vh] w-full max-w-md mx-auto bg-[#e5ddd5] rounded-xl overflow-hidden shadow-2xl border border-gray-300">
       {/* Header */}
       <div className="bg-[#075e54] p-4 flex items-center gap-3 text-white">
         <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-[#075e54]">

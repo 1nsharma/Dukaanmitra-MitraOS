@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { auth, db } from './firebase';
-import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
+import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut, User } from 'firebase/auth';
 import { doc, getDoc, setDoc, collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { LandingPage } from './components/LandingPage';
+import { PrivacyPolicy } from './components/PrivacyPolicy';
+import { TermsOfService } from './components/TermsOfService';
 import { StoreDashboard } from './components/StoreDashboard';
 import { AdminDashboard } from './components/AdminDashboard';
 import { WhatsAppSimulation } from './components/WhatsAppSimulation';
@@ -12,7 +14,7 @@ import { cn } from './lib/utils';
 
 export default function App() {
   const [view, setView] = useState<View>('landing');
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [role, setRole] = useState<UserRole | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -81,7 +83,15 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-50 font-sans">
       {view === 'landing' ? (
-        <LandingPage onStart={handleLogin} />
+        <LandingPage 
+          onStart={user ? () => setView(role?.role === 'superadmin' ? 'admin_dashboard' : 'store_dashboard') : handleLogin} 
+          onNavigate={setView} 
+          isLoggedIn={!!user}
+        />
+      ) : view === 'privacy' ? (
+        <PrivacyPolicy onBack={() => setView('landing')} />
+      ) : view === 'terms' ? (
+        <TermsOfService onBack={() => setView('landing')} />
       ) : (
         <div className="flex h-screen overflow-hidden">
           {/* Sidebar */}
