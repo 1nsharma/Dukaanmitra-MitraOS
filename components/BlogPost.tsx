@@ -61,6 +61,61 @@ const blogPosts = {
       "datePublished": "2026-04-10",
       "image": "https://dukaanmitra.in/blog/kirana-tools-og.jpg"
     }
+  },
+  "recover-udhaar-faster-ai": {
+    title: "How to Recover Udhaar 40% Faster with AI Reminders",
+    description: "Learn how automated WhatsApp reminders can help you recover udhaar without the awkwardness.",
+    date: "April 12, 2026",
+    author: "Amit Sharma",
+    tag: "Finance",
+    content: `
+      <p>Udhaar is the backbone of Indian retail, but it's also the biggest headache for shop owners. Chasing customers for payments can be awkward and time-consuming. Here's how AI is changing the game.</p>
+      <h2>The Problem with Manual Reminders</h2>
+      <p>When you manually call a customer for udhaar, it can strain the relationship. Often, customers genuinely forget, but a phone call feels like a confrontation.</p>
+      <h2>The AI Solution</h2>
+      <p>DukaanMitra's AI Munim sends polite, automated WhatsApp reminders. These messages are professional and include a clear breakdown of the pending amount and a quick payment link.</p>
+      <h2>Why it Works</h2>
+      <ul>
+        <li><strong>Consistency:</strong> AI never forgets to send a reminder.</li>
+        <li><strong>Professionalism:</strong> Automated messages feel less personal and more like a standard business process.</li>
+        <li><strong>Convenience:</strong> Including a UPI link makes it easy for customers to pay instantly.</li>
+      </ul>
+      <p>Our data shows that shops using AI reminders recover their payments 40% faster than those using manual methods.</p>
+    `,
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "How to Recover Udhaar 40% Faster with AI Reminders",
+      "datePublished": "2026-04-12",
+      "author": { "@type": "Person", "name": "Amit Sharma" }
+    }
+  },
+  "ai-marketing-tips-small-shop": {
+    title: "5 AI Marketing Tips for Small Shop Owners",
+    description: "Grow your customer base using simple AI-driven marketing strategies.",
+    date: "April 15, 2026",
+    author: "Amit Sharma",
+    tag: "Marketing",
+    content: `
+      <p>Marketing isn't just for big brands. With AI, even a small kirana store can run effective campaigns. Here are 5 tips to get started.</p>
+      <h2>1. Personalized WhatsApp Status</h2>
+      <p>Use AI to generate personalized offers based on what your customers buy most. If a customer buys milk every day, send them an offer on bread or eggs.</p>
+      <h2>2. AI-Generated Posters</h2>
+      <p>You don't need a designer. Tools like DukaanMitra can generate professional-looking posters for your shop's offers in seconds.</p>
+      <h2>3. Smart Customer Segmentation</h2>
+      <p>AI can group your customers into categories like "Regulars", "Occasional", and "At Risk". Target each group with different messages.</p>
+      <h2>4. Automated Festival Greetings</h2>
+      <p>Stay top-of-mind by sending automated, personalized greetings during festivals like Diwali or Eid, along with a special discount code.</p>
+      <h2>5. Feedback Loops</h2>
+      <p>Use AI to ask for feedback after a purchase. Positive reviews can be shared on your Google My Business profile to attract new customers.</p>
+    `,
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "5 AI Marketing Tips for Small Shop Owners",
+      "datePublished": "2026-04-15",
+      "author": { "@type": "Person", "name": "Amit Sharma" }
+    }
   }
 };
 

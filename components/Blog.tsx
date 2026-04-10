@@ -25,6 +25,20 @@ const Blog: React.FC = () => {
       excerpt: "A step-by-step guide to tracking your daily sales without complex software.",
       date: "April 5, 2026",
       tag: "Management"
+    },
+    {
+      title: "How to Recover Udhaar 40% Faster with AI Reminders",
+      slug: "recover-udhaar-faster-ai",
+      excerpt: "Tired of chasing customers for payments? Learn how automated WhatsApp reminders can help you recover udhaar without the awkwardness.",
+      date: "April 12, 2026",
+      tag: "Finance"
+    },
+    {
+      title: "5 AI Marketing Tips for Small Shop Owners",
+      slug: "ai-marketing-tips-small-shop",
+      excerpt: "Grow your customer base using simple AI-driven marketing strategies that work for local Indian dukaans.",
+      date: "April 15, 2026",
+      tag: "Marketing"
     }
   ];
 

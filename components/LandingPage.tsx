@@ -494,6 +494,69 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, isLoggedIn }) => {
         </div>
       </section>
 
+      {/* Detailed SEO Content Section */}
+      <section className="py-32 px-6 lg:px-20 bg-slate-50">
+        <div className="max-w-4xl mx-auto space-y-16">
+          <div className="space-y-8">
+            <h2 className="text-4xl md:text-6xl font-black italic tracking-tighter uppercase text-slate-900 leading-tight">
+              DukaanMitra – AI-Powered Shop Management for Indian Retailers
+            </h2>
+            <div className="prose prose-lg text-slate-600 font-bold italic leading-relaxed space-y-6">
+              <p>
+                In the rapidly evolving landscape of Indian retail, managing a traditional kirana store or a small business requires more than just a bahi-khata. 
+                <strong> DukaanMitra</strong> is designed to be your ultimate <strong>AI shop management tool</strong>, specifically built for the unique needs of 
+                Indian दुकानदार. Whether you are in a bustling metro or a Tier 2 city like Lucknow or Kanpur, our platform empowers you to 
+                <strong> automate dukaan tasks</strong> and transition into the digital age without the complexity of traditional ERP systems.
+              </p>
+              <p>
+                Why is DukaanMitra considered the <strong>best dukaan management app</strong>? It's because we understand that your time is valuable. 
+                Instead of spending hours on manual entries, our <strong>AI-powered WhatsApp Munim</strong> allows you to log sales, track inventory, 
+                and manage udhaar by simply sending a message. This <strong>retail management software in India</strong> is not just an app; 
+                it's a comprehensive <strong>CRM for Indian retailers</strong> that lives where you already are—on WhatsApp.
+              </p>
+              <h3 className="text-2xl font-black italic text-slate-900 uppercase">How to Manage Small Shop Digitally with AI</h3>
+              <p>
+                Many shop owners ask, <em>"Dukaan ka hisaab kaise rakhe app?"</em> The answer lies in simplicity and intelligence. 
+                DukaanMitra uses advanced Natural Language Processing (NLP) to understand your business language. When you type 
+                "Rahul 500 Chini", our AI automatically identifies the customer (Rahul), the amount (₹500), and the item (Sugar/Chini). 
+                It then updates your digital ledger in real-time, providing you with an accurate <strong>inventory management app in India</strong> 
+                experience without the data entry fatigue.
+              </p>
+              <p>
+                Our <strong>small business automation in India</strong> initiative aims to bridge the digital divide. By providing 
+                <strong>kirana store software</strong> that requires zero training, we ensure that every merchant can benefit from 
+                <strong>AI retail analytics</strong>. You get daily reports on your sales, pending udhaar, and stock alerts, 
+                helping you make data-backed decisions to grow your business.
+              </p>
+              <h3 className="text-2xl font-black italic text-slate-900 uppercase">The Future of Kirana Store Software</h3>
+              <p>
+                The future of retail is smart, connected, and automated. DukaanMitra is leading this change by offering 
+                <strong>affordable kirana software</strong> that scales with your business. From automated udhaar reminders 
+                that help you recover payments 40% faster to AI-driven marketing tools that help you engage with your local 
+                customers, we provide everything you need to thrive in a competitive market.
+              </p>
+              <p>
+                Stop struggling with manual calculations and lost records. Join the thousands of smart merchants who have 
+                chosen DukaanMitra as their trusted <strong>retail management software</strong>. Start your journey today 
+                and see how easy it is to <strong>manage your shop digitally</strong>. Bas WhatsApp chalana hai, baaki kaam 
+                Munim AI sambhal lega!
+              </p>
+            </div>
+          </div>
+          
+          <div className="grid sm:grid-cols-2 gap-8 pt-12">
+            <div className="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-xl space-y-4">
+              <h4 className="text-xl font-black italic text-indigo-600 uppercase">AI CRM for Retail</h4>
+              <p className="text-sm font-bold text-slate-500 italic">Manage customer relationships and loyalty automatically via WhatsApp interactions.</p>
+            </div>
+            <div className="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-xl space-y-4">
+              <h4 className="text-xl font-black italic text-indigo-600 uppercase">Smart Inventory</h4>
+              <p className="text-sm font-bold text-slate-500 italic">Real-time stock tracking and low-inventory alerts sent directly to your phone.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ Section */}
       <section className="py-32 px-6 lg:px-20 bg-white">
         <div className="max-w-4xl mx-auto space-y-20">
