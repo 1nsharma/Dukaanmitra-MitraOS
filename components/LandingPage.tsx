@@ -86,6 +86,51 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, isLoggedIn }) => {
     ]
   };
 
+  const howToSchema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to manage your kirana store with DukaanMitra",
+    "description": "A simple 3-step guide to digitizing your shop using WhatsApp.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "Send START to WhatsApp",
+        "text": "Message 'START' to +91 63937 41171 to activate your digital Munim.",
+        "url": "https://dukaanmitra.in/#start"
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Log your first transaction",
+        "text": "Type a simple message like 'Rahul 500 Sugar' to record a sale or udhaar.",
+        "url": "https://dukaanmitra.in/#log"
+      },
+      {
+        "@type": "HowToStep",
+        "name": "View your EOD report",
+        "text": "Receive an automated summary of your daily sales and pending udhaar every evening.",
+        "url": "https://dukaanmitra.in/#report"
+      }
+    ]
+  };
+
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "DukaanMitra AI Munim",
+    "image": "https://dukaanmitra.in/logo.png",
+    "description": "AI-powered WhatsApp assistant for Indian kirana stores.",
+    "brand": {
+      "@type": "Brand",
+      "name": "DukaanMitra"
+    },
+    "offers": {
+      "@type": "AggregateOffer",
+      "lowPrice": "0",
+      "highPrice": "499",
+      "priceCurrency": "INR"
+    }
+  };
+
   const faqs = [
     { q: "How do I start using DukaanMitra?", a: "Simply send 'START' to our WhatsApp number +91 63937 41171. No app download is required." },
     { q: "Is my data safe?", a: "Yes, we use enterprise-grade encryption and secure cloud storage (Firebase) to ensure your shop's data is always protected." },
@@ -130,6 +175,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, isLoggedIn }) => {
         <meta name="keywords" content="dukaan management app, retail management software india, kirana store software, small business automation india, inventory management app india, how to manage small shop digitally" />
         <script type="application/ld+json">{JSON.stringify(softwareSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(howToSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(productSchema)}</script>
       </Helmet>
 
       {/* Navbar */}

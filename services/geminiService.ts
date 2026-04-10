@@ -157,7 +157,7 @@ export const generateDailyBlogs = async (): Promise<BlogPost[]> => {
   try {
     const response = await ai.models.generateContent({ 
       model: "gemini-3-flash-preview", 
-      contents: "Generate 3 retail insight blogs. JSON.", 
+      contents: "Generate 3 retail insight blogs for Indian kirana stores. JSON.", 
       config: { 
         responseMimeType: "application/json",
         responseSchema: { type: Type.ARRAY, items: { type: Type.OBJECT, properties: { id: { type: Type.STRING }, title: { type: Type.STRING }, excerpt: { type: Type.STRING }, content: { type: Type.STRING }, tag: { type: Type.STRING }, date: { type: Type.STRING } } } }
@@ -165,6 +165,32 @@ export const generateDailyBlogs = async (): Promise<BlogPost[]> => {
     });
     return JSON.parse(response.text || '[]');
   } catch { return []; }
+};
+
+export const generateSEOContent = async (keyword: string): Promise<{ title: string, content: string, meta: string }> => {
+  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-3-pro-preview",
+      contents: `Generate a high-ranking SEO blog post for the keyword: "${keyword}". Target audience: Indian kirana store owners. Include a catchy title, 800+ words of content in HTML format, and a meta description.`,
+      config: {
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: Type.OBJECT,
+          properties: {
+            title: { type: Type.STRING },
+            content: { type: Type.STRING },
+            meta: { type: Type.STRING }
+          },
+          required: ["title", "content", "meta"]
+        }
+      }
+    });
+    return JSON.parse(response.text || '{}');
+  } catch (error) {
+    console.error("SEO generation error:", error);
+    return { title: "Error", content: "Could not generate content.", meta: "" };
+  }
 };
 
 export const searchGroundingQuery = async (query: string): Promise<{ text: string, links: { uri: string, title: string }[] }> => {

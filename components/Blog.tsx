@@ -103,6 +103,32 @@ const Blog: React.FC = () => {
           </button>
         </div>
       </div>
+
+      <div className="mt-24 space-y-12">
+        <div className="text-center space-y-4">
+          <h2 className="text-3xl font-black text-slate-900 italic tracking-tighter uppercase">Content Calendar</h2>
+          <p className="text-slate-500 font-bold italic">Our 30-day roadmap to retail domination.</p>
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { day: "Week 1", topic: "Digital Basics", status: "Completed" },
+            { day: "Week 2", topic: "AI Automation", status: "In Progress" },
+            { day: "Week 3", topic: "Customer Growth", status: "Upcoming" },
+            { day: "Week 4", topic: "Scaling Up", status: "Upcoming" },
+          ].map((item, i) => (
+            <div key={i} className="p-8 bg-white border border-slate-100 rounded-[2.5rem] shadow-lg space-y-4">
+              <p className="text-[10px] font-black text-indigo-600 uppercase tracking-widest">{item.day}</p>
+              <h4 className="text-xl font-black italic text-slate-900 uppercase">{item.topic}</h4>
+              <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
+                item.status === 'Completed' ? 'bg-emerald-100 text-emerald-600' :
+                item.status === 'In Progress' ? 'bg-amber-100 text-amber-600' : 'bg-slate-100 text-slate-400'
+              }`}>
+                {item.status}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

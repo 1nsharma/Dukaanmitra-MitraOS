@@ -17,6 +17,7 @@ import FAQ from './components/FAQ';
 import Blog from './components/Blog';
 import BlogPost from './components/BlogPost';
 import CityPage from './components/CityPage';
+import SeoDashboard from './components/SeoDashboard';
 import Layout from './components/Layout';
 import { UserRole } from './types';
 
@@ -104,6 +105,7 @@ export default function App() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/seo-dashboard" element={<SeoDashboard />} />
         <Route path="/privacy" element={<PrivacyPolicy onBack={() => {}} />} />
         <Route path="/terms" element={<TermsOfService onBack={() => {}} />} />
         <Route path="/:city" element={<CityPage />} />

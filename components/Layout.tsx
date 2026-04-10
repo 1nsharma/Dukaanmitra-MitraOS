@@ -40,6 +40,7 @@ const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = f
   // OPS NAV
   const opsNav: NavItem[] = [
     { id: 'admin', label: 'Platform Dashboard', icon: <ShieldCheck size={20} />, path: '/admin' },
+    { id: 'seo', label: 'SEO Dashboard', icon: <Star size={20} />, path: '/seo-dashboard' },
     { id: 'features', label: 'Features', icon: <Star size={20} />, path: '/features' },
     { id: 'blog', label: 'Insights Hub', icon: <BookOpen size={20} />, path: '/blog' },
     { id: 'pricing', label: 'Pricing', icon: <CreditCard size={20} />, path: '/pricing' },
