@@ -43,6 +43,42 @@ export const generateAssistantResponse = async (prompt: string, role: 'ops' | 'm
   return response.text || "Munim offline. Systems checking...";
 };
 
+export interface ParsedTransaction {
+  type: 'sale' | 'udhaar' | 'payment';
+  amount: number;
+  customerName?: string;
+  items?: string;
+  description?: string;
+}
+
+export const parseWhatsAppMessage = async (text: string): Promise<ParsedTransaction | null> => {
+  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-3-pro-preview",
+      contents: [{ parts: [{ text: `Parse this Kirana store message into a transaction JSON: "${text}"` }] }],
+      config: {
+        systemInstruction: "You are a Kirana store assistant. Parse messages into JSON with fields: type (sale, udhaar, payment), amount (number), customerName (string, optional), items (string, optional).",
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: Type.OBJECT,
+          properties: {
+            type: { type: Type.STRING, enum: ['sale', 'udhaar', 'payment'] },
+            amount: { type: Type.NUMBER },
+            customerName: { type: Type.STRING },
+            items: { type: Type.STRING }
+          },
+          required: ["type", "amount"]
+        }
+      }
+    });
+    return JSON.parse(response.text || 'null');
+  } catch (error) {
+    console.error("Parsing error:", error);
+    return null;
+  }
+};
+
 export const parseMessage = async (text: string, context?: string, retries = 2): Promise<ParsedBill & { logic_trace: string[] }> => {
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
   try {

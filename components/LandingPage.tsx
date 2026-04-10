@@ -1,16 +1,19 @@
 
 import React, { useEffect, useRef } from 'react';
-import { View } from '../types';
+import { Link, useNavigate } from 'react-router-dom';
 import anime from 'animejs';
 import { motion } from 'motion/react';
+import { Helmet } from 'react-helmet-async';
 
 interface LandingPageProps {
-  setView: (view: View) => void;
+  onStart: () => void;
+  isLoggedIn: boolean;
 }
 
-const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
+const LandingPage: React.FC<LandingPageProps> = ({ onStart, isLoggedIn }) => {
   const heroRef = useRef<HTMLDivElement>(null);
   const mockupRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const tl = (anime as any).timeline({
@@ -33,14 +36,14 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
     }, '-=800');
   }, []);
 
-  const jsonLd = {
+  const softwareSchema = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "DukaanMitra",
     "operatingSystem": "Any",
     "applicationCategory": "BusinessApplication",
     "description": "India's first AI-powered WhatsApp Munim for Kirana stores. Manage udhaar, sales, and inventory via WhatsApp.",
-    "softwareVersion": "2.0.0-JanSunwai",
+    "softwareVersion": "2.0.0",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -57,6 +60,29 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
       "Real-time Udhaar Tracking",
       "Daily Sales Reports",
       "Retail Intelligence Insights"
+    ]
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I start using DukaanMitra?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Simply send 'START' to our WhatsApp number +91 63937 41171. No app download is required."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data safe?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, we use enterprise-grade encryption and secure cloud storage (Firebase) to ensure your shop's data is always protected."
+        }
+      }
     ]
   };
 
@@ -98,31 +124,34 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
+      <Helmet>
+        <title>DukaanMitra - Best Dukaan Management App & Kirana Store Software</title>
+        <meta name="description" content="Manage your shop smarter with DukaanMitra, the leading retail management software in India. Track sales, inventory, and learn how to manage small shop digitally with AI." />
+        <meta name="keywords" content="dukaan management app, retail management software india, kirana store software, small business automation india, inventory management app india, how to manage small shop digitally" />
+        <script type="application/ld+json">{JSON.stringify(softwareSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+      </Helmet>
+
       {/* Navbar */}
       <nav className="px-6 lg:px-20 py-8 flex items-center justify-between sticky top-0 bg-white/90 backdrop-blur-xl z-[100] border-b border-slate-100 shadow-sm transition-all duration-500">
-        <div className="flex items-center gap-3 cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+        <Link to="/" className="flex items-center gap-3 cursor-pointer">
           <div className="w-10 h-10 bg-indigo-600 rounded-[1.2rem] flex items-center justify-center shadow-lg shadow-indigo-200">
              <span className="text-white text-xl font-black italic">D</span>
           </div>
           <h1 className="text-3xl font-black italic tracking-tighter text-slate-900">DukaanMitra</h1>
-        </div>
+        </Link>
         <div className="hidden lg:flex space-x-12 text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] items-center">
-          <a href="#features" className="hover:text-indigo-600 transition-colors">Features</a>
+          <Link to="/features" className="hover:text-indigo-600 transition-colors">Features</Link>
           <a href="#flow" className="hover:text-indigo-600 transition-colors">How it Works</a>
-          <a href="#pricing" className="hover:text-indigo-600 transition-colors">Pricing</a>
-          <a href="#founder" className="hover:text-indigo-600 transition-colors">Founder</a>
-          <button 
-            onClick={() => setView('blog_engine')}
-            className="text-slate-900 border-b-2 border-indigo-600 pb-0.5 hover:opacity-70 transition-all"
-          >
-            Insights Hub
-          </button>
+          <Link to="/pricing" className="hover:text-indigo-600 transition-colors">Pricing</Link>
+          <Link to="/about" className="hover:text-indigo-600 transition-colors">About</Link>
+          <Link to="/blog" className="text-slate-900 border-b-2 border-indigo-600 pb-0.5 hover:opacity-70 transition-all">Insights Hub</Link>
         </div>
         <button 
-          onClick={() => setView('shop_panel')}
+          onClick={isLoggedIn ? () => navigate('/dashboard') : onStart}
           className="bg-slate-900 text-white px-8 py-3 rounded-[1.5rem] font-black text-xs uppercase tracking-widest shadow-2xl hover:bg-indigo-600 transition-all active:scale-95 flex items-center gap-3"
         >
-          <span>Go to App</span>
+          <span>{isLoggedIn ? 'Go to Dashboard' : 'Login / Start'}</span>
           <span className="text-lg">➔</span>
         </button>
       </nav>
@@ -140,19 +169,19 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
               <span className="text-[10px] font-black text-white uppercase tracking-[0.3em]">Aapka Digital Munim India #1</span>
             </div>
             <h1 className="hero-text text-5xl md:text-7xl lg:text-[10rem] font-black text-white leading-[0.8] tracking-tighter italic">
-              Register Feko, <br/>
-              <span className="text-emerald-400">WhatsApp</span> <br/>
-              Chalao!
+              Best Dukaan <br/>
+              <span className="text-emerald-400">Management App</span> <br/>
+              for India
             </h1>
             <p className="hero-text text-2xl lg:text-3xl text-white/90 leading-relaxed max-w-xl font-bold uppercase tracking-tight">
               Transform your Kirana shop with India's first AI-powered WhatsApp Munim. No app downloads. Just message "Rahul 500" and you're done.
             </p>
             <div className="hero-text flex flex-col sm:flex-row gap-6">
               <button 
-                onClick={() => setView('shop_panel')}
+                onClick={isLoggedIn ? () => navigate('/dashboard') : onStart}
                 className="bg-white text-indigo-900 px-8 py-4 sm:px-12 sm:py-6 rounded-[2.5rem] font-black text-xl sm:text-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] hover:scale-105 hover:bg-slate-100 transition-all active:scale-[0.98] italic tracking-tighter"
               >
-                Start Free Trial 🚀
+                Start managing your dukaan smarter today 🚀
               </button>
               <button className="bg-transparent border-[3px] border-white/30 px-8 py-4 sm:px-12 sm:py-6 rounded-[2.5rem] font-black text-xl sm:text-2xl hover:bg-white/10 transition-all shadow-xl italic tracking-tighter">
                 Watch Demo 🎥
@@ -435,12 +464,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
                </div>
                <h2 className="text-4xl md:text-5xl lg:text-7xl font-black text-slate-900 tracking-tighter italic">The Bharat Retail Feed</h2>
             </div>
-            <button 
-              onClick={() => setView('blog_engine')}
+            <Link 
+              to="/blog"
               className="text-indigo-600 font-black text-xl uppercase tracking-tighter italic hover:underline"
             >
               Explore Daily Insights ➔
-            </button>
+            </Link>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
@@ -453,12 +482,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
                 <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] group-hover:text-indigo-600 transition-colors">{b.tag}</span>
                 <h3 className="text-2xl font-black text-slate-900 mt-4 mb-6 italic tracking-tight leading-tight group-hover:text-indigo-600 transition-colors">{b.title}</h3>
                 <p className="text-slate-500 font-bold opacity-80 leading-relaxed mb-8 italic">"{b.excerpt}"</p>
-                <button 
-                   onClick={() => setView('blog_engine')}
+                <Link 
+                   to="/blog"
                    className="text-[11px] font-black uppercase tracking-widest text-slate-900 pb-1 border-b-4 border-emerald-400 group-hover:border-indigo-600 transition-all"
                 >
                   Read Analysis
-                </button>
+                </Link>
               </div>
             ))}
           </div>
@@ -532,9 +561,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ setView }) => {
           Chat with Munim AI
         </div>
       </a>
-      <script type="application/ld+json">
-        {JSON.stringify(jsonLd)}
-      </script>
     </div>
   );
 };

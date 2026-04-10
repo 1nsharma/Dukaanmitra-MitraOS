@@ -1,138 +1,134 @@
 
 import React from 'react';
-import { View } from '../types';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
+import { signOut, User } from 'firebase/auth';
+import { ShieldCheck, LogOut, MessageSquare, LayoutDashboard, Info, Star, CreditCard, HelpCircle, BookOpen } from 'lucide-react';
+import { cn } from '../lib/utils';
 
 interface NavItem {
   id: string;
   label: string;
-  icon: string;
+  icon: React.ReactNode;
+  path: string;
   premium?: boolean;
 }
 
 interface LayoutProps {
   children: React.ReactNode;
-  activeView: View;
-  setView: (view: View) => void;
   isPremium?: boolean;
   isAdmin?: boolean;
+  user?: User | null;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children, activeView, setView, isPremium = true, isAdmin = false }) => {
+const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = false, user = null }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const activePath = location.pathname;
+
   // MERCHANT NAV
   const merchantNav: NavItem[] = [
-    { id: 'shop_panel', label: 'MY SHOP', icon: '🏪' },
-    { id: 'product_strategy', label: 'STRATEGY', icon: '🎯' },
-    { id: 'ai_tools', label: 'AI HUB', icon: '✨', premium: true },
-    { id: 'blog_engine', label: 'MARKET NEWS', icon: '📰' },
-    { id: 'training', label: 'TUTORIALS', icon: '🎓' },
+    { id: 'dashboard', label: 'Shop Ledger', icon: <LayoutDashboard size={20} />, path: '/dashboard' },
+    { id: 'whatsapp', label: 'WhatsApp Munim', icon: <MessageSquare size={20} />, path: '/whatsapp' },
+    { id: 'features', label: 'Features', icon: <Star size={20} />, path: '/features' },
+    { id: 'blog', label: 'Insights Hub', icon: <BookOpen size={20} />, path: '/blog' },
+    { id: 'pricing', label: 'Pricing', icon: <CreditCard size={20} />, path: '/pricing' },
+    { id: 'faq', label: 'FAQ', icon: <HelpCircle size={20} />, path: '/faq' },
+    { id: 'about', label: 'About Us', icon: <Info size={20} />, path: '/about' },
   ];
 
   // OPS NAV
   const opsNav: NavItem[] = [
-    { id: 'dashboard', label: 'COMMAND', icon: '📊' },
-    { id: 'project_detail', label: 'HEALTH', icon: '🩺' },
-    { id: 'superadmin', label: 'INFRA', icon: '🛡️' },
-    { id: 'customers', label: 'MERCHANTS', icon: '🏢' },
-    { id: 'transactions', label: 'GLOBAL LEDGER', icon: '📁' },
-    { id: 'logs', label: 'AUDIT LOGS', icon: '💾' },
-    { id: 'architecture', label: 'BRIDGE', icon: '🏗️' },
+    { id: 'admin', label: 'Platform Dashboard', icon: <ShieldCheck size={20} />, path: '/admin' },
+    { id: 'features', label: 'Features', icon: <Star size={20} />, path: '/features' },
+    { id: 'blog', label: 'Insights Hub', icon: <BookOpen size={20} />, path: '/blog' },
+    { id: 'pricing', label: 'Pricing', icon: <CreditCard size={20} />, path: '/pricing' },
+    { id: 'faq', label: 'FAQ', icon: <HelpCircle size={20} />, path: '/faq' },
+    { id: 'about', label: 'About Us', icon: <Info size={20} />, path: '/about' },
   ];
 
   const handleLogout = async () => {
     try {
-      await auth.signOut();
-      setView('landing');
+      await signOut(auth);
+      navigate('/');
     } catch (err) {
       console.error("Logout failed", err);
     }
   };
 
-  if (activeView === 'landing') {
+  const isLanding = activePath === '/' || activePath === '/privacy' || activePath === '/terms';
+
+  if (isLanding) {
     return <div className="min-h-screen w-full">{children}</div>;
   }
 
   const navItems = isAdmin ? opsNav : merchantNav;
 
   return (
-    <div className={`flex h-[100dvh] w-full overflow-hidden font-sans transition-colors duration-1000 ${isAdmin ? 'bg-[#0a0c10]' : 'bg-slate-50'}`}>
-      {/* Sidebar - Desktop */}
-      <aside className={`hidden lg:flex w-72 flex-col shrink-0 border-r transition-all duration-1000 ${isAdmin ? 'bg-slate-900 border-white/5 text-white' : 'bg-white border-slate-200 text-slate-900'}`}>
-        <div className="p-10 border-b border-white/10 cursor-pointer group" onClick={() => setView('landing')}>
-          <h1 className={`text-3xl font-black tracking-tighter italic transition-all duration-500 ${isAdmin ? 'text-white' : 'text-indigo-600'}`}>
+    <div className="flex min-h-screen bg-slate-50 font-sans">
+      {/* Sidebar */}
+      <aside className="w-72 bg-slate-900 text-white flex flex-col shrink-0 border-r border-white/5 sticky top-0 h-screen">
+        <Link to="/" className="p-10 border-b border-white/10 cursor-pointer group">
+          <h1 className="text-3xl font-black tracking-tighter italic text-white">
             DukaanMitra
           </h1>
-          <div className={`mt-2 inline-flex items-center px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-[0.2em] ${isAdmin ? 'bg-rose-600 text-white' : 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30'}`}>
+          <div className="mt-2 inline-flex items-center px-2 py-0.5 bg-indigo-500/20 text-indigo-400 rounded text-[8px] font-black uppercase tracking-[0.2em] border border-indigo-500/30">
             {isAdmin ? '🛡️ Infrastructure Ops' : '🏪 Retail Merchant'}
           </div>
-        </div>
+        </Link>
         
-        <nav className="flex-1 p-6 space-y-1 overflow-y-auto no-scrollbar">
-          <div className={`px-3 mb-3 mt-2 text-[10px] font-black uppercase tracking-widest flex items-center justify-between ${isAdmin ? 'text-slate-500' : 'text-slate-400'}`}>
-            <span>{isAdmin ? 'Core Systems' : 'Management'}</span>
-            <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${isAdmin ? 'bg-rose-500' : 'bg-emerald-500'}`}></span>
+        <nav className="flex-1 p-6 space-y-2 overflow-y-auto no-scrollbar">
+          <div className="px-3 mb-3 mt-2 text-[10px] font-black uppercase tracking-widest text-slate-500 flex items-center justify-between">
+            <span>Management</span>
+            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
           </div>
 
           {navItems.map((item) => (
-            <button
+            <Link
               key={item.id}
-              onClick={() => setView(item.id as View)}
-              className={`w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all duration-300 ${
-                activeView === item.id 
-                  ? (isAdmin ? 'bg-rose-600 text-white shadow-xl shadow-rose-900/40' : 'bg-indigo-600 text-white shadow-xl shadow-indigo-100') 
-                  : (isAdmin ? 'text-slate-400 hover:bg-white/5 hover:text-white' : 'text-slate-400 hover:bg-slate-50 hover:text-slate-900')
-              }`}
+              to={item.path}
+              className={cn(
+                "w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all duration-300",
+                activePath === item.path 
+                  ? (isAdmin ? "bg-rose-600 text-white shadow-xl shadow-rose-900/40" : "bg-indigo-600 text-white shadow-xl shadow-indigo-100") 
+                  : "text-slate-400 hover:bg-white/5 hover:text-white"
+              )}
             >
-              <div className="flex items-center space-x-4">
-                <span className="text-xl">{item.icon}</span>
-                <span className="font-bold text-[13px] uppercase tracking-tight">{item.label}</span>
-              </div>
-              {item.premium && !isPremium && <span className="text-[8px] bg-amber-500 text-black px-1.5 py-0.5 rounded-full font-black">PRO</span>}
-            </button>
+              {item.icon}
+              <span className="font-bold text-[13px] uppercase tracking-tight">{item.label}</span>
+            </Link>
           ))}
         </nav>
 
-        <div className={`p-6 border-t ${isAdmin ? 'border-white/10 bg-black/20' : 'border-slate-100 bg-slate-50/50'}`}>
+        <div className="p-6 border-t border-white/10 bg-black/20">
+          {user && (
+            <div className="flex items-center gap-4 mb-6 px-4">
+              <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center font-black text-white shadow-lg">
+                {user.displayName?.[0] || user.email?.[0]}
+              </div>
+              <div className="overflow-hidden">
+                <p className="text-xs font-black truncate">{user.displayName || 'Merchant'}</p>
+                <p className="text-[10px] text-slate-500 truncate font-medium">{user.email}</p>
+              </div>
+            </div>
+          )}
           <button 
             onClick={handleLogout}
-            className={`w-full flex items-center justify-center space-x-3 py-4 rounded-2xl transition-all font-black text-[10px] uppercase tracking-widest border border-transparent ${isAdmin ? 'bg-white/5 text-slate-400 hover:text-rose-400 hover:border-rose-500/20' : 'bg-slate-200/50 text-slate-500 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200'}`}
+            className="w-full flex items-center justify-center gap-3 py-4 bg-white/5 hover:bg-rose-500/10 text-slate-400 hover:text-rose-400 rounded-2xl transition-all font-black text-[10px] uppercase tracking-widest border border-transparent hover:border-rose-500/20"
           >
-            <span>End Session</span>
+            <LogOut size={16} />
+            End Session
           </button>
         </div>
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
-        <header className="lg:hidden h-16 flex items-center justify-between px-6 shrink-0 z-50 border-b bg-white border-slate-200">
-          <div className="flex items-center gap-2" onClick={() => setView('landing')}>
-            <h1 className="text-xl font-black italic tracking-tighter text-indigo-600">DukaanMitra</h1>
-          </div>
-          <button onClick={handleLogout} className="w-9 h-9 rounded-full flex items-center justify-center text-lg bg-slate-100">🚪</button>
-        </header>
-
-        <main className="flex-1 overflow-y-auto p-4 lg:p-10 pb-24 lg:pb-12 scroll-smooth">
-          <div className="max-w-[1600px] mx-auto animate-in fade-in duration-700 h-full">
-            {children}
-          </div>
-        </main>
-
-        {/* Mobile Nav */}
-        <nav className={`lg:hidden fixed bottom-0 left-0 right-0 backdrop-blur-2xl border-t flex justify-around items-center h-20 px-4 z-[60] safe-bottom shadow-2xl ${isAdmin ? 'bg-slate-900/95 border-white/5' : 'bg-white/95 border-slate-200'}`}>
-          {navItems.slice(0, 5).map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setView(item.id as View)}
-              className={`flex flex-col items-center justify-center flex-1 space-y-1 transition-all duration-300 ${
-                activeView === item.id ? (isAdmin ? 'text-rose-500' : 'text-indigo-600') : 'text-slate-500 opacity-60'
-              }`}
-            >
-              <span className="text-2xl">{item.icon}</span>
-              <span className="text-[9px] font-black uppercase tracking-tighter">{item.label}</span>
-            </button>
-          ))}
-        </nav>
-      </div>
+      <main className="flex-1 bg-slate-50 relative min-h-screen">
+        <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-indigo-50/50 to-transparent pointer-events-none" />
+        <div className="relative z-10">
+          {children}
+        </div>
+      </main>
     </div>
   );
 };
