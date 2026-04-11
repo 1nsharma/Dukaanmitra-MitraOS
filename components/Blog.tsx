@@ -6,39 +6,39 @@ import { Link } from 'react-router-dom';
 const Blog: React.FC = () => {
   const posts = [
     {
-      title: "Top 10 Tools for Kirana Store Owners in India",
-      slug: "top-10-tools-kirana-store",
-      excerpt: "Discover the best digital tools to manage your kirana store efficiently in 2026.",
-      date: "April 10, 2026",
-      tag: "Business Growth"
+      title: "How to Manage Kirana Store Digitally in India (2026 Guide)",
+      slug: "manage-kirana-store-digitally-india-2026",
+      excerpt: "A complete step-by-step guide to transforming your traditional kirana shop into a digital powerhouse using AI and WhatsApp.",
+      date: "April 11, 2026",
+      tag: "Guide"
     },
     {
-      title: "How AI is Transforming Small Retail Shops",
-      slug: "ai-transforming-small-retail",
-      excerpt: "Learn how artificial intelligence is helping small दुकानदार compete with big retail chains.",
-      date: "April 8, 2026",
-      tag: "AI Technology"
+      title: "Best Free Shop Management Apps in India",
+      slug: "best-free-shop-management-apps-india",
+      excerpt: "Discover the top free apps for managing your retail business, tracking inventory, and handling udhaar without complex software.",
+      date: "April 12, 2026",
+      tag: "Software"
     },
     {
       title: "Daily Sales Tracking System for Small दुकानदार",
-      slug: "daily-sales-tracking-system",
-      excerpt: "A step-by-step guide to tracking your daily sales without complex software.",
-      date: "April 5, 2026",
-      tag: "Management"
-    },
-    {
-      title: "How to Recover Udhaar 40% Faster with AI Reminders",
-      slug: "recover-udhaar-faster-ai",
-      excerpt: "Tired of chasing customers for payments? Learn how automated WhatsApp reminders can help you recover udhaar without the awkwardness.",
-      date: "April 12, 2026",
+      slug: "daily-sales-tracking-system-small-dukaandaar",
+      excerpt: "Learn how to easily track your daily sales and cash flow using simple digital tools designed for Indian merchants.",
+      date: "April 13, 2026",
       tag: "Finance"
     },
     {
-      title: "5 AI Marketing Tips for Small Shop Owners",
-      slug: "ai-marketing-tips-small-shop",
-      excerpt: "Grow your customer base using simple AI-driven marketing strategies that work for local Indian dukaans.",
+      title: "Manual vs Digital Dukaan Management",
+      slug: "manual-vs-digital-dukaan-management",
+      excerpt: "Bahi-khata vs. AI Munim. We break down the pros, cons, and hidden costs of managing your shop manually versus going digital.",
+      date: "April 14, 2026",
+      tag: "Comparison"
+    },
+    {
+      title: "Top AI Tools for Small Retail Businesses",
+      slug: "top-ai-tools-small-retail-businesses",
+      excerpt: "Explore how Artificial Intelligence is helping small retail shops automate billing, marketing, and customer recovery.",
       date: "April 15, 2026",
-      tag: "Marketing"
+      tag: "Technology"
     }
   ];
 
@@ -47,6 +47,7 @@ const Blog: React.FC = () => {
       <Helmet>
         <title>DukaanMitra Blog | Retail Tips & Business Growth</title>
         <meta name="description" content="Learn how to grow your business with AI tools, retail tips, and digital solutions. Insights for every Indian दुकानदार." />
+        <link rel="canonical" href="https://dukaanmitra.in/blog" />
       </Helmet>
       
       <div className="text-center mb-16 space-y-4">

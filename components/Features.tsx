@@ -9,6 +9,7 @@ const Features: React.FC = () => {
         <title>Features | Best Inventory Management App India | DukaanMitra</title>
         <meta name="description" content="Explore powerful features like AI retail analytics, sales management tools, and the best inventory software for small shops in India. Designed for Indian दुकानदार." />
         <meta name="keywords" content="inventory management app india, AI retail analytics, sales management tool, best inventory software for small shops india" />
+        <link rel="canonical" href="https://dukaanmitra.in/features" />
       </Helmet>
       <h1 className="text-4xl font-black text-slate-900 mb-8 italic tracking-tighter uppercase">AI Retail Features</h1>
       <div className="grid md:grid-cols-3 gap-8">

@@ -9,6 +9,7 @@ const Pricing: React.FC = () => {
         <title>DukaanMitra Pricing | Free Shop Management App & Affordable Kirana Software</title>
         <meta name="description" content="Simple and affordable pricing plans for every small business. Start managing your dukaan today with our free shop management app and AI-powered tools. Dukaan ka hisaab kaise rakhe app?" />
         <meta name="keywords" content="free shop management app, affordable kirana software, dukaan ka hisaab kaise rakhe app, kirana store software price" />
+        <link rel="canonical" href="https://dukaanmitra.in/pricing" />
       </Helmet>
       <h1 className="text-4xl font-black text-slate-900 mb-8 italic tracking-tighter uppercase text-center">Simple Pricing</h1>
       <div className="grid md:grid-cols-3 gap-8">

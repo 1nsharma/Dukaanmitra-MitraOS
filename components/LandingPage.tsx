@@ -173,6 +173,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, isLoggedIn }) => {
         <title>DukaanMitra - Best Dukaan Management App & Kirana Store Software</title>
         <meta name="description" content="Manage your shop smarter with DukaanMitra, the leading retail management software in India. Track sales, inventory, and learn how to manage small shop digitally with AI." />
         <meta name="keywords" content="dukaan management app, retail management software india, kirana store software, small business automation india, inventory management app india, how to manage small shop digitally" />
+        <link rel="canonical" href="https://dukaanmitra.in/" />
         <script type="application/ld+json">{JSON.stringify(softwareSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(howToSchema)}</script>
