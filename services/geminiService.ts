@@ -1,6 +1,6 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { ParsedBill, Transaction, BlogPost, OpsHealthSnapshot, SystemManifest } from "../types";
+import { ParsedBill, Transaction, BlogPost, OpsHealthSnapshot, SystemManifest, ChatMessage, ParsedTransaction } from "../types";
 import { SYSTEM_MANIFEST } from "../constants";
 
 const DUKAAN_MITRA_SYSTEM_PROMPT = `
@@ -23,14 +23,14 @@ Task: Answer all technical and functional questions about the system based on th
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-export const generateAssistantResponse = async (prompt: string, role: 'ops' | 'merchant', history: any[] = []): Promise<string> => {
+export const generateAssistantResponse = async (prompt: string, role: 'ops' | 'merchant', history: ChatMessage[] = []): Promise<string> => {
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
   const response = await ai.models.generateContent({
     model: "gemini-3-pro-preview",
     contents: [
       { role: 'user', parts: [{ text: DUKAAN_MITRA_SYSTEM_PROMPT }] },
       ...history.map(m => ({ 
-        role: m.role === 'bot' ? 'model' : 'user', 
+        role: m.role || (m.sender === 'bot' ? 'model' : 'user'), 
         parts: [{ text: m.text }] 
       })),
       { role: 'user', parts: [{ text: prompt }] }
@@ -42,14 +42,6 @@ export const generateAssistantResponse = async (prompt: string, role: 'ops' | 'm
   });
   return response.text || "Munim offline. Systems checking...";
 };
-
-export interface ParsedTransaction {
-  type: 'sale' | 'udhaar' | 'payment';
-  amount: number;
-  customerName?: string;
-  items?: string;
-  description?: string;
-}
 
 export const parseWhatsAppMessage = async (text: string): Promise<ParsedTransaction | null> => {
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
@@ -200,11 +192,11 @@ export const searchGroundingQuery = async (query: string): Promise<{ text: strin
   return { text: response.text || "", links };
 };
 
-export const getTemporalForecast = async (transactions: any) => ({ predicted_revenue: [100, 200, 150, 300, 250, 400, 350], confidence_interval: "95%", growth_strategy: "Scaling" });
-export const getSystemOptimization = async (q: any, s: any) => ({ diagnosis: "Load Balanced", patch_code: "OPTIMIZE_SHARD", impact_analysis: "High", architect_note: "Ready" });
-export const generateOpsDailySummary = async (s: any) => ({ latency: "45ms", throughput: 120, errorRate: "0.01%", activeShards: 4, aiAccuracy: "99%", summary: "Stable", cpuLoad: "20%" });
-export const parseImageBill = async (b: any) => ({ action: 'add_entry', confidence: 0.9, user_message: "Parsed." });
-export const getNearbyLogistics = async (la: any, lo: any) => ({ text: "Available", links: [] });
-export const animateImage = async (b: any, p: any) => "";
-export const analyzeVideo = async (b: any, p: any) => "";
-export const fastChat = async (p: any) => "Fast response.";
+export const getTemporalForecast = async (transactions: Transaction[]) => ({ predicted_revenue: [100, 200, 150, 300, 250, 400, 350], confidence_interval: "95%", growth_strategy: "Scaling" });
+export const getSystemOptimization = async (q: string, s: string) => ({ diagnosis: "Load Balanced", patch_code: "OPTIMIZE_SHARD", impact_analysis: "High", architect_note: "Ready" });
+export const generateOpsDailySummary = async (s: OpsHealthSnapshot) => ({ latency: "45ms", throughput: 120, errorRate: "0.01%", activeShards: 4, aiAccuracy: "99%", summary: "Stable", cpuLoad: "20%" });
+export const parseImageBill = async (b: string) => ({ action: 'add_entry' as const, confidence: 0.9, user_message: "Parsed." });
+export const getNearbyLogistics = async (la: number, lo: number) => ({ text: "Available", links: [] });
+export const animateImage = async (b: string, p: string) => "";
+export const analyzeVideo = async (b: string, p: string) => "";
+export const fastChat = async (p: string) => "Fast response.";

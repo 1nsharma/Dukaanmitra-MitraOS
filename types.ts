@@ -37,7 +37,10 @@ export interface Customer {
   totalLTV: number;
 }
 
+export type TransactionType = 'sale' | 'udhaar' | 'payment';
+
 export interface Transaction {
+  id?: string;
   transId: string;
   storeId: string;
   phone: string;
@@ -45,9 +48,16 @@ export interface Transaction {
   items: string;
   date: string;
   customerName: string;
+  type: TransactionType;
+  customerId?: string;
   intent?: 'NEW_BILL' | 'PAYMENT_RECEIVED' | 'SKIP' | 'ADD_ENTRY' | 'RECOVERY_NUDGE';
   runId?: string;
 }
+
+export type ParsedTransaction =
+  | { type: 'sale'; amount: number; customerName?: string; items?: string; description?: string }
+  | { type: 'udhaar'; amount: number; customerName: string; items?: string; description?: string }
+  | { type: 'payment'; amount: number; customerName: string; description?: string };
 
 export interface ProjectHealthData {
   totalTasks: number;
@@ -106,6 +116,7 @@ export interface ChatMessage {
   isImage?: boolean;
   imageData?: string;
   timestamp: string;
+  role?: 'user' | 'model'; // For Gemini history
 }
 
 export interface OpsHealthSnapshot {
