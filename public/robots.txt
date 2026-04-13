@@ -1,5 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /whatsapp
+Disallow: /seo-dashboard
 
 # Sitemaps
 Sitemap: https://dukaanmitra.in/sitemap.xml
