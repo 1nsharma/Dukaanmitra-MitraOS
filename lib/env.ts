@@ -12,7 +12,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'staging', 'production', 'test']).default('development'),
   
   // API Keys
-  GEMINI_API_KEY: z.string().min(1, 'GEMINI_API_KEY is required for AI features'),
+  GEMINI_API_KEY: z.string().min(1, AIzaSyBF_GBD9s_MmATMkgmhFyN0xgziPNn3l_Y),
   
   // App Settings
   PORT: z.coerce.number().default(3000),
