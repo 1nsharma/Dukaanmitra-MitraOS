@@ -33,6 +33,7 @@ const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = f
     { id: 'whatsapp', label: 'WhatsApp Munim', icon: <MessageSquare size={20} />, path: '/whatsapp' },
     { id: 'features', label: 'Features', icon: <Star size={20} />, path: '/features' },
     { id: 'services', label: 'Services', icon: <Star size={20} />, path: '/services' },
+    { id: 'free-tools', label: 'Free Tools', icon: <Star size={20} />, path: '/free-tools' },
     { id: 'blog', label: 'Insights Hub', icon: <BookOpen size={20} />, path: '/blog' },
     { id: 'pricing', label: 'Pricing', icon: <CreditCard size={20} />, path: '/pricing' },
     { id: 'faq', label: 'FAQ', icon: <HelpCircle size={20} />, path: '/faq' },
@@ -46,6 +47,7 @@ const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = f
     { id: 'seo', label: 'SEO Dashboard', icon: <Star size={20} />, path: '/seo-dashboard' },
     { id: 'features', label: 'Features', icon: <Star size={20} />, path: '/features' },
     { id: 'services', label: 'Services', icon: <Star size={20} />, path: '/services' },
+    { id: 'free-tools', label: 'Free Tools', icon: <Star size={20} />, path: '/free-tools' },
     { id: 'blog', label: 'Insights Hub', icon: <BookOpen size={20} />, path: '/blog' },
     { id: 'pricing', label: 'Pricing', icon: <CreditCard size={20} />, path: '/pricing' },
     { id: 'faq', label: 'FAQ', icon: <HelpCircle size={20} />, path: '/faq' },
@@ -69,6 +71,8 @@ const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = f
     activePath === '/services' ||
     activePath === '/how-it-works' ||
     activePath === '/case-studies' ||
+    activePath === '/free-tools' ||
+    activePath === '/templates' ||
     activePath === '/pricing' || 
     activePath === '/faq' || 
     activePath === '/contact' ||
@@ -92,6 +96,8 @@ const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = f
             <Link to="/features" className={cn("hover:text-indigo-600 transition-colors", activePath === '/features' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Features</Link>
             <Link to="/services" className={cn("hover:text-indigo-600 transition-colors", activePath === '/services' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Services</Link>
             <Link to="/how-it-works" className={cn("hover:text-indigo-600 transition-colors", activePath === '/how-it-works' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>How It Works</Link>
+            <Link to="/free-tools" className={cn("hover:text-indigo-600 transition-colors", activePath === '/free-tools' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Free Tools</Link>
+            <Link to="/templates" className={cn("hover:text-indigo-600 transition-colors", activePath === '/templates' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Templates</Link>
             <Link to="/case-studies" className={cn("hover:text-indigo-600 transition-colors", activePath === '/case-studies' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Success Stories</Link>
             <Link to="/pricing" className={cn("hover:text-indigo-600 transition-colors", activePath === '/pricing' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Pricing</Link>
             <Link to="/about" className={cn("hover:text-indigo-600 transition-colors", activePath === '/about' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>About</Link>

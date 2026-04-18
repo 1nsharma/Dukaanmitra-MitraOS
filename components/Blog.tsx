@@ -13,6 +13,13 @@ const Blog: React.FC = () => {
       tag: "Local SEO"
     },
     {
+      title: "How DukaanMitra Uses AI Sandboxing to Secure Your Shop Data",
+      slug: "ai-sandboxing-secure-shop-data",
+      excerpt: "Technical deep-dive into how we use Vercel Sandbox technology to ensure your private bahi-khata data never leaks. Engineering excellence for Bharat.",
+      date: "April 18, 2026",
+      tag: "Security"
+    },
+    {
       title: "Google Business Profile Kaise Banaye (2026 Tutorial)",
       slug: "google-business-profile-kaise-banaye",
       excerpt: "Learn how to list your business on Google Maps correctly to rank number 1 in your city.",
