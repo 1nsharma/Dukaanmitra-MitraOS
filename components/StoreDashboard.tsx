@@ -59,7 +59,7 @@ export const StoreDashboard: React.FC<{ storeId: string }> = ({ storeId }) => {
     const customersRef = collection(storeRef, 'customers');
     const qCustomers = query(customersRef, where('balance', '>', 0), orderBy('balance', 'desc'), limit(5));
     const unsubscribeCustomers = onSnapshot(qCustomers, (snapshot) => {
-      const custs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as CustomerType));
+      const custs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as unknown as CustomerType));
       setCustomers(custs);
     });
 

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, User, Bot, Check, Clock, AlertCircle } from 'lucide-react';
-import { parseWhatsAppMessage, ParsedTransaction } from '../services/geminiService';
+import { parseWhatsAppMessage } from '../services/geminiService';
+import { ParsedTransaction } from '../types';
 import { logTransaction } from '../services/storeService';
 import { cn } from '../lib/utils';
 

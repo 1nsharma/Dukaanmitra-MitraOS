@@ -69,6 +69,7 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
     amount: 150,
     items: "2kg cheeni",
     date: "2024-12-15T18:45:00Z",
+    type: "sale",
     runId: "run_99128"
   },
   {
@@ -79,6 +80,7 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
     amount: 500,
     items: "doodh cheeni",
     date: "2024-12-15T19:20:00Z",
+    type: "sale",
     runId: "run_99130"
   }
 ];

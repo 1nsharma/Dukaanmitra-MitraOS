@@ -1,6 +1,6 @@
 import { db } from '../firebase';
 import { writeBatch, doc, collection, query, where, getDocs, serverTimestamp, increment } from 'firebase/firestore';
-import { ParsedTransaction } from './geminiService';
+import { ParsedTransaction } from '../types';
 
 export const logTransaction = async (storeId: string, parsed: ParsedTransaction) => {
   const batch = writeBatch(db);
