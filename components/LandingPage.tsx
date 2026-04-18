@@ -5,12 +5,7 @@ import anime from 'animejs';
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 
-interface LandingPageProps {
-  onStart: () => void;
-  isLoggedIn: boolean;
-}
-
-const LandingPage: React.FC<LandingPageProps> = ({ onStart, isLoggedIn }) => {
+const LandingPage: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const mockupRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -179,30 +174,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, isLoggedIn }) => {
         <script type="application/ld+json">{JSON.stringify(howToSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(productSchema)}</script>
       </Helmet>
-
-      {/* Navbar */}
-      <nav className="px-6 lg:px-20 py-8 flex items-center justify-between sticky top-0 bg-white/90 backdrop-blur-xl z-[100] border-b border-slate-100 shadow-sm transition-all duration-500">
-        <Link to="/" className="flex items-center gap-3 cursor-pointer">
-          <div className="w-10 h-10 bg-indigo-600 rounded-[1.2rem] flex items-center justify-center shadow-lg shadow-indigo-200">
-             <span className="text-white text-xl font-black italic">D</span>
-          </div>
-          <h1 className="text-3xl font-black italic tracking-tighter text-slate-900">DukaanMitra</h1>
-        </Link>
-        <div className="hidden lg:flex space-x-12 text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] items-center">
-          <Link to="/features" className="hover:text-indigo-600 transition-colors">Features</Link>
-          <a href="#flow" className="hover:text-indigo-600 transition-colors">How it Works</a>
-          <Link to="/pricing" className="hover:text-indigo-600 transition-colors">Pricing</Link>
-          <Link to="/about" className="hover:text-indigo-600 transition-colors">About</Link>
-          <Link to="/blog" className="text-slate-900 border-b-2 border-indigo-600 pb-0.5 hover:opacity-70 transition-all">Insights Hub</Link>
-        </div>
-        <button 
-          onClick={isLoggedIn ? () => navigate('/dashboard') : onStart}
-          className="bg-slate-900 text-white px-8 py-3 rounded-[1.5rem] font-black text-xs uppercase tracking-widest shadow-2xl hover:bg-indigo-600 transition-all active:scale-95 flex items-center gap-3"
-        >
-          <span>{isLoggedIn ? 'Go to Dashboard' : 'Login / Start'}</span>
-          <span className="text-lg">➔</span>
-        </button>
-      </nav>
 
       {/* Hero Section */}
       <section className="px-6 lg:px-20 py-24 lg:py-48 gradient-bg text-white relative overflow-hidden">
@@ -650,29 +621,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, isLoggedIn }) => {
           </div>
         </div>
       </section>
-
-      {/* Footer Marquee */}
-      <footer className="bg-slate-900 text-white py-10 overflow-hidden">
-        <div className="marquee whitespace-nowrap text-4xl font-black italic tracking-widest uppercase opacity-20">
-          DukaanMitra • Aapka Digital Munim • JanSunwai 2.0 • AI-Powered WhatsApp Munim • No App Downloads • Just WhatsApp • DukaanMitra • Aapka Digital Munim • JanSunwai 2.0 • AI-Powered WhatsApp Munim • No App Downloads • Just WhatsApp
-        </div>
-        <div className="mt-10 text-center text-xs font-black uppercase tracking-widest opacity-40">
-          © 2024 DukaanMitra. All Rights Reserved. Aligned with JanSunwai 2.0 Initiative.
-        </div>
-      </footer>
-
-      {/* WhatsApp Floating Button */}
-      <a 
-        href="https://whatsapp.com/channel/0029VbBxi9eJZg4DGvYpBx0U" 
-        target="_blank" 
-        rel="noopener noreferrer"
-        className="whatsapp-float bg-emerald-500 text-white w-20 h-20 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all active:scale-95 group"
-      >
-        <span className="text-4xl group-hover:rotate-12 transition-transform">📱</span>
-        <div className="absolute -top-12 right-0 bg-white text-slate-900 px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-          Chat with Munim AI
-        </div>
-      </a>
     </div>
   );
 };

@@ -19,9 +19,10 @@ interface LayoutProps {
   isPremium?: boolean;
   isAdmin?: boolean;
   user?: User | null;
+  onLogin?: () => void;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = false, user = null }) => {
+const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = false, user = null, onLogin }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const activePath = location.pathname;
@@ -57,10 +58,73 @@ const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = f
     }
   };
 
-  const isLanding = activePath === '/' || activePath === '/privacy' || activePath === '/terms';
+  const isPublicRoute = 
+    activePath === '/' || 
+    activePath === '/about' || 
+    activePath === '/features' || 
+    activePath === '/pricing' || 
+    activePath === '/faq' || 
+    activePath === '/privacy' || 
+    activePath === '/terms' || 
+    activePath.startsWith('/blog') ||
+    (!activePath.startsWith('/admin') && !activePath.startsWith('/dashboard') && !activePath.startsWith('/whatsapp') && !activePath.startsWith('/demo') && !activePath.startsWith('/seo-dashboard'));
 
-  if (isLanding) {
-    return <div className="min-h-screen w-full">{children}</div>;
+  if (isPublicRoute) {
+    return (
+      <div className="flex flex-col min-h-screen bg-white">
+        {/* Public Navbar */}
+        <nav className="px-6 lg:px-20 py-8 flex items-center justify-between sticky top-0 bg-white/90 backdrop-blur-xl z-[100] border-b border-slate-100 shadow-sm transition-all duration-500">
+          <Link to="/" className="flex items-center gap-3 cursor-pointer">
+            <div className="w-10 h-10 bg-indigo-600 rounded-[1.2rem] flex items-center justify-center shadow-lg shadow-indigo-200">
+               <span className="text-white text-xl font-black italic">D</span>
+            </div>
+            <h1 className="text-3xl font-black italic tracking-tighter text-slate-900">DukaanMitra</h1>
+          </Link>
+          <div className="hidden lg:flex space-x-12 text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] items-center">
+            <Link to="/features" className={cn("hover:text-indigo-600 transition-colors", activePath === '/features' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Features</Link>
+            <Link to="/pricing" className={cn("hover:text-indigo-600 transition-colors", activePath === '/pricing' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Pricing</Link>
+            <Link to="/about" className={cn("hover:text-indigo-600 transition-colors", activePath === '/about' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>About</Link>
+            <Link to="/faq" className={cn("hover:text-indigo-600 transition-colors", activePath === '/faq' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>FAQ</Link>
+            <Link to="/blog" className={cn("hover:text-indigo-600 transition-colors", activePath.startsWith('/blog') && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Insights Hub</Link>
+          </div>
+          <button 
+            onClick={user ? () => navigate('/dashboard') : onLogin}
+            className="bg-slate-900 text-white px-8 py-3 rounded-[1.5rem] font-black text-xs uppercase tracking-widest shadow-2xl hover:bg-indigo-600 transition-all active:scale-95 flex items-center gap-3"
+          >
+            <span>{user ? 'Go to Dashboard' : 'Login / Start'}</span>
+            <span className="text-lg">➔</span>
+          </button>
+        </nav>
+
+        {/* Main Content Component */}
+        <main className="flex-1">
+          {children}
+        </main>
+
+        {/* Public Footer */}
+        <footer className="bg-slate-900 text-white py-10 overflow-hidden mt-auto">
+          <div className="marquee whitespace-nowrap text-4xl font-black italic tracking-widest uppercase opacity-20">
+            DukaanMitra • Aapka Digital Munim • JanSunwai 2.0 • AI-Powered WhatsApp Munim • No App Downloads • Just WhatsApp • DukaanMitra • Aapka Digital Munim • JanSunwai 2.0 • AI-Powered WhatsApp Munim • No App Downloads • Just WhatsApp
+          </div>
+          <div className="mt-10 text-center text-xs font-black uppercase tracking-widest opacity-40">
+            © 2024 DukaanMitra. All Rights Reserved. Aligned with JanSunwai 2.0 Initiative.
+          </div>
+        </footer>
+
+        {/* WhatsApp Floating Button */}
+        <a 
+          href="https://whatsapp.com/channel/0029VbBxi9eJZg4DGvYpBx0U" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="whatsapp-float bg-emerald-500 text-white w-20 h-20 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all active:scale-95 group fixed bottom-6 right-6 z-50"
+        >
+          <span className="text-4xl group-hover:rotate-12 transition-transform">📱</span>
+          <div className="absolute -top-12 right-0 bg-white text-slate-900 px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            Chat with Munim AI
+          </div>
+        </a>
+      </div>
+    );
   }
 
   const navItems = isAdmin ? opsNav : merchantNav;

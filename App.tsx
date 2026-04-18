@@ -91,14 +91,9 @@ export default function App() {
   };
 
   return (
-    <Layout isAdmin={role?.role === 'superadmin'} user={user}>
+    <Layout isAdmin={role?.role === 'superadmin'} user={user} onLogin={handleLogin}>
       <Routes>
-        <Route path="/" element={
-          <LandingPage 
-            onStart={handleLogin} 
-            isLoggedIn={!!user}
-          />
-        } />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/about" element={<About />} />
         <Route path="/features" element={<Features />} />
         <Route path="/pricing" element={<Pricing />} />
