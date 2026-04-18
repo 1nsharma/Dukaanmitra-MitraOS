@@ -272,6 +272,32 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Problem-First intent section */}
+      <section className="py-32 px-6 lg:px-20 bg-slate-50 border-y border-slate-200">
+        <div className="max-w-[1600px] mx-auto space-y-24">
+          <div className="text-center space-y-6">
+            <h2 className="text-4xl md:text-6xl font-black italic tracking-tighter uppercase leading-none text-slate-900">What problem can I solve for you today?</h2>
+            <p className="text-xl text-slate-500 font-bold italic">Stop searching for features, start finding solutions.</p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-12">
+            {[
+              { problem: "Udhaar ka hisaab kaise rakhe?", icon: "📉", link: "/blog/udhaar-ka-hisaab-kaise-rakhe", cta: "Manage Khaata" },
+              { problem: "Daily Sales record nahi ho rahi?", icon: "📊", link: "/blog/kirana-shop-daily-sales-system", cta: "Setup Sales Tracker" },
+              { problem: "WhatsApp se order kaise le?", icon: "📱", link: "/blog/whatsapp-se-order-kaise-le", cta: "Start WhatsApp Shop" }
+            ].map((p, i) => (
+              <div key={i} className="bg-white p-12 rounded-[4rem] shadow-2xl shadow-slate-200/50 border border-slate-100 flex flex-col items-center text-center space-y-8 group hover:scale-105 transition-all duration-500">
+                <div className="text-7xl">{p.icon}</div>
+                <h3 className="text-3xl font-black italic tracking-tight text-slate-900 leading-tight">{p.problem}</h3>
+                <Link to={p.link} className="px-10 py-5 bg-indigo-600 text-white rounded-full font-black text-xs uppercase tracking-[0.2em] transform group-hover:translate-y-[-5px] transition-all shadow-xl">
+                  {p.cta}
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Munim Flow Section */}
       <section id="flow" className="py-32 px-6 lg:px-20 bg-slate-900 text-white overflow-hidden">
         <div className="max-w-[1600px] mx-auto space-y-24">

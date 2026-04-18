@@ -20,6 +20,27 @@ const Blog: React.FC = () => {
       tag: "Security"
     },
     {
+      title: "Udhaar ka hisaab kaise rakhe? (Manual vs Digital Guide 2026)",
+      slug: "udhaar-ka-hisaab-kaise-rakhe",
+      excerpt: "Stop losing money in pending payments. Learn the best way to manage your 'Khaata' and get paid 24% faster using WhatsApp automation.",
+      date: "April 18, 2026",
+      tag: "Operations"
+    },
+    {
+      title: "Kirana Shop Daily Sales System - How to track profit?",
+      slug: "kirana-shop-daily-sales-system",
+      excerpt: "A simple guide to tracking your daily sales and calculating net profit without a calculator. Use AI to automate your bookkeeping.",
+      date: "April 17, 2026",
+      tag: "Growth"
+    },
+    {
+      title: "Best Billing Software for Small Shop (Less than 10k budget)",
+      slug: "best-billing-software-for-small-shop",
+      excerpt: "Comparing top POS systems vs WhatsApp-based AI billing. Find the right balance between cost and speed for your dukaan.",
+      date: "April 17, 2026",
+      tag: "Tech"
+    },
+    {
       title: "Google Business Profile Kaise Banaye (2026 Tutorial)",
       slug: "google-business-profile-kaise-banaye",
       excerpt: "Learn how to list your business on Google Maps correctly to rank number 1 in your city.",

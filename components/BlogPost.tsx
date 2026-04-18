@@ -56,6 +56,114 @@ const blogPosts = {
       }]
     }
   },
+  "udhaar-ka-hisaab-kaise-rakhe": {
+    title: "Udhaar ka hisaab kaise rakhe? (Manual vs Digital Guide 2026)",
+    description: "Master your shop's udhaar management. Compare traditional bahi-khata with AI-powered WhatsApp ledger to improve cash flow by 24%.",
+    date: "April 18, 2026",
+    author: "Amit Sharma",
+    tag: "Operations",
+    content: `
+      <h2>Udhaar Ka Hisaab Kaise Rakhe? (Simple 2026 Guide)</h2>
+      <p>Bharat me kirana aur small retail business bina 'Udhaar' ke nahi chalte. Lekin, udhaar ki wajah se bahut dukaandaron ka paisa atak jata hai. Is guide me hum seekhenge ki kaise apne khaate ko safely manage karein.</p>
+      
+      <h3>1. Traditional Bahi-Khata (Pros & Cons)</h3>
+      <p>Manual register me hisaab likhna sasta hai but risk zyada hai. Agar register kho jaye ya panna fat jaye, toh aapka paisa gaya.</p>
+
+      <h3>2. WhatsApp Business Ledger (The Smart Way)</h3>
+      <p>Aaj kal <a href="/services">WhatsApp based automation</a> ka zamana hai. DukaanMitra AI aapke har transaction ko record karta hai aur automatically polite reminders bhejta hai.</p>
+      
+      <h3>3. 3-Step Success formula for Udhaar Recovery:</h3>
+      <ul>
+        <li><strong>Entry at once:</strong> Sauda hote hi WhatsApp message bhej dein.</li>
+        <li><strong>Friendly Reminders:</strong> Har mahine ki 1st ko automated WhatsApp alert bhejayein.</li>
+        <li><strong>Digital Receipt:</strong> Customer ko transaction ka snapshot WhatsApp par dein taaki baad me koi confusion na ho.</li>
+      </ul>
+
+      <p>Grow your shop in <a href="/kanpur">Kanpur</a> or <a href="/lucknow">Lucknow</a> by following this system.</p>
+
+      <h2>Recommended Tools:</h2>
+      <ul>
+        <li><a href="/free-tools">Free Udhaar Calculator (AI Parser)</a></li>
+        <li><a href="/blog/whatsapp-se-order-kaise-le">How to take orders on WhatsApp?</a></li>
+      </ul>
+    `,
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "Udhaar ka hisaab kaise rakhe?",
+      "step": [{
+        "@type": "HowToStep",
+        "text": "Record transaction on WhatsApp immediately."
+      }, {
+        "@type": "HowToStep",
+        "text": "Send automated monthly reminders via DukaanMitra."
+      }]
+    }
+  },
+  "kirana-shop-daily-sales-system": {
+    title: "Kirana Shop Daily Sales System - How to track profit?",
+    description: "Learn how to calculate daily profit and track sales volume at your kirana store using smart AI tools and simple WhatsApp logs.",
+    date: "April 17, 2026",
+    author: "Amit Sharma",
+    tag: "Growth",
+    content: `
+      <h2>Daily Sales Track Kaise Karein?</h2>
+      <p>Kirana dukan me margin kam hota hai, isliye **Daily Sales tracking** bahut important hai. Agar aapko din ke end me pata chale ki kitna profit hua, toh aap stock better plan kar sakte hain.</p>
+      
+      <h3>Steps to setup a Sales System:</h3>
+      <ul>
+        <li><strong>Log every sale:</strong> Digital ledger par entry karein.</li>
+        <li><strong>Calculate Margins:</strong> Common items jaise Aata, Dal, Tel ka average profit % nikal ke rakhein.</li>
+        <li><strong>Weekly Review:</strong> Har Sunday dekhein kaunsa item sabse zyada bik raha hai.</li>
+      </ul>
+
+      <p>Use our <a href="/free-tools">AI Tools</a> to simplify this logic. Merchants in <a href="/mumbai">Mumbai</a> and <a href="/delhi">Delhi</a> are already using AI for inventory tracking.</p>
+
+      <h2>Internal Links:</h2>
+      <ul>
+        <li><a href="/blog/local-business-ko-customer-kaise-mile">How to get more customers?</a></li>
+        <li><a href="/blog/udhaar-ka-hisaab-kaise-rakhe">Manage your Udhaar better</a></li>
+      </ul>
+    `,
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Kirana Shop Daily Sales System",
+      "author": "Amit Sharma"
+    }
+  },
+  "best-billing-software-for-small-shop": {
+    title: "Best Billing Software for Small Shop (Less than 10k budget)",
+    description: "Compare top billing solutions for retailers in India. From desktop POS to mobile AI tools like DukaanMitra. Choose the best for your budget.",
+    date: "April 17, 2026",
+    author: "Amit Sharma",
+    tag: "Tech",
+    content: `
+      <h2>Small Shop ke liye Sahi Billing Software Select Karein</h2>
+      <p>Billing software me log aksar confuse ho jate hain. Zyadatar retailers ko mehenge POS system ki zaroorat nahi hoti.</p>
+      
+      <h3>Top 3 Categories:</h3>
+      <ul>
+        <li><strong>WhatsApp Based AI (Best for Speed):</strong> No hardware needed. Just your phone. Example: <a href="/services">DukaanMitra</a>.</li>
+        <li><strong>Mobile Apps (Best for inventory):</strong> Good for tracking SKUs.</li>
+        <li><strong>Desktop POS (Best for Billing Counter):</strong> Great for big supermarkets with barcodes.</li>
+      </ul>
+
+      <p>If you're in <a href="/pune">Pune</a> or <a href="/bangalore">Bangalore</a>, check our local tech services.</p>
+
+      <h2>Related Articles:</h2>
+      <ul>
+        <li><a href="/blog/google-business-profile-kaise-banaye">Get on Google Maps</a></li>
+        <li><a href="/blog/kanpur-me-shop-ko-online-kaise-laaye">Online Shop Guide</a></li>
+      </ul>
+    `,
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Best Billing Software for Small Shop",
+      "author": "Amit Sharma"
+    }
+  },
   "ai-sandboxing-secure-shop-data": {
     title: "How DukaanMitra Uses AI Sandboxing to Secure Shop Data",
     description: "Learn about the high-end security engineering behind DukaanMitra. We use Vercel Sandbox to isolate AI logic and protect merchant privacy.",

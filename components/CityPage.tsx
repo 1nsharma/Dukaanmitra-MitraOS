@@ -13,7 +13,8 @@ const cityData = {
     stats: "500+ Shops in Lucknow",
     testimonial: "Lucknow ke dukaandaaro ke liye DukaanMitra sabse bada vardaan hai. Ab bahi-khata ki tension khatam!",
     author: "Rajesh Kumar, Aminabad",
-    localTips: "Lucknow markets like Aminabad and Chowk are seeing a massive shift to digital payments. DukaanMitra helps local merchants track these UPI payments alongside cash automatically."
+    localTips: "Lucknow markets like Aminabad and Chowk are seeing a massive shift to digital payments. DukaanMitra helps local merchants track these UPI payments alongside cash automatically.",
+    cityGuides: ["kanpur-me-shop-ko-online-kaise-laaye", "google-business-profile-kaise-banaye"]
   },
   "kanpur": {
     name: "Kanpur",
@@ -23,7 +24,8 @@ const cityData = {
     stats: "750+ Shops in Kanpur",
     testimonial: "Kanpur ki bheed mein hisaab rakhna mushkil tha, par DukaanMitra ne sab asaan kar diya.",
     author: "Suresh Gupta, Gumti No. 5",
-    localTips: "In Kanpur's busy hubs like Naveen Market, speed is key. Our AI parses voice notes and texts in seconds, perfect for high-volume traders."
+    localTips: "In Kanpur's busy hubs like Naveen Market, speed is key. Our AI parses voice notes and texts in seconds, perfect for high-volume traders.",
+    cityGuides: ["kanpur-me-shop-ko-online-kaise-laaye", "gbp-suspend-kyun-hota-hai"]
   },
   "delhi": {
     name: "Delhi",
@@ -33,7 +35,8 @@ const cityData = {
     stats: "1200+ Shops in Delhi NCR",
     testimonial: "Delhi NCR ke competitive market mein DukaanMitra humein edge deta hai.",
     author: "Mohit Jain, Chandni Chowk",
-    localTips: "Delhi merchants use DukaanMitra to handle both local customers and wholesale tracking efficiently."
+    localTips: "Delhi merchants use DukaanMitra to handle both local customers and wholesale tracking efficiently.",
+    cityGuides: ["google-business-profile-kaise-banaye", "ai-sandboxing-secure-shop-data"]
   },
   "mumbai": {
     name: "Mumbai",
@@ -43,7 +46,8 @@ const cityData = {
     stats: "1000+ Shops in Mumbai",
     testimonial: "Mumbai local jaisi tezi chahiye shop management mein, aur woh DukaanMitra deta hai.",
     author: "Vikas Patil, Dadar",
-    localTips: "Mumbai's high real estate costs mean you need efficient inventory. Tracking dead stock helps save space."
+    localTips: "Mumbai's high real estate costs mean you need efficient inventory. Tracking dead stock helps save space.",
+    cityGuides: ["whatsapp-se-order-kaise-le", "local-business-ko-customer-kaise-mile"]
   },
   "bangalore": {
     name: "Bangalore",
@@ -53,7 +57,8 @@ const cityData = {
     stats: "850+ Shops in Bangalore",
     testimonial: "Tech city ke liye tech-smart munim! DukaanMitra is revolutionary.",
     author: "Ananth K, Indiranagar",
-    localTips: "Bangalore customers expect digital bills. DukaanMitra sends them instantly via WhatsApp."
+    localTips: "Bangalore customers expect digital bills. DukaanMitra sends them instantly via WhatsApp.",
+    cityGuides: ["ai-sandboxing-secure-shop-data", "manage-kirana-store-digitally-india-2026"]
   },
   "pune": {
     name: "Pune",
@@ -63,7 +68,74 @@ const cityData = {
     stats: "600+ Shops in Pune",
     testimonial: "Pune ki dukaano ke liye sabse asaan digital tool.",
     author: "Abhishek Deshmukh, Kothrud",
-    localTips: "Pune merchants prefer our clean analytics to track monthly growth trends."
+    localTips: "Pune merchants prefer our clean analytics to track monthly growth trends.",
+    cityGuides: ["manage-kirana-store-digitally-india-2026", "gbp-suspend-kyun-hota-hai"]
+  },
+  "ahmedabad": {
+    name: "Ahmedabad",
+    title: "Best Kirana Software Ahmedabad | Shop App Gujarat",
+    description: "Modernize your Ahmedabad business with AI. Top-rated retail management for merchants in Manek Chowk and CG Road.",
+    keywords: "kirana software ahmedabad, retail app ahmedabad, shop management gujarat",
+    stats: "450+ Shops in Ahmedabad",
+    testimonial: "Ahmedabad ke vyapariyon ke liye sabse tez hisaab-kitab software.",
+    author: "Gautam Shah, Manek Chowk",
+    localTips: "Ahmedabad merchants use our AI to track bulk transactions and festive season sales.",
+    cityGuides: ["kirana-shop-daily-sales-system", "google-business-profile-kaise-banaye"]
+  },
+  "hyderabad": {
+    name: "Hyderabad",
+    title: "Top Retail App Hyderabad | Kirana Software Telangana",
+    description: "Efficiency meeting tradition. The best WhatsApp-first shop software for Hyderabad's busy retailers and wholesalers.",
+    keywords: "retail app hyderabad, kirana software telangana, shop management hyderabad",
+    stats: "550+ Shops in Hyderabad",
+    testimonial: "Banjara Hills and Ameerpet shops are managing wholesale orders via our WhatsApp catalogue automation.",
+    author: "Srinivas Rao, Ameerpet",
+    localTips: "Hyderabad businesses are moving to digital catalogues to handle high order volumes.",
+    cityGuides: ["whatsapp-se-order-kaise-le", "best-billing-software-for-small-shop"]
+  },
+  "chennai": {
+    name: "Chennai",
+    title: "Smart Shop App Chennai | Retail Software Tamil Nadu",
+    description: "Automate your Chennai shop with AI. Recover udhaar faster and manage sales via WhatsApp. Trusted by T. Nagar merchants.",
+    keywords: "shop app chennai, retail software tamil nadu, kirana software chennai",
+    stats: "400+ Shops in Chennai",
+    testimonial: "Anna Nagar boutiques are automating customer replies using our AI sandbox logic.",
+    author: "Karthik Raja, T. Nagar",
+    localTips: "Chennai merchants prioritize data privacy, which our AI Sandbox ensures.",
+    cityGuides: ["ai-sandboxing-secure-shop-data", "local-business-ko-customer-kaise-mile"]
+  },
+  "kolkata": {
+    name: "Kolkata",
+    title: "Best Bahi-Khata App Kolkata | Retail Software West Bengal",
+    description: "Replace manual registers in Kolkata with AI Munim. Digital transformation for Burrabazar and Park Street wholesalers.",
+    keywords: "bahi khata app kolkata, retail software west bengal, shop management kolkata",
+    stats: "650+ Shops in Kolkata",
+    testimonial: "Kolkata wholesalers are digitizing their manual registers using DukaanMitra AI.",
+    author: "Arijit Das, Burrabazar",
+    localTips: "Burrabazar traders save 4 hours daily using our automated ledger sync.",
+    cityGuides: ["udhaar-ka-hisaab-kaise-rakhe", "best-billing-software-for-small-shop"]
+  },
+  "jaipur": {
+    name: "Jaipur",
+    title: "Shop Management App Jaipur | Kirana Software Rajasthan",
+    description: "The most trusted digital munim for Jaipur's retailers. Manage your Pink City shop with the power of WhatsApp AI.",
+    keywords: "shop app jaipur, kirana software rajasthan, retail management jaipur",
+    stats: "350+ Shops in Jaipur",
+    testimonial: "Johari Bazar and C-Scheme outlets use AI insights to manage seasonal stock demands.",
+    author: "Vikram Singh, C-Scheme",
+    localTips: "Jaipur outlets use AI reports to predict tourist season stock requirements.",
+    cityGuides: ["manage-kirana-store-digitally-india-2026", "kirana-shop-daily-sales-system"]
+  },
+  "surat": {
+    name: "Surat",
+    title: "Fast Billing Software Surat | Retail App Gujarat",
+    description: "Handle 100+ daily transactions easily. The fastest WhatsApp billing software for Surat's textile and kirana markets.",
+    keywords: "billing software surat, retail app surat, shop management gujarat",
+    stats: "700+ Shops in Surat",
+    testimonial: "Textile market merchants are using high-speed WhatsApp billing to manage 100+ daily transactions.",
+    author: "Dhaval Patel, Varachha",
+    localTips: "Surat traders love our 'One-Message Billing' for high-frequency sales.",
+    cityGuides: ["best-billing-software-for-small-shop", "udhaar-ka-hisaab-kaise-rakhe"]
   }
 };
 
@@ -182,6 +254,27 @@ const CityPage: React.FC = () => {
               Local Insights for {data.name} Retailers
             </h2>
             <p className="text-xl text-slate-500 font-bold italic">{data.localTips}</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-white p-10 rounded-[3rem] shadow-xl border border-slate-100 space-y-4">
+              <h3 className="text-xl font-black italic text-slate-900 uppercase">Best Shop App in {data.name}</h3>
+              <p className="text-slate-500 font-medium text-sm leading-relaxed">
+                Looking for the best shop management app in {data.name}? DukaanMitra provides localized AI tools for {data.name} retailers.
+              </p>
+            </div>
+            <div className="bg-white p-10 rounded-[3rem] shadow-xl border border-slate-100 space-y-4">
+              <h3 className="text-xl font-black italic text-slate-900 uppercase">Kirana Software {data.name}</h3>
+              <p className="text-slate-500 font-medium text-sm leading-relaxed">
+                Join 500+ kirana stores in {data.name} using our WhatsApp billing system. Modernize your {data.name} business today.
+              </p>
+            </div>
+            <div className="bg-white p-10 rounded-[3rem] shadow-xl border border-slate-100 space-y-4">
+              <h3 className="text-xl font-black italic text-slate-900 uppercase">WhatsApp Billing {data.name}</h3>
+              <p className="text-slate-500 font-medium text-sm leading-relaxed">
+                Setup high-speed WhatsApp billing for your {data.name} based shop. No hardware, just your phone.
+              </p>
+            </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
