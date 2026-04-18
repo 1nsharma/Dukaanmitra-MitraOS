@@ -111,6 +111,7 @@ export default function App() {
         <Route path="/:city" element={<CityPage />} />
 
         {/* Merchant Routes */}
+        <Route path="/demo" element={<StoreDashboard storeId="demo-mode" />} />
         <Route path="/dashboard" element={
           <ProtectedRoute>
             {role?.storeId ? <StoreDashboard storeId={role.storeId} /> : <div>Loading Store...</div>}

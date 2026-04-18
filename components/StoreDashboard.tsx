@@ -41,6 +41,26 @@ export const StoreDashboard: React.FC<{ storeId: string }> = ({ storeId }) => {
   const [blastProgress, setBlastProgress] = useState(0);
 
   useEffect(() => {
+    if (storeId === 'demo-mode') {
+      setStore({
+        id: 'demo-mode',
+        name: "Amit's Supermart (Demo)",
+        totalSales: 45200,
+        totalUdhaar: 12500
+      });
+      setTransactions([
+        { id: '1', type: 'sale', amount: 500, items: '2kg Sugar, Milk', date: 'Just now', timestamp: 0, customerName: '', customerPhone: '' },
+        { id: '2', type: 'udhaar', amount: 1500, items: 'Flour 10kg, Cooking Oil', date: '2 hours ago', timestamp: 0, customerName: '', customerPhone: '' },
+        { id: '3', type: 'payment', amount: 800, items: 'Paid old udhaar', date: 'Yesterday', timestamp: 0, customerName: '', customerPhone: '' }
+      ]);
+      setCustomers([
+        { phone: '9876543210', name: 'Ramesh Singh', totalLTV: 4500, balance: 2500, lastSeen: '' },
+        { phone: '9876543211', name: 'Suresh Kumar', totalLTV: 1500, balance: 1500, lastSeen: '' }
+      ]);
+      setLoading(false);
+      return;
+    }
+
     const storeRef = doc(db, 'stores', storeId);
     const unsubscribeStore = onSnapshot(storeRef, (doc) => {
       if (doc.exists()) {
@@ -73,7 +93,13 @@ export const StoreDashboard: React.FC<{ storeId: string }> = ({ storeId }) => {
   const handleAlertAction = async (title: string, desc: string, count: number) => {
     setSelectedAlert({ title, desc, count });
     setIsAlertProcessing(true);
-    const nudge = await generateAlertAction(title, desc);
+    let nudge = "";
+    if (storeId === 'demo-mode') {
+      await new Promise(r => setTimeout(r, 1500));
+      nudge = "Namaste Ramesh, aapka ₹2450 ka udhaar baki hai. Kripya aaj hi payment karein. DukaanMitra dwara bheja gaya sandesh.";
+    } else {
+      nudge = await generateAlertAction(title, desc);
+    }
     setAlertNudge(nudge);
     setIsAlertProcessing(false);
   };
@@ -103,16 +129,26 @@ export const StoreDashboard: React.FC<{ storeId: string }> = ({ storeId }) => {
 
   const handleGenerateMarketing = async () => {
     setIsGenerating(true);
-    const content = await generateMarketingContent(marketingType, marketingDetails);
-    setGeneratedContent(content);
+    if (storeId === 'demo-mode') {
+      await new Promise(r => setTimeout(r, 1500));
+      setGeneratedContent("🎉 Festive Offer! 🎉 20% off on all dairy items this Sunday! Jaldi aaiye Amit's Supermart mein. 🏃‍♂️💨");
+    } else {
+      const content = await generateMarketingContent(marketingType, marketingDetails);
+      setGeneratedContent(content);
+    }
     setIsGenerating(false);
   };
 
   const handleGeneratePoster = async () => {
     setIsPosterGenerating(true);
     try {
-      const poster = await generateMarketingPoster(`${marketingType}: ${marketingDetails}`);
-      setGeneratedPoster(poster);
+      if (storeId === 'demo-mode') {
+        await new Promise(r => setTimeout(r, 2000));
+        setGeneratedPoster("https://picsum.photos/seed/festival/800/1200");
+      } else {
+        const poster = await generateMarketingPoster(`${marketingType}: ${marketingDetails}`);
+        setGeneratedPoster(poster);
+      }
     } catch (e) {
       console.error("Poster gen failed", e);
     } finally {

@@ -231,8 +231,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, isLoggedIn }) => {
               >
                 Start managing your dukaan smarter today 🚀
               </a>
-              <button className="bg-transparent border-[3px] border-white/30 px-8 py-4 sm:px-12 sm:py-6 rounded-[2.5rem] font-black text-xl sm:text-2xl hover:bg-white/10 transition-all shadow-xl italic tracking-tighter">
-                Watch Demo 🎥
+              <button onClick={() => navigate('/demo')} className="bg-transparent border-[3px] border-white/30 px-8 py-4 sm:px-12 sm:py-6 rounded-[2.5rem] font-black text-xl sm:text-2xl hover:bg-white/10 transition-all shadow-xl italic tracking-tighter">
+                View Demo Dashboard 📊
               </button>
             </div>
           </div>
@@ -639,8 +639,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, isLoggedIn }) => {
               </div>
               <div className="bg-white/5 p-8 rounded-[3rem] border border-white/10 space-y-4">
                 <p className="text-[10px] font-black uppercase tracking-widest text-indigo-400">Step 2</p>
-                <h4 className="text-2xl font-black italic tracking-tighter uppercase">Watch Demo</h4>
-                <p className="text-sm font-bold opacity-60">See Munim in Action (2-minute video)</p>
+                <h4 className="text-2xl font-black italic tracking-tighter uppercase">Try Live Demo</h4>
+                <p className="text-sm font-bold opacity-60">Experience the Dashboard instantly.</p>
+                <button onClick={() => navigate('/demo')} className="mt-4 px-6 py-2 bg-indigo-600 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-indigo-500 transition-colors">Open Demo</button>
               </div>
             </div>
             <a href="https://whatsapp.com/channel/0029VbBxi9eJZg4DGvYpBx0U" target="_blank" rel="noopener noreferrer" className="inline-block w-full md:w-auto px-16 py-8 bg-emerald-500 text-slate-900 rounded-[3rem] font-black text-3xl hover:bg-emerald-400 transition-all shadow-2xl active:scale-95 italic tracking-tighter text-center">
