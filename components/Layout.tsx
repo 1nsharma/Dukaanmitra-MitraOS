@@ -102,11 +102,35 @@ const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = f
         </main>
 
         {/* Public Footer */}
-        <footer className="bg-slate-900 text-white py-10 overflow-hidden mt-auto">
-          <div className="marquee whitespace-nowrap text-4xl font-black italic tracking-widest uppercase opacity-20">
+        <footer className="bg-slate-900 text-white pt-16 pb-8 overflow-hidden mt-auto border-t border-slate-800">
+          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-12 mb-16 relative z-10">
+            <div className="space-y-4">
+              <h3 className="text-2xl font-black italic tracking-tighter text-white">DukaanMitra</h3>
+              <p className="text-slate-400 text-sm font-medium leading-relaxed">India's first WhatsApp-based AI Munim. Simplifying accounting and udhaar recovery for Bharat's retailers.</p>
+            </div>
+            <div className="space-y-4">
+              <h4 className="text-white font-black uppercase tracking-widest text-xs opacity-70">Trust & Compliance</h4>
+              <ul className="space-y-2 text-sm text-slate-300 font-medium">
+                <li className="flex items-center gap-2"><span className="text-emerald-500">✓</span> MSME Registered Enterprise</li>
+                <li className="flex items-center gap-2"><span className="text-emerald-500">✓</span> GSTIN: 09EK... (In Process)</li>
+                <li className="flex items-center gap-2"><span className="text-emerald-500">✓</span> 100% Data Encryption (Firebase)</li>
+              </ul>
+            </div>
+            <div className="space-y-4">
+              <h4 className="text-white font-black uppercase tracking-widest text-xs opacity-70">Registered Office</h4>
+              <ul className="space-y-2 text-sm text-slate-300 font-medium">
+                <li>DukaanMitra Technologies</li>
+                <li>Swaroop Nagar</li>
+                <li>Kanpur, Uttar Pradesh 208005</li>
+                <li>Bharat (India)</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="marquee whitespace-nowrap text-4xl font-black italic tracking-widest uppercase opacity-10 pointer-events-none">
             DukaanMitra • Aapka Digital Munim • JanSunwai 2.0 • AI-Powered WhatsApp Munim • No App Downloads • Just WhatsApp • DukaanMitra • Aapka Digital Munim • JanSunwai 2.0 • AI-Powered WhatsApp Munim • No App Downloads • Just WhatsApp
           </div>
-          <div className="mt-10 text-center text-xs font-black uppercase tracking-widest opacity-40">
+          <div className="mt-8 text-center text-[10px] font-black uppercase tracking-widest opacity-40">
             © 2024 DukaanMitra. All Rights Reserved. Aligned with JanSunwai 2.0 Initiative.
           </div>
         </footer>
