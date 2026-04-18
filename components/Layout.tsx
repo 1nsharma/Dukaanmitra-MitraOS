@@ -32,10 +32,12 @@ const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = f
     { id: 'dashboard', label: 'Shop Ledger', icon: <LayoutDashboard size={20} />, path: '/dashboard' },
     { id: 'whatsapp', label: 'WhatsApp Munim', icon: <MessageSquare size={20} />, path: '/whatsapp' },
     { id: 'features', label: 'Features', icon: <Star size={20} />, path: '/features' },
+    { id: 'services', label: 'Services', icon: <Star size={20} />, path: '/services' },
     { id: 'blog', label: 'Insights Hub', icon: <BookOpen size={20} />, path: '/blog' },
     { id: 'pricing', label: 'Pricing', icon: <CreditCard size={20} />, path: '/pricing' },
     { id: 'faq', label: 'FAQ', icon: <HelpCircle size={20} />, path: '/faq' },
     { id: 'about', label: 'About Us', icon: <Info size={20} />, path: '/about' },
+    { id: 'contact', label: 'Contact', icon: <MessageSquare size={20} />, path: '/contact' },
   ];
 
   // OPS NAV
@@ -43,10 +45,12 @@ const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = f
     { id: 'admin', label: 'Platform Dashboard', icon: <ShieldCheck size={20} />, path: '/admin' },
     { id: 'seo', label: 'SEO Dashboard', icon: <Star size={20} />, path: '/seo-dashboard' },
     { id: 'features', label: 'Features', icon: <Star size={20} />, path: '/features' },
+    { id: 'services', label: 'Services', icon: <Star size={20} />, path: '/services' },
     { id: 'blog', label: 'Insights Hub', icon: <BookOpen size={20} />, path: '/blog' },
     { id: 'pricing', label: 'Pricing', icon: <CreditCard size={20} />, path: '/pricing' },
     { id: 'faq', label: 'FAQ', icon: <HelpCircle size={20} />, path: '/faq' },
     { id: 'about', label: 'About Us', icon: <Info size={20} />, path: '/about' },
+    { id: 'contact', label: 'Contact', icon: <MessageSquare size={20} />, path: '/contact' },
   ];
 
   const handleLogout = async () => {
@@ -62,8 +66,10 @@ const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = f
     activePath === '/' || 
     activePath === '/about' || 
     activePath === '/features' || 
+    activePath === '/services' ||
     activePath === '/pricing' || 
     activePath === '/faq' || 
+    activePath === '/contact' ||
     activePath === '/privacy' || 
     activePath === '/terms' || 
     activePath.startsWith('/blog') ||
@@ -80,11 +86,12 @@ const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = f
             </div>
             <h1 className="text-3xl font-black italic tracking-tighter text-slate-900">DukaanMitra</h1>
           </Link>
-          <div className="hidden lg:flex space-x-12 text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] items-center">
+          <div className="hidden lg:flex space-x-10 text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] items-center">
             <Link to="/features" className={cn("hover:text-indigo-600 transition-colors", activePath === '/features' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Features</Link>
+            <Link to="/services" className={cn("hover:text-indigo-600 transition-colors", activePath === '/services' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Services</Link>
             <Link to="/pricing" className={cn("hover:text-indigo-600 transition-colors", activePath === '/pricing' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Pricing</Link>
             <Link to="/about" className={cn("hover:text-indigo-600 transition-colors", activePath === '/about' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>About</Link>
-            <Link to="/faq" className={cn("hover:text-indigo-600 transition-colors", activePath === '/faq' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>FAQ</Link>
+            <Link to="/contact" className={cn("hover:text-indigo-600 transition-colors", activePath === '/contact' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Contact</Link>
             <Link to="/blog" className={cn("hover:text-indigo-600 transition-colors", activePath.startsWith('/blog') && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Insights Hub</Link>
           </div>
           <button 

@@ -19,6 +19,8 @@ import BlogPost from './components/BlogPost';
 import CityPage from './components/CityPage';
 import SeoDashboard from './components/SeoDashboard';
 import Layout from './components/Layout';
+import Contact from './components/Contact';
+import Services from './components/Services';
 import { UserRole } from './types';
 
 export default function App() {
@@ -97,6 +99,8 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/features" element={<Features />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/services" element={<Services />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />

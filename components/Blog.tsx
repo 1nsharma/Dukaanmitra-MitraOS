@@ -6,39 +6,46 @@ import { Link } from 'react-router-dom';
 const Blog: React.FC = () => {
   const posts = [
     {
+      title: "Kanpur me shop ko online kaise laaye - The Ultimate Guide",
+      slug: "kanpur-me-shop-ko-online-kaise-laaye",
+      excerpt: "Step by step process to get your Kanpur-based physical shop online using Google Business and WhatsApp. No apps needed.",
+      date: "April 18, 2026",
+      tag: "Local SEO"
+    },
+    {
+      title: "Google Business Profile Kaise Banaye (2026 Tutorial)",
+      slug: "google-business-profile-kaise-banaye",
+      excerpt: "Learn how to list your business on Google Maps correctly to rank number 1 in your city.",
+      date: "April 18, 2026",
+      tag: "Google Service"
+    },
+    {
+      title: "GBP Suspend Kyun Hota Hai Aur Ise Kaise Fix Karein?",
+      slug: "gbp-suspend-kyun-hota-hai",
+      excerpt: "Is your Google Business Profile suspended due to deceptive content or address mismatch? Learn the root causes and recovery steps.",
+      date: "April 18, 2026",
+      tag: "Recovery"
+    },
+    {
+      title: "WhatsApp Se Order Kaise Le - Small Business Guide",
+      slug: "whatsapp-se-order-kaise-le",
+      excerpt: "Stop paying high commissions. Setup WhatsApp Business catalogue and start taking direct deliveries from local customers.",
+      date: "April 17, 2026",
+      tag: "Growth"
+    },
+    {
+      title: "Local Business Ko Customer Kaise Mile - Top 5 Strategies",
+      slug: "local-business-ko-customer-kaise-mile",
+      excerpt: "Increase footfall at your physical shop by implementing these 5 digital and offline trust strategies.",
+      date: "April 17, 2026",
+      tag: "Strategy"
+    },
+    {
       title: "How to Manage Kirana Store Digitally in India (2026 Guide)",
       slug: "manage-kirana-store-digitally-india-2026",
       excerpt: "A complete step-by-step guide to transforming your traditional kirana shop into a digital powerhouse using AI and WhatsApp.",
       date: "April 11, 2026",
       tag: "Guide"
-    },
-    {
-      title: "Best Free Shop Management Apps in India",
-      slug: "best-free-shop-management-apps-india",
-      excerpt: "Discover the top free apps for managing your retail business, tracking inventory, and handling udhaar without complex software.",
-      date: "April 12, 2026",
-      tag: "Software"
-    },
-    {
-      title: "Daily Sales Tracking System for Small दुकानदार",
-      slug: "daily-sales-tracking-system-small-dukaandaar",
-      excerpt: "Learn how to easily track your daily sales and cash flow using simple digital tools designed for Indian merchants.",
-      date: "April 13, 2026",
-      tag: "Finance"
-    },
-    {
-      title: "Manual vs Digital Dukaan Management",
-      slug: "manual-vs-digital-dukaan-management",
-      excerpt: "Bahi-khata vs. AI Munim. We break down the pros, cons, and hidden costs of managing your shop manually versus going digital.",
-      date: "April 14, 2026",
-      tag: "Comparison"
-    },
-    {
-      title: "Top AI Tools for Small Retail Businesses",
-      slug: "top-ai-tools-small-retail-businesses",
-      excerpt: "Explore how Artificial Intelligence is helping small retail shops automate billing, marketing, and customer recovery.",
-      date: "April 15, 2026",
-      tag: "Technology"
     }
   ];
 
