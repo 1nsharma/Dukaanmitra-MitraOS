@@ -21,6 +21,8 @@ import SeoDashboard from './components/SeoDashboard';
 import Layout from './components/Layout';
 import Contact from './components/Contact';
 import Services from './components/Services';
+import HowItWorks from './components/HowItWorks';
+import CaseStudies from './components/CaseStudies';
 import { UserRole } from './types';
 
 export default function App() {
@@ -101,6 +103,8 @@ export default function App() {
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/case-studies" element={<CaseStudies />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />

@@ -5,32 +5,43 @@ import { Helmet } from 'react-helmet-async';
 
 const blogPosts = {
   "kanpur-me-shop-ko-online-kaise-laaye": {
-    title: "Kanpur me shop ko online kaise laaye - 2026 Guide",
-    description: "Step by step process to get your Kanpur-based physical shop online using Google Business and WhatsApp. No apps needed.",
+    title: "Kanpur me shop ko online kaise laaye - The Ultimate Guide for Shop Owners (2026)",
+    description: "Step by step process to get your Kanpur-based physical shop online using Google Business and WhatsApp. No apps needed. Learn how to grow your local dukaan digitally.",
     date: "April 18, 2026",
     author: "Amit Sharma",
     tag: "Local SEO",
     content: `
-      <h2>Kanpur me shop ko online kaise laaye?</h2>
-      <p><strong>Answer:</strong> Apni dukan ko online laane ka sabse aasan tarika hai Google Business Profile banana aur WhatsApp Business setup karna. Iske liye kisi mehengi website ya app ki zaroorat nahi hai.</p>
+      <h2>Kanpur me shop ko online kaise laaye? (A Step-by-Step Guide)</h2>
+      <p><strong>Dukan ko online laane ka fast tarika:</strong> Apni dukan ko online laane ka sabse aasan tarika hai Google Business Profile banana aur WhatsApp Business setup karna. Iske liye kisi mehengi website ya app ki zaroorat nahi hai.</p>
       
-      <h3>1. Google Business Profile Par Register Karein</h3>
-      <p>Sabse pehle locals ko aapki dukan dikhni chahiye.</p>
+      <h3>1. Google Business Profile Par Register Karein (Map Listing)</h3>
+      <p>Sabse pehle locals ko aapki dukan Google Maps par dikhni chahiye.</p>
       <ul>
         <li>Google maps par apni dukan ka real naam aur address dalein.</li>
         <li>Swaroop Nagar, Kakadeo ya apne local area ko accurately pin karein.</li>
         <li>Bahar ke signboard ki clear photo upload karein taaki profile suspend na ho.</li>
       </ul>
 
-      <h3>2. WhatsApp Business Account Banaye</h3>
+      <h3>2. WhatsApp Business Account Setup Karein</h3>
       <p>Kanpur me har customer WhatsApp use karta hai. Normal WhatsApp ko 'Business' me convert karein.</p>
       <ul>
         <li>Apne products ka catalogue WhatsApp me add karein.</li>
         <li>Auto-reply set karein jab aap dukan par busy hon.</li>
       </ul>
 
-      <h3>3. DukaanMitra Jaise tool use karein</h3>
-      <p>Stock aur udhaar WhatsApp pe hi <a href="/services">manage karein</a>.</p>
+      <h3>3. DukaanMitra Jaise AI Smart Tools Use Karein</h3>
+      <p>Stock aur udhaar WhatsApp pe hi <a href="/services">manage karein</a>. Isse aapko manual bahi-khata se chutkara milega.</p>
+
+      <h2>Important Links for Local Merchants:</h2>
+      <ul>
+        <li><a href="/kanpur">DukaanMitra Services in Kanpur</a></li>
+        <li><a href="/services">WhatsApp Automation for Small Shops</a></li>
+        <li><a href="/blog/gbp-suspend-kyun-hota-hai">Fixing Google Profile Suspension</a></li>
+      </ul>
+
+      <h2>Frequently Asked Questions (FAQs)</h2>
+      <h3>Kya ye service free hai?</h3>
+      <p>DukaanMitra ka trial version bilkul free hai. Aap <a href="/pricing">Pricing page</a> par plans check kar sakte hain.</p>
     `,
     schema: {
       "@context": "https://schema.org",
@@ -46,23 +57,29 @@ const blogPosts = {
     }
   },
   "google-business-profile-kaise-banaye": {
-    title: "Google Business Profile Kaise Banaye (Tutorial)",
-    description: "Learn how to list your business on Google Maps correctly to rank number 1 in your city.",
+    title: "Google Business Profile Kaise Banaye (2026 Tutorial for Indian Retailers)",
+    description: "Learn how to list your business on Google Maps correctly to rank number 1 in your city. Boost your shop's digital visibility in India.",
     date: "April 18, 2026",
     author: "Amit Sharma",
     tag: "Google Service",
     content: `
-      <h2>Google Business Profile Kaise Banaye?</h2>
+      <h2>Google Business Profile Kaise Banaye? (Step-by-Step Tutorial)</h2>
       <p><strong>Answer:</strong> Google Business Profile banane ke liye google.com/business par jayein, 'Manage Now' par click karein, apne business ki details (Naam, Category, Address) enter karein aur Mobile video ya Postcard ke through verification complete karein.</p>
       
-      <h3>Step-by-Step Guide:</h3>
+      <h3>Google Profile Setup Checklist:</h3>
       <ul>
-        <li><strong>Business Name:</strong> Bilkul wahi naam use karein jo aapke dukan ke board par hai. Extra keywords (e.g. "Raju Kirana - Best shop in Kanpur") mat dalein, suspend ho jayegi.</li>
-        <li><strong>Category:</strong> Primary category bahut important hai. 'Grocery Store' ya 'Retail' sahi se select karein.</li>
-        <li><strong>Address:</strong> Agar aapke paas physical shop hai tabhi address dalein. Agar ghar se service dete hain, to 'Service Area Business' chunein.</li>
+        <li><strong>Business Name:</strong> Bilkul wahi naam use karein jo aapke dukan ke board par hai. SEO ke liye extra keywords mat dalein.</li>
+        <li><strong>Category:</strong> Primary category bahut important hai. 'Grocery Store' ya 'General Store' sahi se select karein.</li>
+        <li><strong>Address:</strong> Agar aapke paas physical shop hai tabhi address dalein.</li>
       </ul>
 
-      <p>Need expert help? Chceck out our <a href="/services">Google Listing Services</a>.</p>
+      <p>For more local retail tips, visit our <a href="/services">Growth Services</a> page or check our <a href="/lucknow">Lucknow business guide</a>.</p>
+
+      <h2>Internal Links for Growth:</h2>
+      <ul>
+        <li><a href="/blog/local-business-ko-customer-kaise-mile">How to get more customers?</a></li>
+        <li><a href="/blog/gbp-suspend-kyun-hota-hai">Why GBP gets suspended?</a></li>
+      </ul>
     `,
     schema: {
       "@context": "https://schema.org",
@@ -78,24 +95,29 @@ const blogPosts = {
     }
   },
   "gbp-suspend-kyun-hota-hai": {
-    title: "GBP Suspend Kyun Hota Hai Aur Ise Kaise Fix Karein?",
-    description: "Is your Google Business Profile suspended due to deceptive content or address mismatch? Learn the root causes and recovery steps.",
+    title: "GBP Suspend Kyun Hota Hai Aur Ise Kaise Fix Karein? (2026 Fix Guide)",
+    description: "Is your Google Business Profile suspended due to deceptive content or address mismatch? Learn the root causes and recovery steps for Indian shop owners.",
     date: "April 18, 2026",
     author: "Amit Sharma",
     tag: "Recovery",
     content: `
-      <h2>GBP (Google Business Profile) Suspend Kyun Hota Hai?</h2>
-      <p><strong>Answer:</strong> Google aapki profile tab suspend karta hai jab aapke business ka naam, address ya details guideline ke khilaf hon, jaise fake address dena, board par likhe naam se alag naam likhna, ya residential pta as a storefront dikhana.</p>
+      <h2>GBP (Google Business Profile) Suspend Kyun Hota Hai? (Avoid These Mistakes)</h2>
+      <p><strong>Direct Answer:</strong> Google aapki profile tab suspend karta hai jab aapke business ka naam, address ya details guideline ke khilaf hon, jaise fake address dena, board par likhe naam se alag naam likhna, ya residential pta as a storefront dikhana.</p>
       
-      <h3>Top Reasons for Suspension:</h3>
+      <h3>Top Reasons for Suspension in India:</h3>
       <ul>
-        <li><strong>Name Mismatch:</strong> Aapka GST me naam 'Rakesh Enterprises' hai aur Google par 'Best Prices Grocery' likha hai.</li>
-        <li><strong>Residential Address:</strong> Agar aap ghar se operate kar rahe hain aur use shop dikha rahe hain.</li>
-        <li><strong>Keyword Stuffing:</strong> Dukan ke naam ke aage shehar ka naam jodna (e.g., Raju Sweets Kanpur).</li>
+        <li><strong>Name Mismatch:</strong> Board par kuch aur, Google par kuch aur.</li>
+        <li><strong>Keyword Stuffing:</strong> Adding 'Best Kirana' to your shop name on Google.</li>
+        <li><strong>Multiple Profiles:</strong> Creating many listings for the same shop.</li>
       </ul>
 
-      <h3>How to Fix it?</h3>
-      <p>Suspension appeal file karne se pehle apni profile ko completely correct karein. Apna GST certificate aur dukan ke bahar/andar ki clear photos (with signboard) ready rakhein. Agar then bhi fix nahi hota, to aap <a href="/contact">humse contact kar sakte hain</a> recovery ke liye.</p>
+      <p>If you're stuck, you can <a href="/contact">contact us</a> for expert recovery help or visit our <a href="/services">services page</a>.</p>
+
+      <h2>Recommended Reading:</h2>
+      <ul>
+        <li><a href="/blog/google-business-profile-kaise-banaye">Correct way to create a profile</a></li>
+        <li><a href="/blog/kanpur-me-shop-ko-online-kaise-laaye">Local Online Guide</a></li>
+      </ul>
     `,
     schema: {
       "@context": "https://schema.org",
@@ -111,22 +133,29 @@ const blogPosts = {
     }
   },
   "whatsapp-se-order-kaise-le": {
-    title: "WhatsApp Se Order Kaise Le - Growth Guide",
-    description: "Stop paying high commissions. Setup WhatsApp Business catalogue and start taking direct deliveries from local customers.",
+    title: "WhatsApp Se Order Kaise Le (Step-by-Step Guide for Shop Owners in India)",
+    description: "Stop paying high commissions. Setup WhatsApp Business catalogue and start taking direct orders from local customers. Grow your sales 2x using AI.",
     date: "April 17, 2026",
     author: "Amit Sharma",
     tag: "Growth",
     content: `
-      <h2>WhatsApp Se Order Kaise Le?</h2>
-      <p><strong>Answer:</strong> WhatsApp se order lene ke liye WhatsApp Business account install karein, usme 'Catalogue' banayein jisme apne items aur price dalein, aur apna link apne customers ko share karein taaki wo direct cart me item add karke order bhej sakein.</p>
+      <h2>WhatsApp Se Order Kaise Le? (3-Step Simplified Process)</h2>
+      <p><strong>Summary:</strong> WhatsApp se order lene ke liye WhatsApp Business account install karein, usme 'Catalogue' banayein jisme apne items aur price dalein, aur apna link apne customers ko share karein.</p>
       
-      <h3>3 Steps to WhatsApp Orders:</h3>
+      <h3>Setup Your WhatsApp Store:</h3>
       <ul>
-        <li>Catalogue me clear photos aur correct pricing update rakhein.</li>
-        <li>Auto-reply me ek Welcome message dalein jisme catalogue ka link ho.</li>
-        <li>Digital AI tools (jaise DukaanMitra) attach karein jo incoming orders ko khud ledger me note kar len.</li>
+        <li><strong>Catalogue:</strong> Add clear photos of your daily grocery items.</li>
+        <li><strong>Broadcast Lists:</strong> Use them to announce daily special offers.</li>
+        <li><strong>Automation:</strong> Use <a href="/services">DukaanMitra AI</a> to track these orders automatically.</li>
       </ul>
-      <p>Ye approach aapko aggregators ke heavy commission se bachata hai.</p>
+
+      <p>Digital shops in <a href="/delhi">Delhi</a> and <a href="/mumbai">Mumbai</a> are already using this strategy to bypass Zomato/Swiggy commissions.</p>
+
+      <h2>Internal Links:</h2>
+      <ul>
+        <li><a href="/blog/top-ai-tools-small-retail-businesses">AI Tools for Retailers</a></li>
+        <li><a href="/how-it-works">How DukaanMitra Works</a></li>
+      </ul>
     `,
     schema: {
       "@context": "https://schema.org",
@@ -142,21 +171,26 @@ const blogPosts = {
     }
   },
   "local-business-ko-customer-kaise-mile": {
-    title: "Local Business Ko Customer Kaise Mile - Top 5 Strategies",
-    description: "Increase footfall at your physical shop by implementing these 5 digital and offline trust strategies.",
+    title: "Local Business Ko Customer Kaise Mile (Top 5 Strategies for Indian Shops)",
+    description: "Increase footfall at your physical shop by implementing these 5 digital and offline trust strategies. Master local SEO and WhatsApp growth.",
     date: "April 17, 2026",
     author: "Amit Sharma",
     tag: "Strategy",
     content: `
-      <h2>Local Business Ko Naye Customer Kaise Mile?</h2>
-      <p><strong>Answer:</strong> Local business me footfall badhane ke liye Local SEO (Google Maps) strong karein, Justdial jaise platforms par verify karwayein, aur purane customers se WhatsApp ke thorough connected rahein taaki word-of-mouth badhe.</p>
+      <h2>Naye Customer Kaise Mile? (5 Best Strategies)</h2>
+      <p><strong>Answer:</strong> Local business me footfall badhane ke liye Local SEO (Google Maps) strong karein, Justdial jaise platforms par verify karwayein, aur purane customers se WhatsApp ke thorough connected rahein.</p>
       
-      <h3>Best Strategies:</h3>
+      <h3>Grow Your Shop Footfall:</h3>
       <ul>
-        <li><strong>Cross-platform Validation:</strong> IndiaMART, Justdial, aur Google Maps teeno jagah aapka NAP (Name, Address, Phone) bilkul exactly same hona chahiye. Isse AI ko "Entity Signal" milta hai aur ranking badhti hai.</li>
-        <li><strong>Post regular updates:</strong> Naya stock aaye toh Google Business Profile par photos post karein.</li>
-        <li><strong>WhatsApp Broadcasts:</strong> Apne regular customers ke liye ek Broadcast list banayein aur unhein special offers bhejein.</li>
+        <li><strong>NAP Consistency:</strong> Same Name, Address, Phone everywhere (Google, IndiaMART, Justdial).</li>
+        <li><strong>Offer Digital Bills:</strong> Use <a href="/services">shop management software</a> like DukaanMitra.</li>
       </ul>
+
+      <p>Visit our <a href="/blog/kanpur-me-shop-ko-online-kaise-laaye">Kanpur Online Guide</a> for a localized example.</p>
+
+      <h2>Frequently Asked Questions</h2>
+      <h3>Kya social media dukan ke liye zaroorat hai?</h3>
+      <p>Dukan ke liye WhatsApp Status aur Google Maps baaki platforms se zyada useful hain.</p>
     `,
     schema: {
       "@context": "https://schema.org",

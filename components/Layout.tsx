@@ -67,6 +67,8 @@ const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = f
     activePath === '/about' || 
     activePath === '/features' || 
     activePath === '/services' ||
+    activePath === '/how-it-works' ||
+    activePath === '/case-studies' ||
     activePath === '/pricing' || 
     activePath === '/faq' || 
     activePath === '/contact' ||
@@ -89,6 +91,8 @@ const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = f
           <div className="hidden lg:flex space-x-10 text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] items-center">
             <Link to="/features" className={cn("hover:text-indigo-600 transition-colors", activePath === '/features' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Features</Link>
             <Link to="/services" className={cn("hover:text-indigo-600 transition-colors", activePath === '/services' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Services</Link>
+            <Link to="/how-it-works" className={cn("hover:text-indigo-600 transition-colors", activePath === '/how-it-works' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>How It Works</Link>
+            <Link to="/case-studies" className={cn("hover:text-indigo-600 transition-colors", activePath === '/case-studies' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Success Stories</Link>
             <Link to="/pricing" className={cn("hover:text-indigo-600 transition-colors", activePath === '/pricing' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Pricing</Link>
             <Link to="/about" className={cn("hover:text-indigo-600 transition-colors", activePath === '/about' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>About</Link>
             <Link to="/contact" className={cn("hover:text-indigo-600 transition-colors", activePath === '/contact' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Contact</Link>

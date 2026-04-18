@@ -12,7 +12,8 @@ const cityData = {
     keywords: "kirana software lucknow, dukaan app lucknow, retail management lucknow, shop automation lucknow",
     stats: "500+ Shops in Lucknow",
     testimonial: "Lucknow ke dukaandaaro ke liye DukaanMitra sabse bada vardaan hai. Ab bahi-khata ki tension khatam!",
-    author: "Rajesh Kumar, Aminabad"
+    author: "Rajesh Kumar, Aminabad",
+    localTips: "Lucknow markets like Aminabad and Chowk are seeing a massive shift to digital payments. DukaanMitra helps local merchants track these UPI payments alongside cash automatically."
   },
   "kanpur": {
     name: "Kanpur",
@@ -21,7 +22,48 @@ const cityData = {
     keywords: "kirana store software kanpur, retail software kanpur, dukaan management kanpur, business automation kanpur",
     stats: "750+ Shops in Kanpur",
     testimonial: "Kanpur ki bheed mein hisaab rakhna mushkil tha, par DukaanMitra ne sab asaan kar diya.",
-    author: "Suresh Gupta, Gumti No. 5"
+    author: "Suresh Gupta, Gumti No. 5",
+    localTips: "In Kanpur's busy hubs like Naveen Market, speed is key. Our AI parses voice notes and texts in seconds, perfect for high-volume traders."
+  },
+  "delhi": {
+    name: "Delhi",
+    title: "Enterprise Retail App Delhi | Digital Shop Software NCR",
+    description: "Scale your Delhi retail empire with DukaanMitra. Advanced automation for Delhi's competitive markets from Chandni Chowk to Karol Bagh.",
+    keywords: "kirana software delhi, retail app delhi, shop management software delhi, business automation delhi",
+    stats: "1200+ Shops in Delhi NCR",
+    testimonial: "Delhi NCR ke competitive market mein DukaanMitra humein edge deta hai.",
+    author: "Mohit Jain, Chandni Chowk",
+    localTips: "Delhi merchants use DukaanMitra to handle both local customers and wholesale tracking efficiently."
+  },
+  "mumbai": {
+    name: "Mumbai",
+    title: "Retail Automation Mumbai | Smart Dukaan App Maharashtra",
+    description: "Automate your Mumbai shop with India's smartest AI Munim. Trusted by retailers across Mumbai and Navi Mumbai.",
+    keywords: "kirana software mumbai, retail management mumbai, dukaan app mumbai, business automation mumbai",
+    stats: "1000+ Shops in Mumbai",
+    testimonial: "Mumbai local jaisi tezi chahiye shop management mein, aur woh DukaanMitra deta hai.",
+    author: "Vikas Patil, Dadar",
+    localTips: "Mumbai's high real estate costs mean you need efficient inventory. Tracking dead stock helps save space."
+  },
+  "bangalore": {
+    name: "Bangalore",
+    title: "Tech-Forward Retail App Bangalore | Kirana Software Bengaluru",
+    description: "Bring the Silicon Valley efficiency to your Bangalore kirana store. AI-driven shop management for modern Karnataka retailers.",
+    keywords: "kirana software bangalore, retail app bangalore, shop management software bengaluru, business automation karnataka",
+    stats: "850+ Shops in Bangalore",
+    testimonial: "Tech city ke liye tech-smart munim! DukaanMitra is revolutionary.",
+    author: "Ananth K, Indiranagar",
+    localTips: "Bangalore customers expect digital bills. DukaanMitra sends them instantly via WhatsApp."
+  },
+  "pune": {
+    name: "Pune",
+    title: "Smart Shop Management Pune | Retail Software Maharashtra",
+    description: "The most efficient way to manage your retail business in Pune. Simplify bahi-khata and recover udhaar faster with AI.",
+    keywords: "kirana software pune, retail app pune, shop management software pune, business automation maharashtra",
+    stats: "600+ Shops in Pune",
+    testimonial: "Pune ki dukaano ke liye sabse asaan digital tool.",
+    author: "Abhishek Deshmukh, Kothrud",
+    localTips: "Pune merchants prefer our clean analytics to track monthly growth trends."
   }
 };
 
@@ -128,6 +170,41 @@ const CityPage: React.FC = () => {
                 <p className="text-sm font-black italic text-slate-900">{data.author}</p>
                 <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">{data.stats}</p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 px-6 lg:px-20 bg-slate-50">
+        <div className="max-w-6xl mx-auto space-y-12">
+          <div className="text-center space-y-4">
+            <h2 className="text-3xl md:text-5xl font-black italic tracking-tighter uppercase text-slate-900 leading-none">
+              Local Insights for {data.name} Retailers
+            </h2>
+            <p className="text-xl text-slate-500 font-bold italic">{data.localTips}</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-white p-10 rounded-[3rem] shadow-xl border border-slate-100 space-y-6">
+              <h3 className="text-2xl font-black italic text-slate-900 uppercase">Related Guides for {data.name}</h3>
+              <ul className="space-y-4">
+                <li>
+                  <Link to="/blog/kanpur-me-shop-ko-online-kaise-laaye" className="text-indigo-600 font-black italic text-lg hover:underline block leading-tight">
+                    • How to take your {data.name} based physical shop online?
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/blog/gbp-suspend-kyun-hota-hai" className="text-indigo-600 font-black italic text-lg hover:underline block leading-tight">
+                    • Fixing your shop's Google Maps location issues in {data.name}.
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div className="bg-white p-10 rounded-[3rem] shadow-xl border border-slate-100 space-y-6">
+              <h3 className="text-2xl font-black italic text-slate-900 uppercase">Our Presence in {data.name}</h3>
+              <p className="text-slate-500 font-medium leading-relaxed">
+                DukaanMitra is actively partnering with local merchant associations in {data.name} to digitize the traditional kirana ecosystem. We believe in "Local First, Digital Next".
+              </p>
             </div>
           </div>
         </div>
