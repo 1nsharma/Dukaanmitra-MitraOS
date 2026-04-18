@@ -225,12 +225,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, isLoggedIn }) => {
               Transform your Kirana shop with India's first AI-powered WhatsApp Munim. No app downloads. Just message "Rahul 500" and you're done.
             </p>
             <div className="hero-text flex flex-col sm:flex-row gap-6">
-              <button 
-                onClick={isLoggedIn ? () => navigate('/dashboard') : onStart}
-                className="bg-white text-indigo-900 px-8 py-4 sm:px-12 sm:py-6 rounded-[2.5rem] font-black text-xl sm:text-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] hover:scale-105 hover:bg-slate-100 transition-all active:scale-[0.98] italic tracking-tighter"
+              <a 
+                href="https://whatsapp.com/channel/0029VbBxi9eJZg4DGvYpBx0U" target="_blank" rel="noopener noreferrer"
+                className="bg-white text-indigo-900 px-8 py-4 sm:px-12 sm:py-6 rounded-[2.5rem] font-black text-xl sm:text-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] hover:scale-105 hover:bg-slate-100 transition-all active:scale-[0.98] italic tracking-tighter text-center"
               >
                 Start managing your dukaan smarter today 🚀
-              </button>
+              </a>
               <button className="bg-transparent border-[3px] border-white/30 px-8 py-4 sm:px-12 sm:py-6 rounded-[2.5rem] font-black text-xl sm:text-2xl hover:bg-white/10 transition-all shadow-xl italic tracking-tighter">
                 Watch Demo 🎥
               </button>
@@ -635,7 +635,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, isLoggedIn }) => {
               <div className="bg-white/5 p-8 rounded-[3rem] border border-white/10 space-y-4">
                 <p className="text-[10px] font-black uppercase tracking-widest text-emerald-400">Step 1</p>
                 <h4 className="text-2xl font-black italic tracking-tighter uppercase">Start Free Trial</h4>
-                <p className="text-sm font-bold opacity-60">Just WhatsApp "START" to +91 63937 41171</p>
+                <p className="text-sm font-bold opacity-60">Join our WhatsApp Channel to activate your Munim.</p>
               </div>
               <div className="bg-white/5 p-8 rounded-[3rem] border border-white/10 space-y-4">
                 <p className="text-[10px] font-black uppercase tracking-widest text-indigo-400">Step 2</p>
@@ -643,9 +643,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, isLoggedIn }) => {
                 <p className="text-sm font-bold opacity-60">See Munim in Action (2-minute video)</p>
               </div>
             </div>
-            <button className="w-full md:w-auto px-16 py-8 bg-emerald-500 text-slate-900 rounded-[3rem] font-black text-3xl hover:bg-emerald-400 transition-all shadow-2xl active:scale-95 italic tracking-tighter">
-              Call Us: +91 63937 41171
-            </button>
+            <a href="https://whatsapp.com/channel/0029VbBxi9eJZg4DGvYpBx0U" target="_blank" rel="noopener noreferrer" className="inline-block w-full md:w-auto px-16 py-8 bg-emerald-500 text-slate-900 rounded-[3rem] font-black text-3xl hover:bg-emerald-400 transition-all shadow-2xl active:scale-95 italic tracking-tighter text-center">
+              Join WhatsApp Channel
+            </a>
           </div>
         </div>
       </section>
@@ -662,7 +662,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, isLoggedIn }) => {
 
       {/* WhatsApp Floating Button */}
       <a 
-        href="https://wa.me/916393741171?text=START" 
+        href="https://whatsapp.com/channel/0029VbBxi9eJZg4DGvYpBx0U" 
         target="_blank" 
         rel="noopener noreferrer"
         className="whatsapp-float bg-emerald-500 text-white w-20 h-20 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all active:scale-95 group"

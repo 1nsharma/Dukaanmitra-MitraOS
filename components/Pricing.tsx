@@ -29,9 +29,9 @@ const Pricing: React.FC = () => {
                 </li>
               ))}
             </ul>
-            <button className={`w-full py-4 rounded-2xl font-black uppercase tracking-widest transition active:scale-95 ${p.popular ? 'bg-white text-indigo-600' : 'bg-indigo-600 text-white hover:bg-indigo-700'}`}>
+            <a href="https://whatsapp.com/channel/0029VbBxi9eJZg4DGvYpBx0U" target="_blank" rel="noopener noreferrer" className={`block text-center w-full py-4 rounded-2xl font-black uppercase tracking-widest transition active:scale-95 ${p.popular ? 'bg-white text-indigo-600' : 'bg-indigo-600 text-white hover:bg-indigo-700'}`}>
               Get Started
-            </button>
+            </a>
           </div>
         ))}
       </div>

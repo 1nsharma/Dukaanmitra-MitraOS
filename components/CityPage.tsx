@@ -137,12 +137,13 @@ const CityPage: React.FC = () => {
         <div className="max-w-4xl mx-auto space-y-8">
           <h2 className="text-4xl md:text-6xl font-black italic tracking-tighter uppercase">Join the {data.name} Retail Revolution</h2>
           <p className="text-xl font-bold italic opacity-90">Stop wasting time on manual entries. Let AI handle your dukaan.</p>
-          <Link 
-            to="/"
+          <a 
+            href="https://whatsapp.com/channel/0029VbBxi9eJZg4DGvYpBx0U"
+            target="_blank" rel="noopener noreferrer"
             className="bg-slate-900 text-white px-12 py-6 rounded-[2.5rem] font-black text-2xl shadow-2xl hover:bg-white hover:text-indigo-600 transition-all inline-block italic tracking-tighter"
           >
             Start Your 14-Day Free Trial ➔
-          </Link>
+          </a>
         </div>
       </section>
     </div>
