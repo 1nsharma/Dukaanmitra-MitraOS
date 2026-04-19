@@ -120,26 +120,34 @@ const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = f
 
         {/* Public Footer */}
         <footer className="bg-slate-900 text-white pt-16 pb-8 overflow-hidden mt-auto border-t border-slate-800">
-          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-12 mb-16 relative z-10">
+          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-12 mb-16 relative z-10">
             <div className="space-y-4">
               <h3 className="text-2xl font-black italic tracking-tighter text-white">DukaanMitra</h3>
               <p className="text-slate-400 text-sm font-medium leading-relaxed">India's first WhatsApp-based AI Munim. Simplifying accounting and udhaar recovery for Bharat's retailers.</p>
             </div>
             <div className="space-y-4">
-              <h4 className="text-white font-black uppercase tracking-widest text-xs opacity-70">Trust & Compliance</h4>
-              <ul className="space-y-2 text-sm text-slate-300 font-medium">
-                <li className="flex items-center gap-2"><span className="text-emerald-500">✓</span> MSME Registered Enterprise</li>
-                <li className="flex items-center gap-2"><span className="text-emerald-500">✓</span> GSTIN: 09EK... (In Process)</li>
-                <li className="flex items-center gap-2"><span className="text-emerald-500">✓</span> 100% Data Encryption (Firebase)</li>
+              <h4 className="text-white font-black uppercase tracking-widest text-xs opacity-70">Products</h4>
+              <ul className="space-y-2 text-sm text-slate-300 font-bold">
+                <li><Link to="/udhaar-management-app" className="hover:text-emerald-400 transition-colors">Udhaar App</Link></li>
+                <li><Link to="/whatsapp-shop-management" className="hover:text-emerald-400 transition-colors">WhatsApp Munim</Link></li>
+                <li><Link to="/get-more-google-reviews-for-shop" className="hover:text-emerald-400 transition-colors">Google Reviews Tool</Link></li>
+                <li><Link to="/pricing" className="hover:text-emerald-400 transition-colors">Pricing</Link></li>
               </ul>
             </div>
             <div className="space-y-4">
-              <h4 className="text-white font-black uppercase tracking-widest text-xs opacity-70">Registered Office</h4>
-              <ul className="space-y-2 text-sm text-slate-300 font-medium">
-                <li>DukaanMitra Technologies</li>
-                <li>Swaroop Nagar</li>
-                <li>Kanpur, Uttar Pradesh 208005</li>
-                <li>Bharat (India)</li>
+              <h4 className="text-white font-black uppercase tracking-widest text-xs opacity-70">Compare To Alternatives</h4>
+              <ul className="space-y-2 text-sm text-slate-300 font-bold">
+                <li><Link to="/compare/okcredit" className="hover:text-emerald-400 transition-colors">vs OkCredit</Link></li>
+                <li><Link to="/compare/khatabook" className="hover:text-emerald-400 transition-colors">vs KhataBook</Link></li>
+                <li><Link to="/compare/vyapar" className="hover:text-emerald-400 transition-colors">vs Vyapar</Link></li>
+              </ul>
+            </div>
+            <div className="space-y-4">
+              <h4 className="text-white font-black uppercase tracking-widest text-xs opacity-70">Resources</h4>
+              <ul className="space-y-2 text-sm text-slate-300 font-bold">
+                <li><Link to="/blog" className="hover:text-emerald-400 transition-colors">Insights Hub</Link></li>
+                <li><Link to="/free-tools" className="hover:text-emerald-400 transition-colors">Free Tools</Link></li>
+                <li><Link to="/templates" className="hover:text-emerald-400 transition-colors">Templates</Link></li>
               </ul>
             </div>
           </div>

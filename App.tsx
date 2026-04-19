@@ -25,6 +25,11 @@ import HowItWorks from './components/HowItWorks';
 import CaseStudies from './components/CaseStudies';
 import FreeTools from './components/FreeTools';
 import Templates from './components/Templates';
+import { WhatsAppShopManagement } from './components/WhatsAppShopManagement';
+import { GoogleReviewsShop } from './components/GoogleReviewsShop';
+import { UdhaarManagementApp } from './components/UdhaarManagementApp';
+import { ComparisonPage } from './components/ComparisonPage';
+import { ProgrammaticSeoPage } from './components/ProgrammaticSeoPage';
 import { UserRole } from './types';
 
 export default function App() {
@@ -115,6 +120,11 @@ export default function App() {
         <Route path="/seo-dashboard" element={<SeoDashboard />} />
         <Route path="/privacy" element={<PrivacyPolicy onBack={() => {}} />} />
         <Route path="/terms" element={<TermsOfService onBack={() => {}} />} />
+        <Route path="/whatsapp-shop-management" element={<WhatsAppShopManagement />} />
+        <Route path="/get-more-google-reviews-for-shop" element={<GoogleReviewsShop />} />
+        <Route path="/udhaar-management-app" element={<UdhaarManagementApp />} />
+        <Route path="/compare/:competitor" element={<ComparisonPage />} />
+        <Route path="/p/:slug" element={<ProgrammaticSeoPage />} />
         <Route path="/:city" element={<CityPage />} />
 
         {/* Merchant Routes */}
