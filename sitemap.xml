@@ -288,27 +288,119 @@
 
   <!-- COMPLIANCE PAGES -->
   <url>
-    <loc>https://dukaanmitra.in/about</loc>
-    <lastmod>2026-04-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://dukaanmitra.in/faq</loc>
     <lastmod>2026-04-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-  <url>
-    <loc>https://dukaanmitra.in/privacy</loc>
-    <lastmod>2026-04-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://dukaanmitra.in/terms</loc>
-    <lastmod>2026-04-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
+  <!-- MASS PROGRAMMATIC CITIES -->
+  <url><loc>https://dukaanmitra.in/agra</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/aligarh</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/allahabad</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/amritsar</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/aurangabad</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/bareilly</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/bhavnagar</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/bhiwandi</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/bhopal</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/bhubaneswar</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/bikaner</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/chandigarh</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/coimbatore</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/cuttack</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/dehradun</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/dhanbad</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/bhilai</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/durgapur</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/erode</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/faridabad</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/firozabad</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/ghaziabad</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/gorakhpur</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/gulbarga</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/guntur</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/gwalior</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/guwahati</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/hubli</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/indore</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/jabalpur</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/jalandhar</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/jalgaon</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/jamnagar</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/jamshedpur</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/jhansi</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/jodhpur</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/kakinada</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/kochi</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/kolhapur</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/kollam</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/kota</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/kozhikode</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/kurnool</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/ludhiana</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/madurai</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/malegaon</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/mangalore</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/meerut</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/moradabad</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/mysore</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/nagpur</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/nanded</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/nashik</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/nellore</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/noida</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/patna</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/pondicherry</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/raipur</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/rajkot</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/rajahmundry</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/ranchi</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/rourkela</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/salem</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/sangli</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/siliguri</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/solapur</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/srinagar</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/thiruvananthapuram</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/thrissur</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/tiruchirappalli</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/tirunelveli</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/tiruppur</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/ujjain</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/vadodara</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/varanasi</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/vasai-virar</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/vijayawada</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/visakhapatnam</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/warangal</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/gurgaon</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/ajmer</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/akola</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/ulhasnagar</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/saharanpur</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/rohtak</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/mathura</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dukaanmitra.in/gaya</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  
+  <!-- MASS PROGRAMMATIC LONG-TAIL TOOLS -->
+  <url><loc>https://dukaanmitra.in/p/best-billing-software-for-mobile-shop</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dukaanmitra.in/p/garment-shop-software-free</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dukaanmitra.in/p/hardware-shop-billing-app</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dukaanmitra.in/p/medical-store-software-india</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dukaanmitra.in/p/supermarket-billing-software-free-download</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dukaanmitra.in/p/jewellery-shop-management-software</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dukaanmitra.in/p/sweet-shop-billing-software</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dukaanmitra.in/p/footwear-shop-software</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dukaanmitra.in/p/electronics-shop-billing-app</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dukaanmitra.in/p/kirana-khata-app-for-pc</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dukaanmitra.in/p/bina-internet-ke-billing-machine</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dukaanmitra.in/p/whatsapp-par-customer-ko-bill-kaise-bheje</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dukaanmitra.in/p/auto-parts-shop-free-billing</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dukaanmitra.in/p/grocery-shop-inventory-excel</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dukaanmitra.in/p/retail-shop-accounting-software</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dukaanmitra.in/p/free-gst-billing-software</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dukaanmitra.in/p/mobile-accessories-shop-software</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dukaanmitra.in/p/kirana-shop-profit-calculator</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dukaanmitra.in/p/whatsapp-catalog-maker-app</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dukaanmitra.in/p/digital-payment-tracker-for-shop</loc><lastmod>2026-04-20</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
 </urlset>

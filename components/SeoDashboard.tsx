@@ -13,22 +13,18 @@ import {
   AlertCircle,
   Zap,
   Globe,
-  ArrowUpRight
+  ArrowUpRight,
+  Database
 } from 'lucide-react';
 import { generateSEOContent } from '../services/geminiService';
+import { seoBlueprintMatrix, generateSampleKeywords } from '../lib/seoBlueprintData';
 
 const SeoDashboard: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'keywords' | 'backlinks' | 'content'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'keywords' | 'backlinks' | 'content' | 'blueprint'>('overview');
   const [generating, setGenerating] = useState(false);
   const [generatedContent, setGeneratedContent] = useState<{title: string, content: string, meta: string} | null>(null);
 
-  const keywords = [
-    { term: "best dukaan management app", rank: 12, trend: "+4", difficulty: "Medium", volume: "1.2k" },
-    { term: "kirana store software india", rank: 8, trend: "+2", difficulty: "High", volume: "2.5k" },
-    { term: "how to manage udhaar digitally", rank: 3, trend: "0", difficulty: "Low", volume: "800" },
-    { term: "retail automation lucknow", rank: 15, trend: "+10", difficulty: "Low", volume: "450" },
-    { term: "smart munim app", rank: 45, trend: "+5", difficulty: "Medium", volume: "1.1k" },
-  ];
+  const keywords = generateSampleKeywords();
 
   const backlinks = [
     { site: "YourStory", status: "Live", type: "Guest Post", authority: 85 },
@@ -78,9 +74,10 @@ const SeoDashboard: React.FC = () => {
         </div>
 
         {/* Tabs */}
-        <div className="flex bg-white p-2 rounded-3xl shadow-sm border border-slate-100 w-fit">
+        <div className="flex bg-white p-2 rounded-3xl shadow-sm border border-slate-100 w-fit overflow-x-auto max-w-full">
           {[
             { id: 'overview', label: 'Overview', icon: BarChart3 },
+            { id: 'blueprint', label: 'Keyword Blueprint', icon: Database },
             { id: 'keywords', label: 'Keywords', icon: Search },
             { id: 'backlinks', label: 'Backlinks', icon: LinkIcon },
             { id: 'content', label: 'Content Engine', icon: FileText },
@@ -88,7 +85,7 @@ const SeoDashboard: React.FC = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all ${
+              className={`flex shrink-0 items-center gap-2 px-6 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all ${
                 activeTab === tab.id ? 'bg-slate-900 text-white shadow-xl' : 'text-slate-400 hover:text-slate-600'
               }`}
             >
@@ -100,6 +97,74 @@ const SeoDashboard: React.FC = () => {
 
         {/* Content Area */}
         <div className="grid lg:grid-cols-3 gap-12">
+          {activeTab === 'blueprint' && (
+            <div className="lg:col-span-3 space-y-12">
+              <div className="bg-indigo-600 p-12 rounded-[4rem] text-white space-y-6 relative overflow-hidden">
+                <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
+                <div className="inline-flex items-center space-x-3 bg-white/20 px-5 py-2 rounded-full border border-white/20">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span className="text-[10px] font-black uppercase tracking-widest">Live Engine</span>
+                </div>
+                <h2 className="text-4xl md:text-5xl font-black italic tracking-tighter uppercase relative z-10">1000+ Keyword Blueprint Matrix</h2>
+                <p className="text-indigo-100 font-bold text-lg max-w-2xl relative z-10">
+                  This isn't a static list. This is the programmatic architecture that generates over 1000 targeted search terms across High Intent, Compare, and Local verticals. 
+                </p>
+                <div className="flex gap-4 pt-4 relative z-10">
+                   <div className="bg-white/10 p-6 rounded-3xl border border-white/20">
+                      <p className="text-xs font-black uppercase tracking-widest text-indigo-300">Total Reach</p>
+                      <p className="text-4xl font-black italic">1,025</p>
+                   </div>
+                   <div className="bg-white/10 p-6 rounded-3xl border border-white/20">
+                      <p className="text-xs font-black uppercase tracking-widest text-emerald-300">Est. Search Vol.</p>
+                      <p className="text-4xl font-black italic">325K+</p>
+                   </div>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {Object.entries(seoBlueprintMatrix).map(([key, pillar]) => (
+                  <div key={key} className="bg-white p-8 rounded-[3rem] shadow-xl border border-slate-100 space-y-6 hover:scale-105 transition-transform group">
+                    <div className="flex items-start justify-between">
+                       <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
+                          pillar.intent.includes('High') ? 'bg-indigo-100 text-indigo-600' :
+                          pillar.intent.includes('Local') ? 'bg-emerald-100 text-emerald-600' :
+                          'bg-amber-100 text-amber-600'
+                       }`}>
+                         {pillar.intent}
+                       </span>
+                       <span className="text-xs font-black italic text-slate-400">{pillar.generatedCount} Pages</span>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-black italic text-slate-900 uppercase leading-tight mb-2">{pillar.title}</h3>
+                      <p className="text-xs font-bold text-slate-500 italic">Volume: {pillar.estimatedVolume.toLocaleString()} / mo</p>
+                    </div>
+                    <div className="space-y-2 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Seed Modifiers</p>
+                      {pillar.seedKeywords.slice(0,4).map((k, i) => (
+                        <div key={i} className="text-xs font-bold italic text-slate-700 before:content-['→'] before:mr-2 before:text-indigo-400">
+                          {k}
+                        </div>
+                      ))}
+                      {pillar.seedKeywords.length > 4 && (
+                        <div className="text-xs font-black text-slate-400 italic">+{pillar.seedKeywords.length - 4} more...</div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-slate-900 p-12 rounded-[4rem] text-center space-y-8 relative overflow-hidden">
+                 <h3 className="text-3xl font-black italic text-white uppercase tracking-tight">Deploy Programmatic Engine</h3>
+                 <p className="text-slate-400 text-lg font-bold italic max-w-2xl mx-auto">
+                   The architecture is loaded. Ready to spin up 100+ highly optimized City and Tool pages based on this blueprint?
+                 </p>
+                 <button className="bg-emerald-500 text-slate-900 px-10 py-5 rounded-[2rem] font-black uppercase tracking-widest hover:bg-emerald-400 transition-all shadow-[0_0_30px_rgba(16,185,129,0.3)]">
+                   Trigger Mass Generation
+                 </button>
+              </div>
+            </div>
+          )}
+
           {activeTab === 'overview' && (
             <>
               <div className="lg:col-span-2 space-y-8">

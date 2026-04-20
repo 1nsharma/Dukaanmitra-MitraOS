@@ -61,7 +61,8 @@ service cloud.firestore {
 
     function isAdmin() {
       return isAuthenticated() && 
-        (get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role == 'superadmin' ||
+        ((exists(/databases/$(database)/documents/admins/$(request.auth.uid)) && 
+          get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role == 'superadmin') ||
          (request.auth.token.email == "AMITSHARMA99976@gmail.com" && request.auth.token.email_verified == true));
     }
 
@@ -120,6 +121,12 @@ service cloud.firestore {
     match /admins/{adminUid} {
       allow read: if isAuthenticated() && (request.auth.uid == adminUid || isAdmin());
       allow write: if isAdmin();
+    }
+
+    // Merchants
+    match /merchants/{merchantUid} {
+      allow read: if isAuthenticated() && (request.auth.uid == merchantUid || isAdmin());
+      allow write: if isAuthenticated() && (request.auth.uid == merchantUid || isAdmin());
     }
   }
 }

@@ -165,6 +165,20 @@ const Blog: React.FC = () => {
           ))}
         </div>
       </div>
+
+      <div className="mt-24 bg-slate-50 border border-slate-200 rounded-[3rem] p-12 lg:p-16 text-center space-y-10">
+        <div className="space-y-4">
+          <h2 className="text-3xl font-black text-slate-900 italic tracking-tighter uppercase">Explore Our Tools</h2>
+          <p className="text-slate-500 font-bold italic max-w-2xl mx-auto">Ready to apply what you've learned? Check out our key solutions below.</p>
+        </div>
+        <div className="flex flex-wrap justify-center gap-4">
+          <Link to="/whatsapp-shop-management" className="px-6 py-3 bg-white border border-indigo-100 text-indigo-700 font-black text-xs uppercase tracking-widest rounded-full hover:bg-indigo-50 transition-colors shadow-sm">WhatsApp Munim</Link>
+          <Link to="/udhaar-management-app" className="px-6 py-3 bg-white border border-indigo-100 text-indigo-700 font-black text-xs uppercase tracking-widest rounded-full hover:bg-indigo-50 transition-colors shadow-sm">Udhaar Tracking App</Link>
+          <Link to="/get-more-google-reviews-for-shop" className="px-6 py-3 bg-white border border-indigo-100 text-indigo-700 font-black text-xs uppercase tracking-widest rounded-full hover:bg-indigo-50 transition-colors shadow-sm">Review Automator</Link>
+          <Link to="/compare/khatabook" className="px-6 py-3 bg-white border border-indigo-100 text-indigo-700 font-black text-xs uppercase tracking-widest rounded-full hover:bg-indigo-50 transition-colors shadow-sm">vs KhataBook</Link>
+          <Link to="/compare/okcredit" className="px-6 py-3 bg-white border border-indigo-100 text-indigo-700 font-black text-xs uppercase tracking-widest rounded-full hover:bg-indigo-50 transition-colors shadow-sm">vs OkCredit</Link>
+        </div>
+      </div>
     </div>
   );
 };

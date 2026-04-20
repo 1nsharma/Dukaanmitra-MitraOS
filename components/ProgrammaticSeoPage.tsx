@@ -129,7 +129,34 @@ const seoPagesDatabase: Record<string, SeoPageData> = {
 
 export const ProgrammaticSeoPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const data = slug ? seoPagesDatabase[slug.toLowerCase()] : null;
+  let data = slug ? seoPagesDatabase[slug.toLowerCase()] : null;
+
+  if (!data && slug) {
+    const formattedTitle = slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    data = {
+      category: "Growth",
+      title: `${formattedTitle} | DukaanMitra AI Solutions`,
+      metaDesc: `Discover the best automated solutions for ${formattedTitle} using DukaanMitra's WhatsApp-first AI engine.`,
+      keywords: `${slug.replace(/-/g, ' ')}, small business tools india, retail shop software`,
+      h1: formattedTitle,
+      subtitle: "Transform your dukaan business practically with AI automation.",
+      problemHeading: "The Traditional Hassle",
+      problems: [
+        "Manual tracking takes up to 3 hours daily", 
+        "Losing track of important financial data", 
+        "Inefficient customer retention flow", 
+        "Competitive disadvantage against modern marts"
+      ],
+      solutionHeading: "The AI-Powered Path",
+      solutions: [
+        "100% automated WhatsApp workflows", 
+        "Zero staff training required", 
+        "Data-driven business decisions", 
+        "Increase overall GMV margins"
+      ],
+      ctaText: "Get Started Now"
+    };
+  }
 
   if (!data) {
     return <Navigate to="/blog" replace />; // Fallback if slug not found

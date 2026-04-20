@@ -141,7 +141,22 @@ const cityData = {
 
 const CityPage: React.FC = () => {
   const { city } = useParams<{ city: string }>();
-  const data = city ? cityData[city.toLowerCase() as keyof typeof cityData] : null;
+  let data = city ? cityData[city.toLowerCase() as keyof typeof cityData] : null;
+
+  if (!data && city) {
+    const formattedCity = city.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    data = {
+      name: formattedCity,
+      title: `Best Dukaan & Kirana Software in ${formattedCity} | DukaanMitra`,
+      description: `Empowering ${formattedCity}'s retail stores with AI-powered WhatsApp automation. Start managing udhaar and billing digitally.`,
+      keywords: `kirana software ${formattedCity}, dukaan app ${formattedCity}, retail management ${formattedCity}, shop automation ${formattedCity}`,
+      stats: `Trusted Local Business Tool`,
+      testimonial: `${formattedCity} ke dukaandaaron ke liye sabse asaan WhatsApp munim. Zero tracking errors aur faster udhaar recovery.`,
+      author: "Local Merchant",
+      localTips: `Digital payments are booming in ${formattedCity}. DukaanMitra helps local merchants track these alongside cash automatically.`,
+      cityGuides: ["kanpur-me-shop-ko-online-kaise-laaye", "whatsapp-se-order-kaise-le"]
+    };
+  }
 
   if (!data) {
     return (

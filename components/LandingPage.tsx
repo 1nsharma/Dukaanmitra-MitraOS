@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import anime from 'animejs';
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
+import { WhatsAppSimulation } from './WhatsAppSimulation';
 
 const LandingPage: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -208,32 +209,12 @@ const LandingPage: React.FC = () => {
             </div>
           </div>
           <div className="relative" ref={mockupRef}>
-            <div className="bg-slate-900 p-4 sm:p-8 rounded-[3rem] sm:rounded-[4.5rem] shadow-[0_60px_120px_-30px_rgba(0,0,0,0.5)] border-[8px] sm:border-[12px] border-slate-800 rotate-2 transform hover:rotate-0 transition-transform duration-1000 group max-w-[380px] mx-auto">
-               <div className="bg-[#efe7de] aspect-[9/19.5] rounded-[2rem] sm:rounded-[3.5rem] overflow-hidden flex flex-col relative border border-slate-800/50">
-                  <div className="bg-indigo-700 p-7 pt-12 text-white flex items-center space-x-4 shadow-xl z-10">
-                    <div className="w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center font-bold shadow-inner">DM</div>
-                    <div>
-                      <p className="font-black text-lg tracking-tight">Munim AI</p>
-                      <p className="text-[10px] opacity-70 font-black uppercase tracking-widest">Typing insights...</p>
-                    </div>
-                  </div>
-                  <div className="flex-1 p-8 space-y-6 font-bold overflow-hidden relative">
-                    <div className="bg-white p-5 rounded-3xl rounded-tl-none shadow-xl text-sm self-start max-w-[85%]">
-                      Namaste Bhaiya! Aaj ka hisaab likhein? 🏠
-                    </div>
-                    <div className="bg-[#dcf8c6] p-5 rounded-3xl rounded-tr-none shadow-xl text-sm self-end ml-auto max-w-[85%]">
-                      Rahul 500 udhaar chini
-                    </div>
-                    <div className="bg-white p-6 rounded-3xl rounded-tl-none shadow-2xl text-sm self-start max-w-[85%] border-l-[6px] border-indigo-600">
-                      <p className="font-black text-indigo-600 text-xs mb-1 uppercase tracking-widest">Entry Confirmed! ✅</p>
-                      Rahul: ₹500 (Sugar) <br/>
-                      Total Udhaari: <span className="text-emerald-600">₹1,250</span>
-                    </div>
-                    <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#efe7de] to-transparent pointer-events-none"></div>
-                  </div>
-                  <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-40 h-7 bg-slate-900 rounded-full z-20 flex items-center justify-center">
-                    <div className="w-14 h-1 bg-slate-800 rounded-full"></div>
-                  </div>
+            <div className="sm:p-4 rounded-[2rem] sm:rounded-[3rem] shadow-[0_60px_120px_-30px_rgba(0,0,0,0.5)] border-[8px] sm:border-[12px] border-slate-800 rotate-2 transform hover:rotate-0 transition-transform duration-1000 group max-w-[420px] mx-auto bg-slate-800 overflow-hidden relative">
+               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-7 bg-slate-900 rounded-b-3xl z-20 flex items-center justify-center">
+                 <div className="w-14 h-1 bg-slate-800 rounded-full"></div>
+               </div>
+               <div className="bg-[#efe7de] w-full h-[600px] flex flex-col relative z-10 pointer-events-auto">
+                 <WhatsAppSimulation storeId="demo-mode" />
                </div>
             </div>
           </div>
@@ -597,6 +578,47 @@ const LandingPage: React.FC = () => {
             <div className="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-xl space-y-4">
               <h4 className="text-xl font-black italic text-indigo-600 uppercase">Smart Inventory</h4>
               <p className="text-sm font-bold text-slate-500 italic">Real-time stock tracking and low-inventory alerts sent directly to your phone.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Internal Navigation for Discovery Crawl */}
+      <section className="py-32 px-6 lg:px-20 bg-white border-y border-slate-100">
+        <div className="max-w-[1600px] mx-auto grid lg:grid-cols-2 gap-20">
+          <div className="space-y-12">
+            <h2 className="text-4xl md:text-5xl font-black italic tracking-tighter uppercase text-slate-900 leading-tight">
+              Top Growth Guides
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {[
+                { title: "Manage Udhaar Safely", link: "/p/bahi-khata-alternative" },
+                { title: "Increase Shop GMV", link: "/p/kirana-store-ko-grow-kaise-kare" },
+                { title: "WhatsApp Billing Setup", link: "/p/kirana-store-software" },
+                { title: "Inventory Masterclass", link: "/p/inventory-management-kirana" },
+                { title: "Automate Reviews", link: "/get-more-google-reviews-for-shop" },
+                { title: "Zero Cost Shop Launch", link: "/p/dukaan-online-kaise-laye" },
+              ].map((guide, i) => (
+                <Link key={i} to={guide.link} className="p-6 bg-slate-50 hover:bg-slate-100 rounded-3xl border border-slate-100 transition-colors flex justify-between items-center group">
+                  <span className="font-bold text-slate-700 italic group-hover:text-indigo-600 transition-colors">{guide.title}</span>
+                  <span className="text-slate-400 group-hover:text-indigo-600 transition-colors">➔</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div className="space-y-12">
+            <h2 className="text-4xl md:text-5xl font-black italic tracking-tighter uppercase text-slate-900 leading-tight">
+              Areas We Serve
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
+              {[
+                "Lucknow", "Kanpur", "Delhi", "Mumbai", "Bangalore", "Pune", 
+                "Ahmedabad", "Hyderabad", "Chennai", "Kolkata", "Jaipur", "Surat"
+              ].map((city, i) => (
+                <Link key={i} to={`/${city.toLowerCase()}`} className="p-6 bg-indigo-50 hover:bg-indigo-600 rounded-3xl border border-indigo-100 transition-colors flex justify-between items-center group">
+                  <span className="font-black tracking-tight text-indigo-900 group-hover:text-white transition-colors">{city}</span>
+                </Link>
+              ))}
             </div>
           </div>
         </div>

@@ -140,14 +140,15 @@ const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = f
                 <li><Link to="/compare/okcredit" className="hover:text-emerald-400 transition-colors">vs OkCredit</Link></li>
                 <li><Link to="/compare/khatabook" className="hover:text-emerald-400 transition-colors">vs KhataBook</Link></li>
                 <li><Link to="/compare/vyapar" className="hover:text-emerald-400 transition-colors">vs Vyapar</Link></li>
+                <li><Link to="/p/bahi-khata-alternative" className="hover:text-emerald-400 transition-colors">Digital Bahi Khata</Link></li>
               </ul>
             </div>
             <div className="space-y-4">
               <h4 className="text-white font-black uppercase tracking-widest text-xs opacity-70">Resources</h4>
               <ul className="space-y-2 text-sm text-slate-300 font-bold">
                 <li><Link to="/blog" className="hover:text-emerald-400 transition-colors">Insights Hub</Link></li>
-                <li><Link to="/free-tools" className="hover:text-emerald-400 transition-colors">Free Tools</Link></li>
-                <li><Link to="/templates" className="hover:text-emerald-400 transition-colors">Templates</Link></li>
+                <li><Link to="/p/kirana-store-software" className="hover:text-emerald-400 transition-colors">Kirana Software Info</Link></li>
+                <li><Link to="/faq" className="hover:text-emerald-400 transition-colors">FAQs</Link></li>
               </ul>
             </div>
           </div>

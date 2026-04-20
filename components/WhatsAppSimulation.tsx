@@ -20,6 +20,55 @@ export const WhatsAppSimulation: React.FC<{ storeId: string }> = ({ storeId }) =
       id: '1',
       text: "Namaste! I'm your Munim AI. Send me your daily transactions like 'Sold 2kg sugar for 100' or 'Gave 500 udhaar to Ramesh'.",
       sender: 'bot',
+      timestamp: new Date(Date.now() - 3600000 * 2), // 2 hours ago
+      status: 'read'
+    },
+    {
+      id: '2',
+      text: "Rahul ko 500 ka udhaar diya (Chini aur tel)",
+      sender: 'user',
+      timestamp: new Date(Date.now() - 3600000 * 1.5),
+      status: 'read'
+    },
+    {
+      id: '3',
+      text: "Got it! Logged a udhaar of ₹500 for Rahul.",
+      sender: 'bot',
+      timestamp: new Date(Date.now() - 3600000 * 1.5 + 5000),
+      status: 'read'
+    },
+    {
+      id: '4',
+      text: "Ajeet ne 1500 diye purana hisaab",
+      sender: 'user',
+      timestamp: new Date(Date.now() - 3600000 * 1),
+      status: 'read'
+    },
+    {
+      id: '5',
+      text: "Got it! Logged a payment of ₹1500 for Ajeet. His new balance is updated.",
+      sender: 'bot',
+      timestamp: new Date(Date.now() - 3600000 * 1 + 6000),
+      status: 'read'
+    },
+    {
+      id: '6',
+      text: "Bikri 300 (Doodh aur bread)",
+      sender: 'user',
+      timestamp: new Date(Date.now() - 1800000), // 30 mins ago
+      status: 'read'
+    },
+    {
+      id: '7',
+      text: "Got it! Logged a sale of ₹300.",
+      sender: 'bot',
+      timestamp: new Date(Date.now() - 1800000 + 4000),
+      status: 'read'
+    },
+    {
+      id: '8',
+      text: "Try your turn now! Type a message below 👇",
+      sender: 'bot',
       timestamp: new Date(),
       status: 'read'
     }
@@ -54,9 +103,14 @@ export const WhatsAppSimulation: React.FC<{ storeId: string }> = ({ storeId }) =
     setIsTyping(false);
 
     if (parsed) {
-      // Log to Firestore
+      // Log to Firestore if not demo mode
       try {
-        await logTransaction(storeId, parsed);
+        if (storeId !== 'demo-mode') {
+          await logTransaction(storeId, parsed);
+        } else {
+          // Fake delay for demo mode
+          await new Promise(r => setTimeout(r, 800));
+        }
         
         const botMessage: Message = {
           id: (Date.now() + 1).toString(),
@@ -93,7 +147,7 @@ export const WhatsAppSimulation: React.FC<{ storeId: string }> = ({ storeId }) =
 
 
   return (
-    <div className="flex flex-col h-[500px] sm:h-[600px] max-h-[80vh] w-full max-w-md mx-auto bg-[#e5ddd5] rounded-xl overflow-hidden shadow-2xl border border-gray-300">
+    <div className="flex flex-col h-full w-full bg-[#e5ddd5] overflow-hidden">
       {/* Header */}
       <div className="bg-[#075e54] p-4 flex items-center gap-3 text-white">
         <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-[#075e54]">
