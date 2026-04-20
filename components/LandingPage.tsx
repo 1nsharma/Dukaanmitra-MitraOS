@@ -119,8 +119,28 @@ const LandingPage: React.FC = () => {
       "@type": "Brand",
       "name": "DukaanMitra"
     },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "1250"
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Rajesh Kirana Store"
+        }
+      }
+    ],
     "offers": {
       "@type": "AggregateOffer",
+      "offerCount": "3",
       "lowPrice": "0",
       "highPrice": "499",
       "priceCurrency": "INR"
