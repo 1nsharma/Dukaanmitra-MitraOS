@@ -2,6 +2,7 @@ import js from "@eslint/js";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 import globals from "globals";
+import firebaseRulesPlugin from '@firebase/eslint-plugin-security-rules';
 
 export default [
   js.configs.recommended,
@@ -27,5 +28,6 @@ export default [
       "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
     }
-  }
+  },
+  firebaseRulesPlugin.configs['flat/recommended']
 ];

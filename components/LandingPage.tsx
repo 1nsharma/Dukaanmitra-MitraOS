@@ -5,6 +5,9 @@ import anime from 'animejs';
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { WhatsAppSimulation } from './WhatsAppSimulation';
+import { Button } from './ui/Button';
+import { Card } from './ui/Card';
+import { cn } from '../lib/utils';
 
 const LandingPage: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -216,15 +219,21 @@ const LandingPage: React.FC = () => {
               Transform your Kirana shop with India's first AI-powered WhatsApp Munim. No app downloads. Just message "Rahul 500" and you're done.
             </p>
             <div className="hero-text flex flex-col sm:flex-row gap-6">
-              <a 
-                href="https://whatsapp.com/channel/0029VbBxi9eJZg4DGvYpBx0U" target="_blank" rel="noopener noreferrer"
-                className="bg-white text-indigo-900 px-8 py-4 sm:px-12 sm:py-6 rounded-[2.5rem] font-black text-xl sm:text-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.3)] hover:scale-105 hover:bg-slate-100 transition-all active:scale-[0.98] italic tracking-tighter text-center"
+              <Button 
+                onClick={() => window.open("https://whatsapp.com/channel/0029VbBxi9eJZg4DGvYpBx0U", "_blank")}
+                size="xl"
+                className="bg-white text-indigo-900 border-none shadow-[12px_12px_0px_0px_rgba(0,0,0,0.2)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all h-24"
               >
-                Start managing your dukaan smarter today 🚀
-              </a>
-              <button onClick={() => navigate('/demo')} className="bg-transparent border-[3px] border-white/30 px-8 py-4 sm:px-12 sm:py-6 rounded-[2.5rem] font-black text-xl sm:text-2xl hover:bg-white/10 transition-all shadow-xl italic tracking-tighter">
-                View Demo Dashboard 📊
-              </button>
+                START MANAGING YOUR DUKAAN 🚀
+              </Button>
+              <Button 
+                onClick={() => navigate('/demo')}
+                variant="outline"
+                size="xl"
+                className="border-white/30 text-white hover:bg-white/10 active:scale-[0.98] h-24"
+              >
+                VIEW DEMO DASHBOARD 📊
+              </Button>
             </div>
           </div>
           <div className="relative" ref={mockupRef}>
@@ -250,23 +259,22 @@ const LandingPage: React.FC = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
             {features.map((f, i) => (
-              <motion.div 
-                key={i}
-                whileHover={{ y: -10 }}
-                className="p-10 rounded-[3.5rem] bg-slate-50 border border-slate-100 shadow-xl shadow-slate-200/30 space-y-6 group hover:bg-indigo-600 transition-colors duration-500"
-              >
-                <div className="w-16 h-16 bg-white rounded-3xl flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform">
+              <Card key={i} className="p-12 space-y-8 group hover:bg-indigo-600 transition-all duration-500 border-b-8 border-slate-900 hover:border-indigo-900 relative">
+                <div className="w-20 h-20 bg-indigo-50 rounded-[1.5rem] flex items-center justify-center text-4xl shadow-inner group-hover:scale-110 transition-transform group-hover:bg-white/20">
                   {f.icon}
                 </div>
-                <div className="space-y-3">
-                  <h3 className="text-3xl font-black italic tracking-tighter uppercase text-slate-900 group-hover:text-white">{f.title}</h3>
-                  <p className="text-slate-500 font-bold leading-relaxed group-hover:text-indigo-100">{f.desc}</p>
-                  <div className="pt-4 border-t border-slate-200 group-hover:border-indigo-400">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-indigo-600 group-hover:text-white mb-1">Benefit</p>
-                    <p className="text-sm font-black italic text-slate-700 group-hover:text-white">{f.benefit}</p>
+                <div className="space-y-4">
+                  <Card.Title className="text-4xl group-hover:text-white leading-none tracking-tighter">{f.title}</Card.Title>
+                  <Card.Description className="text-lg group-hover:text-indigo-50 font-bold italic opacity-70">"{f.desc}"</Card.Description>
+                  <div className="pt-6 border-t border-slate-100 group-hover:border-indigo-400">
+                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-600 group-hover:text-white mb-2">Bharat Advantage</p>
+                    <p className="text-sm font-black italic text-slate-800 group-hover:text-white underline decoration-emerald-400 decoration-4 underline-offset-4">{f.benefit}</p>
                   </div>
                 </div>
-              </motion.div>
+                <div className="absolute top-10 right-10 text-slate-100/10 group-hover:text-white/10 text-9xl font-black italic pointer-events-none uppercase tracking-tighter leading-none select-none italic">
+                   {i + 1}
+                </div>
+              </Card>
             ))}
           </div>
         </div>
@@ -286,13 +294,16 @@ const LandingPage: React.FC = () => {
               { problem: "Daily Sales record nahi ho rahi?", icon: "📊", link: "/blog/kirana-shop-daily-sales-system", cta: "Setup Sales Tracker" },
               { problem: "WhatsApp se order kaise le?", icon: "📱", link: "/blog/whatsapp-se-order-kaise-le", cta: "Start WhatsApp Shop" }
             ].map((p, i) => (
-              <div key={i} className="bg-white p-12 rounded-[4rem] shadow-2xl shadow-slate-200/50 border border-slate-100 flex flex-col items-center text-center space-y-8 group hover:scale-105 transition-all duration-500">
-                <div className="text-7xl">{p.icon}</div>
-                <h3 className="text-3xl font-black italic tracking-tight text-slate-900 leading-tight">{p.problem}</h3>
-                <Link to={p.link} className="px-10 py-5 bg-indigo-600 text-white rounded-full font-black text-xs uppercase tracking-[0.2em] transform group-hover:translate-y-[-5px] transition-all shadow-xl">
-                  {p.cta}
-                </Link>
-              </div>
+              <Card key={i} className="p-12 flex flex-col items-center text-center space-y-8 border-b-8 border-indigo-600 hover:translate-y-[-8px] transition-all duration-500 bg-white group shadow-[12px_12px_0px_0px_rgba(0,0,0,0.05)]">
+                <div className="text-8xl group-hover:scale-110 transition-transform duration-500">{p.icon}</div>
+                <Card.Title className="text-3xl leading-tight italic tracking-tighter uppercase">{p.problem}</Card.Title>
+                <Button 
+                  onClick={() => navigate(p.link)}
+                  className="w-full h-14 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
+                >
+                  {p.cta} ➔
+                </Button>
+              </Card>
             ))}
           </div>
         </div>
@@ -347,32 +358,46 @@ const LandingPage: React.FC = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {pricing.map((p, i) => (
-              <div key={i} className={`p-10 rounded-[3.5rem] border-2 flex flex-col ${p.name === 'Growth' ? 'bg-slate-900 text-white border-slate-900 scale-105 shadow-2xl z-10' : 'bg-white text-slate-900 border-slate-100 shadow-xl'}`}>
+              <Card key={i} className={cn(
+                "p-10 flex flex-col border-b-8 transition-all duration-500 relative overflow-hidden h-full",
+                p.name === 'Growth + Supply' 
+                  ? 'bg-slate-900 text-white border-indigo-500 scale-105 shadow-2xl z-10' 
+                  : 'bg-white text-slate-900 border-slate-200 shadow-xl'
+              )}>
                 <div className="mb-8">
-                  <h3 className="text-2xl font-black italic tracking-tighter uppercase mb-2">{p.name}</h3>
-                  <div className="flex items-baseline gap-1">
+                  <h3 className="text-2xl font-black italic tracking-tighter uppercase mb-4 opacity-70 leading-none">{p.name}</h3>
+                  <div className="flex flex-col">
                     <span className="text-5xl font-black italic tracking-tighter">{p.price}</span>
-                    <span className="text-xs font-black uppercase tracking-widest opacity-60">/month</span>
+                    <span className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40 mt-1 italic">per shop / month</span>
                   </div>
                 </div>
-                <div className="flex-1 space-y-4 mb-10">
+                <div className="flex-1 space-y-5 mb-10">
                   {p.features.map((feat, j) => (
                     <div key={j} className="flex items-center gap-3">
-                      <span className="text-emerald-500">✔</span>
-                      <span className="text-sm font-bold opacity-80">{feat}</span>
+                      <div className="w-5 h-5 bg-emerald-500/20 text-emerald-500 rounded-full flex items-center justify-center text-[10px] font-black italic">✓</div>
+                      <span className="text-sm font-bold opacity-80 italic tracking-tight">{feat}</span>
                     </div>
                   ))}
                 </div>
                 <div className="space-y-6">
-                  <div className="p-4 bg-slate-100 rounded-2xl text-slate-900">
-                    <p className="text-[9px] font-black uppercase tracking-widest opacity-50 mb-1">Best For</p>
-                    <p className="text-xs font-bold italic">{p.bestFor}</p>
+                  <div className={cn(
+                    "p-5 rounded-3xl border-2 italic",
+                    p.name === 'Growth + Supply' ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-100'
+                  )}>
+                    <p className="text-[9px] font-black uppercase tracking-widest opacity-40 mb-2">Mission Fit</p>
+                    <p className="text-xs font-black tracking-tight leading-relaxed">{p.bestFor}</p>
                   </div>
-                  <button className={`w-full py-5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all ${p.name === 'Growth' ? 'bg-emerald-500 text-slate-900 hover:bg-emerald-400' : 'bg-slate-900 text-white hover:bg-indigo-600'}`}>
-                    Choose Plan
-                  </button>
+                  <Button 
+                    variant={p.name === 'Growth + Supply' ? 'primary' : 'secondary'}
+                    className="w-full py-6 h-14 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] hover:shadow-none transition-all italic tracking-tighter"
+                  >
+                    CHOOSE THIS PLAN ➔
+                  </Button>
                 </div>
-              </div>
+                <div className="absolute -top-4 -right-4 text-9xl font-black italic opacity-[0.03] select-none pointer-events-none italic uppercase">
+                  {p.name[0]}
+                </div>
+              </Card>
             ))}
           </div>
           <p className="text-center text-slate-400 font-bold italic">Note: All plans include free onboarding and 24/7 WhatsApp support.</p>
@@ -435,21 +460,21 @@ const LandingPage: React.FC = () => {
           </div>
           <div className="grid md:grid-cols-3 gap-12">
             {testimonials.map((t, i) => (
-              <div key={i} className="bg-white p-12 rounded-[4rem] shadow-xl shadow-slate-200/50 border border-white space-y-8 relative group hover:scale-105 transition-all duration-500">
-                <div className="text-6xl text-indigo-100 absolute top-8 left-8 opacity-50 group-hover:opacity-100 transition-opacity">“</div>
+              <Card key={i} className="p-12 border-b-8 border-indigo-100 hover:border-indigo-600 space-y-8 relative group hover:scale-105 transition-all duration-500 bg-white shadow-xl">
+                <div className="text-8xl text-indigo-100 absolute top-4 left-4 opacity-30 group-hover:opacity-60 transition-opacity italic font-black">“</div>
                 <p className="text-2xl font-black italic tracking-tight text-slate-900 leading-tight relative z-10 pt-8">
                   {t.quote}
                 </p>
-                <div className="flex items-center gap-4 pt-8 border-t border-slate-100">
-                  <div className="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center text-2xl">
+                <div className="flex items-center gap-5 pt-8 border-t-2 border-slate-50">
+                  <div className="w-16 h-16 bg-slate-900 text-white rounded-2xl flex items-center justify-center text-3xl shadow-lg italic">
                     {t.icon}
                   </div>
                   <div>
-                    <p className="text-lg font-black italic tracking-tight text-slate-900">{t.name}</p>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">{t.shop}</p>
+                    <p className="text-xl font-black italic tracking-tight text-slate-900 leading-none mb-1">{t.name}</p>
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-500 italic">{t.shop}</p>
                   </div>
                 </div>
-              </div>
+              </Card>
             ))}
           </div>
         </div>
@@ -522,18 +547,19 @@ const LandingPage: React.FC = () => {
               { title: "UPI Lite: The Game Changer for Small Kiranas", tag: "Tech", excerpt: "How low-latency payments are reducing queue times in Delhi's busy markets." },
               { title: "Managing Winter Stocks in Northern India", tag: "Inventory", excerpt: "Strategic stock management for Tier-2 cities during the coldest months." },
               { title: "Building Trust with Digital Udhaar Reminders", tag: "Retention", excerpt: "Data shows 40% faster recovery when reminders are sent via WhatsApp." }
-            ].map((b, i) => (
-              <div key={i} className="bg-white p-10 rounded-[3.5rem] shadow-xl shadow-slate-200/50 border border-white hover:border-indigo-200 hover:scale-105 transition-all duration-500 group">
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] group-hover:text-indigo-600 transition-colors">{b.tag}</span>
-                <h3 className="text-2xl font-black text-slate-900 mt-4 mb-6 italic tracking-tight leading-tight group-hover:text-indigo-600 transition-colors">{b.title}</h3>
-                <p className="text-slate-500 font-bold opacity-80 leading-relaxed mb-8 italic">"{b.excerpt}"</p>
-                <Link 
-                   to="/blog"
-                   className="text-[11px] font-black uppercase tracking-widest text-slate-900 pb-1 border-b-4 border-emerald-400 group-hover:border-indigo-600 transition-all"
+            ].map((b, i) => ( b &&
+              <Card key={i} className="p-10 border-b-8 border-slate-100 hover:border-indigo-600 hover:scale-105 transition-all duration-500 group bg-white">
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] group-hover:text-indigo-600 transition-colors italic">{b.tag}</span>
+                <Card.Title className="text-3xl mt-4 mb-6 leading-none italic">{b.title}</Card.Title>
+                <Card.Description className="mb-8 opacity-80 italic font-bold">"{b.excerpt}"</Card.Description>
+                <Button 
+                   onClick={() => navigate('/blog')}
+                   variant="ghost"
+                   className="text-[11px] font-black uppercase tracking-widest text-slate-900 p-0 h-auto hover:bg-transparent underline decoration-emerald-400 decoration-4 underline-offset-8 hover:decoration-indigo-600"
                 >
-                  Read Analysis
-                </Link>
-              </div>
+                  READ ANALYSIS ➔
+                </Button>
+              </Card>
             ))}
           </div>
         </div>

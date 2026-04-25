@@ -51,59 +51,81 @@ service cloud.firestore {
     // Helper Functions
     // ===============================================================
     
-    function isAuthenticated() {
+    function isSignedIn() {
       return request.auth != null;
     }
 
-    function isOwner(ownerUid) {
-      return isAuthenticated() && request.auth.uid == ownerUid;
+    function isEmailVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isValidId(id) {
+       return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
     }
 
     function isAdmin() {
-      return isAuthenticated() && 
-        ((exists(/databases/$(database)/documents/admins/$(request.auth.uid)) && 
-          get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role == 'superadmin') ||
-         (request.auth.token.email == "AMITSHARMA99976@gmail.com" && request.auth.token.email_verified == true));
+      return isEmailVerified() && 
+        (exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
+         request.auth.token.email == "AMITSHARMA99976@gmail.com");
     }
 
     function isStoreOwner(storeId) {
-      return isAuthenticated() && get(/databases/$(database)/documents/stores/$(storeId)).data.ownerUid == request.auth.uid;
+      return isEmailVerified() && 
+        get(/databases/$(database)/documents/stores/$(storeId)).data.ownerUid == request.auth.uid;
     }
 
-    function hasRequiredFields(fields) {
-      return request.resource.data.keys().hasAll(fields);
-    }
-
+    // Validation Helpers
     function isValidStore(data) {
-      return data.name is string && data.name.size() > 0 && data.name.size() < 100 &&
-             data.whatsappNumber is string && data.whatsappNumber.size() >= 10 && data.whatsappNumber.size() <= 15;
+      return data.keys().hasAll(['id', 'name', 'ownerUid', 'whatsappNumber', 'createdAt']) &&
+             data.name is string && data.name.size() > 0 && data.name.size() < 100 &&
+             data.whatsappNumber is string && data.whatsappNumber.size() >= 10 && data.whatsappNumber.size() <= 15 &&
+             data.ownerUid == request.auth.uid;
     }
 
     function isValidTransaction(data) {
-      return data.type in ["sale", "udhaar", "payment"] &&
+      return data.keys().hasAll(['id', 'storeId', 'type', 'amount', 'timestamp']) &&
+             data.type in ["sale", "udhaar", "payment"] &&
              data.amount is number && data.amount > 0 &&
-             data.timestamp is timestamp;
+             data.timestamp == request.time;
     }
 
     function isValidCustomer(data) {
-      return data.name is string && data.name.size() > 0 && data.name.size() < 100;
+      return data.keys().hasAll(['id', 'storeId', 'name']) &&
+             data.name is string && data.name.size() > 0 && data.name.size() < 100 &&
+             data.storeId is string;
     }
 
     // ===============================================================
     // Rules
     // ===============================================================
 
+    // Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
     // Stores
     match /stores/{storeId} {
-      allow read: if isOwner(resource.data.ownerUid) || isAdmin();
-      allow create: if isAuthenticated() && isValidStore(request.resource.data) && (request.resource.data.ownerUid == request.auth.uid || isAdmin());
-      allow update: if (isOwner(resource.data.ownerUid) || isAdmin()) && isValidStore(request.resource.data) && request.resource.data.ownerUid == resource.data.ownerUid;
+      allow read: if isSignedIn() && (existing().ownerUid == request.auth.uid || isAdmin());
+      allow create: if isEmailVerified() && isValidStore(incoming()) && isValidId(storeId);
+      allow update: if (existing().ownerUid == request.auth.uid || isAdmin()) && 
+                    isValidStore(incoming()) && 
+                    incoming().ownerUid == existing().ownerUid &&
+                    incoming().diff(existing()).affectedKeys().hasOnly(['name', 'whatsappNumber', 'totalSales', 'totalUdhaar']);
       allow delete: if isAdmin();
 
       // Transactions
       match /transactions/{transactionId} {
         allow read: if isStoreOwner(storeId) || isAdmin();
-        allow create: if isStoreOwner(storeId) && isValidTransaction(request.resource.data) || isAdmin();
+        allow create: if isStoreOwner(storeId) && isValidTransaction(incoming()) && isValidId(transactionId);
         allow update: if isAdmin();
         allow delete: if isAdmin();
       }
@@ -111,10 +133,27 @@ service cloud.firestore {
       // Customers
       match /customers/{customerId} {
         allow read: if isStoreOwner(storeId) || isAdmin();
-        allow create: if isStoreOwner(storeId) && isValidCustomer(request.resource.data) || isAdmin();
-        allow update: if (isStoreOwner(storeId) || isAdmin()) && isValidCustomer(request.resource.data);
+        allow create: if isStoreOwner(storeId) && isValidCustomer(incoming()) && isValidId(customerId);
+        allow update: if (isStoreOwner(storeId) || isAdmin()) && 
+                      isValidCustomer(incoming()) &&
+                      incoming().diff(existing()).affectedKeys().hasOnly(['name', 'whatsappNumber', 'balance', 'lastTransactionAt']);
         allow delete: if isAdmin();
       }
+    }
+
+    // Mem0g Graph Memory
+    match /memory_nodes/{nodeId} {
+      allow read: if isAuthenticated() && (resource.data.storeId == 'demo-mode' || isStoreOwner(resource.data.storeId) || isAdmin());
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && (isStoreOwner(resource.data.storeId) || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    match /memory_relations/{relId} {
+      allow read: if isAuthenticated() && (resource.data.storeId == 'demo-mode' || isStoreOwner(resource.data.storeId) || isAdmin());
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && (isStoreOwner(resource.data.storeId) || isAdmin());
+      allow delete: if isAdmin();
     }
 
     // Admins

@@ -1,57 +1,68 @@
 import React from 'react';
 import { cn } from '../../lib/utils';
+import { Loader2 } from 'lucide-react';
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
-  size?: 'sm' | 'md' | 'lg' | 'icon';
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'icon';
   isLoading?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
 }
 
-export const Button: React.FC<ButtonProps> = ({
-  className,
-  variant = 'primary',
-  size = 'md',
-  isLoading,
-  leftIcon,
-  rightIcon,
-  children,
-  disabled,
-  ...props
-}) => {
-  const variants = {
-    primary: 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md shadow-indigo-100',
-    secondary: 'bg-slate-900 text-white hover:bg-slate-800 shadow-md',
-    outline: 'border-2 border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300',
-    ghost: 'text-slate-600 hover:bg-slate-100',
-    danger: 'bg-rose-600 text-white hover:bg-rose-700 shadow-md shadow-rose-100',
-  };
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ 
+    className, 
+    variant = 'primary', 
+    size = 'md', 
+    isLoading, 
+    leftIcon, 
+    rightIcon, 
+    children, 
+    disabled, 
+    ...props 
+  }, ref) => {
+    const variants = {
+      primary: 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-100',
+      secondary: 'bg-slate-900 text-white hover:bg-slate-800 shadow-lg shadow-slate-200',
+      outline: 'border-[3px] border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300',
+      ghost: 'text-slate-600 hover:bg-slate-100',
+      danger: 'bg-rose-600 text-white hover:bg-rose-700 shadow-lg shadow-rose-100',
+    };
 
-  const sizes = {
-    sm: 'px-3 py-1.5 text-xs rounded-xl',
-    md: 'px-6 py-3 text-sm rounded-2xl',
-    lg: 'px-8 py-4 text-base rounded-[1.5rem]',
-    icon: 'p-3 rounded-xl',
-  };
+    const sizes = {
+      sm: 'h-10 px-4 text-[10px] rounded-xl',
+      md: 'h-14 px-8 text-xs rounded-2xl',
+      lg: 'h-16 px-10 text-sm rounded-[1.5rem]',
+      xl: 'h-20 px-12 text-lg rounded-[2rem]',
+      icon: 'h-12 w-12 rounded-xl p-0',
+    };
 
-  return (
-    <button
-      className={cn(
-        'font-black uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2',
-        variants[variant],
-        sizes[size],
-        className
-      )}
-      disabled={isLoading || disabled}
-      {...props}
-    >
-      {isLoading && (
-        <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-      )}
-      {!isLoading && leftIcon}
-      {children}
-      {!isLoading && rightIcon}
-    </button>
-  );
-};
+    return (
+      <button
+        ref={ref}
+        className={cn(
+          'inline-flex items-center justify-center gap-3 font-black uppercase tracking-[0.15em] italic transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none select-none',
+          variants[variant],
+          sizes[size],
+          className
+        )}
+        disabled={isLoading || disabled}
+        aria-busy={isLoading}
+        {...props}
+      >
+        {isLoading ? (
+          <Loader2 className="h-5 w-5 animate-spin" />
+        ) : (
+          <>
+            {leftIcon && <span className="shrink-0">{leftIcon}</span>}
+            {children}
+            {rightIcon && <span className="shrink-0">{rightIcon}</span>}
+          </>
+        )}
+      </button>
+    );
+  }
+);
+
+Button.displayName = 'Button';

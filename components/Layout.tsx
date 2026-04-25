@@ -3,8 +3,9 @@ import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { signOut, User } from 'firebase/auth';
-import { ShieldCheck, LogOut, MessageSquare, LayoutDashboard, Info, Star, CreditCard, HelpCircle, BookOpen } from 'lucide-react';
+import { ShieldCheck, LogOut, MessageSquare, LayoutDashboard, Info, Star, CreditCard, HelpCircle, BookOpen, Menu } from 'lucide-react';
 import { cn } from '../lib/utils';
+import { Button } from './ui/Button';
 
 interface NavItem {
   id: string;
@@ -85,32 +86,48 @@ const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = f
     return (
       <div className="flex flex-col min-h-screen bg-white">
         {/* Public Navbar */}
-        <nav className="px-6 lg:px-20 py-8 flex items-center justify-between sticky top-0 bg-white/90 backdrop-blur-xl z-[100] border-b border-slate-100 shadow-sm transition-all duration-500">
-          <Link to="/" className="flex items-center gap-3 cursor-pointer">
-            <div className="w-10 h-10 bg-indigo-600 rounded-[1.2rem] flex items-center justify-center shadow-lg shadow-indigo-200">
-               <span className="text-white text-xl font-black italic">D</span>
+        <nav className="px-6 lg:px-20 py-8 flex items-center justify-between sticky top-0 bg-white/90 backdrop-blur-xl z-[100] border-b-4 border-slate-900 transition-all duration-500">
+          <Link to="/" className="flex items-center gap-3 cursor-pointer group">
+            <div className="w-12 h-12 bg-indigo-600 rounded-[1rem] flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] group-hover:translate-x-1 group-hover:translate-y-1 group-hover:shadow-none transition-all">
+               <span className="text-white text-2xl font-black italic">D</span>
             </div>
-            <h1 className="text-3xl font-black italic tracking-tighter text-slate-900">DukaanMitra</h1>
+            <div className="flex flex-col -space-y-1">
+              <h1 className="text-3xl font-black italic tracking-tighter text-slate-900 uppercase leading-none">DukaanMitra</h1>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 italic">Bharat's AI Munim</span>
+            </div>
           </Link>
-          <div className="hidden lg:flex space-x-10 text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] items-center">
-            <Link to="/features" className={cn("hover:text-indigo-600 transition-colors", activePath === '/features' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Features</Link>
-            <Link to="/services" className={cn("hover:text-indigo-600 transition-colors", activePath === '/services' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Services</Link>
-            <Link to="/how-it-works" className={cn("hover:text-indigo-600 transition-colors", activePath === '/how-it-works' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>How It Works</Link>
-            <Link to="/free-tools" className={cn("hover:text-indigo-600 transition-colors", activePath === '/free-tools' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Free Tools</Link>
-            <Link to="/templates" className={cn("hover:text-indigo-600 transition-colors", activePath === '/templates' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Templates</Link>
-            <Link to="/case-studies" className={cn("hover:text-indigo-600 transition-colors", activePath === '/case-studies' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Success Stories</Link>
-            <Link to="/pricing" className={cn("hover:text-indigo-600 transition-colors", activePath === '/pricing' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Pricing</Link>
-            <Link to="/about" className={cn("hover:text-indigo-600 transition-colors", activePath === '/about' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>About</Link>
-            <Link to="/contact" className={cn("hover:text-indigo-600 transition-colors", activePath === '/contact' && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Contact</Link>
-            <Link to="/blog" className={cn("hover:text-indigo-600 transition-colors", activePath.startsWith('/blog') && "text-indigo-600 border-b-2 border-indigo-600 pb-0.5")}>Insights Hub</Link>
+          <div className="hidden lg:flex space-x-8 text-[11px] font-black text-slate-500 uppercase tracking-[0.2em] items-center">
+            {[
+              { label: 'Features', path: '/features' },
+              { label: 'Services', path: '/services' },
+              { label: 'How It Works', path: '/how-it-works' },
+              { label: 'Free Tools', path: '/free-tools' },
+              { label: 'Pricing', path: '/pricing' },
+              { label: 'About', path: '/about' },
+            ].map((item) => (
+              <Link 
+                key={item.path} 
+                to={item.path} 
+                className={cn(
+                  "hover:text-indigo-600 transition-all hover:translate-y-[-1px] active:translate-y-[1px]", 
+                  activePath === item.path && "text-slate-900 underline decoration-indigo-500 decoration-4 underline-offset-8"
+                )}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
-          <button 
+          <Button 
             onClick={user ? () => navigate('/dashboard') : onLogin}
-            className="bg-slate-900 text-white px-8 py-3 rounded-[1.5rem] font-black text-xs uppercase tracking-widest shadow-2xl hover:bg-indigo-600 transition-all active:scale-95 flex items-center gap-3"
+            size="lg"
+            className="hidden lg:flex shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] hover:shadow-none translate-x-[-4px] translate-y-[-4px] hover:translate-x-0 hover:translate-y-0"
+            rightIcon={<span className="text-lg">➔</span>}
           >
-            <span>{user ? 'Go to Dashboard' : 'Login / Start'}</span>
-            <span className="text-lg">➔</span>
-          </button>
+            {user ? 'Go to Dashboard' : 'Login / Start'}
+          </Button>
+          <Button variant="ghost" size="icon" className="lg:hidden">
+            <Menu size={24} />
+          </Button>
         </nav>
 
         {/* Main Content Component */}
@@ -192,10 +209,10 @@ const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = f
           </div>
         </Link>
         
-        <nav className="flex-1 p-6 space-y-2 overflow-y-auto no-scrollbar">
-          <div className="px-3 mb-3 mt-2 text-[10px] font-black uppercase tracking-widest text-slate-500 flex items-center justify-between">
-            <span>Management</span>
-            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+        <nav className="flex-1 p-6 space-y-3 overflow-y-auto no-scrollbar">
+          <div className="px-5 mb-4 mt-2 text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 italic flex items-center justify-between">
+            <span>Core Navigation</span>
+            <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_12px_rgba(16,185,129,0.5)]"></span>
           </div>
 
           {navItems.map((item) => (
@@ -203,14 +220,19 @@ const Layout: React.FC<LayoutProps> = ({ children, isPremium = true, isAdmin = f
               key={item.id}
               to={item.path}
               className={cn(
-                "w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all duration-300",
+                "w-full flex items-center gap-4 px-6 py-4 rounded-[1.5rem] transition-all duration-300 border-2 border-transparent group",
                 activePath === item.path 
-                  ? (isAdmin ? "bg-rose-600 text-white shadow-xl shadow-rose-900/40" : "bg-indigo-600 text-white shadow-xl shadow-indigo-100") 
+                  ? (isAdmin ? "bg-rose-600 text-white shadow-[6px_6px_0px_0px_rgba(157,23,77,1)] border-slate-900 -translate-x-1 -translate-y-1" : "bg-indigo-600 text-white shadow-[6px_6px_0px_0px_rgba(49,46,129,1)] border-slate-900 -translate-x-1 -translate-y-1") 
                   : "text-slate-400 hover:bg-white/5 hover:text-white"
               )}
             >
-              {item.icon}
-              <span className="font-bold text-[13px] uppercase tracking-tight">{item.label}</span>
+              <div className={cn(
+                "p-2 rounded-xl transition-colors",
+                activePath === item.path ? "bg-white/20" : "bg-white/5 group-hover:bg-white/10"
+              )}>
+                {item.icon}
+              </div>
+              <span className="font-black text-xs uppercase tracking-widest italic">{item.label}</span>
             </Link>
           ))}
         </nav>

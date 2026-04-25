@@ -27,14 +27,24 @@ export interface SystemManifest {
   };
 }
 
-export interface Customer {
-  phone: string;
-  name: string;
+import { Timestamp, FieldValue } from 'firebase/firestore';
+
+export interface StoreCustomer {
+  id?: string;
   storeId: string;
-  joinDate: string;
-  trialEndDate: string;
-  paidStatus: 'Trial' | 'Active' | 'Expired';
-  totalLTV: number;
+  name: string;
+  balance: number;
+  lastTransactionAt: Timestamp | FieldValue | string;
+}
+
+export interface StoreTransaction {
+  id?: string;
+  storeId: string;
+  customerId?: string;
+  type: TransactionType;
+  amount: number;
+  description: string;
+  timestamp: Timestamp | FieldValue | string;
 }
 
 export type TransactionType = 'sale' | 'udhaar' | 'payment';
@@ -110,6 +120,11 @@ export interface DatabaseConfig {
   lastSync: string;
 }
 
+export interface ChatHistoryMessage {
+  role: 'user' | 'model';
+  parts: { text: string }[];
+}
+
 export interface ChatMessage {
   sender: 'user' | 'bot' | 'system';
   text: string;
@@ -117,6 +132,7 @@ export interface ChatMessage {
   imageData?: string;
   timestamp: string;
   role?: 'user' | 'model'; // For Gemini history
+  triage?: AgentRoutingResponse;
 }
 
 export interface OpsHealthSnapshot {

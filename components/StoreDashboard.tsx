@@ -8,7 +8,7 @@ import { generateAlertAction, generateMarketingContent, generateMarketingPoster 
 import { Transaction, Customer as CustomerType, UserRole } from '../types';
 import { Button } from './ui/Button';
 import { Input } from './ui/Input';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './ui/Card';
+import { Card } from './ui/Card';
 import { StatWidget } from './ui/StatWidget';
 
 interface StoreData {
@@ -245,8 +245,8 @@ export const StoreDashboard: React.FC<{ storeId: string }> = ({ storeId }) => {
            {/* Chat List */}
            <Card className="lg:col-span-1 p-0 flex flex-col overflow-hidden">
               <div className="p-4 border-b bg-slate-900 text-white flex items-center justify-between">
-                 <h3 className="font-black uppercase text-xs tracking-widest">Active Channels</h3>
-                 <span className="bg-emerald-500 text-[8px] font-black px-1.5 py-0.5 rounded">4 LIVE</span>
+                 <h3 className="font-black uppercase text-xs tracking-widest leading-none">Active Channels</h3>
+                 <span className="bg-emerald-500 text-[8px] font-black px-1.5 py-0.5 rounded leading-none">4 LIVE</span>
               </div>
               <div className="flex-1 overflow-y-auto divide-y divide-slate-100">
                  {[
@@ -410,7 +410,7 @@ export const StoreDashboard: React.FC<{ storeId: string }> = ({ storeId }) => {
               color="indigo"
             />
             <Card className="md:col-span-3 bg-blue-50 border-blue-200 border">
-              <CardContent className="py-4 flex items-center justify-between">
+              <Card.Content className="py-4 flex items-center justify-between p-0">
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">₹</div>
                   <div>
@@ -418,21 +418,21 @@ export const StoreDashboard: React.FC<{ storeId: string }> = ({ storeId }) => {
                     <p className="text-xs text-blue-700">92% of your messages are categorized as <span className="font-bold underline text-blue-900">Utility</span> (Free within 24hr window). Smart logic saved you ₹420 this week.</p>
                   </div>
                 </div>
-                <Button variant="outline" size="sm" className="border-blue-300 text-blue-800 hover:bg-blue-100">OPTIMIZE ➔</Button>
-              </CardContent>
+                <Button variant="outline" size="sm" className="border-blue-300 text-blue-800 hover:bg-blue-100 italic h-10">OPTIMIZE ➔</Button>
+              </Card.Content>
             </Card>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Recent Transactions */}
             <Card>
-              <CardHeader>
-                <CardTitle>Recent Transactions</CardTitle>
-                <Button variant="ghost" size="sm">View All</Button>
-              </CardHeader>
-              <CardContent>
+              <Card.Header className="flex-row items-center justify-between">
+                <Card.Title>Recent Transactions</Card.Title>
+                <Button variant="ghost" size="sm" className="h-10">View All</Button>
+              </Card.Header>
+              <Card.Content>
                 {transactions.map((tx) => (
-                  <div key={tx.id} className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-xl transition-colors">
+                  <div key={tx.id} className="flex items-center justify-between p-4 hover:bg-slate-50 rounded-[1.5rem] transition-colors border border-transparent hover:border-slate-100">
                     <div className="flex items-center gap-3">
                       <div className={cn(
                         "w-10 h-10 rounded-full flex items-center justify-center",
@@ -461,18 +461,18 @@ export const StoreDashboard: React.FC<{ storeId: string }> = ({ storeId }) => {
                     </div>
                   </div>
                 ))}
-              </CardContent>
+              </Card.Content>
             </Card>
 
             {/* Top Udhaar Customers */}
             <Card>
-              <CardHeader>
-                <CardTitle>Top Udhaar Customers</CardTitle>
-                <Button variant="ghost" size="sm">Remind All</Button>
-              </CardHeader>
-              <CardContent>
+              <Card.Header className="flex-row items-center justify-between">
+                <Card.Title>Top Udhaar Customers</Card.Title>
+                <Button variant="ghost" size="sm" className="h-10">Remind All</Button>
+              </Card.Header>
+              <Card.Content>
                 {customers.map((cust) => (
-                  <div key={cust.phone} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+                  <div key={cust.phone} className="flex items-center justify-between p-4 bg-slate-50 rounded-[1.5rem] border border-slate-100">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">
                         {cust.name[0]}
@@ -490,7 +490,7 @@ export const StoreDashboard: React.FC<{ storeId: string }> = ({ storeId }) => {
                     </div>
                   </div>
                 ))}
-              </CardContent>
+              </Card.Content>
 
               {/* Chart */}
               <div className="h-48 mt-8">
@@ -538,7 +538,7 @@ export const StoreDashboard: React.FC<{ storeId: string }> = ({ storeId }) => {
                 "border-2 transition-all group relative overflow-hidden",
                 triggeredAlerts.has(alert.title) ? 'border-emerald-300 bg-emerald-50/20' : 'border-slate-50 hover:border-indigo-200 shadow-sm hover:shadow-xl'
               )}>
-                  <CardHeader>
+                  <Card.Header className="flex-row items-center justify-between">
                     <div className={cn(
                       "w-16 h-16 rounded-[1.5rem] flex items-center justify-center text-3xl shadow-inner transition-colors",
                       triggeredAlerts.has(alert.title) ? 'bg-emerald-100' : 'bg-slate-50 group-hover:bg-indigo-50'
@@ -553,28 +553,28 @@ export const StoreDashboard: React.FC<{ storeId: string }> = ({ storeId }) => {
                     )}>
                       {alert.priority} Priority
                     </span>
-                  </CardHeader>
-                  <CardContent>
-                     <CardTitle>{alert.title}</CardTitle>
-                     <CardDescription>"{alert.desc}"</CardDescription>
+                  </Card.Header>
+                  <Card.Content>
+                     <Card.Title>{alert.title}</Card.Title>
+                     <Card.Description>"{alert.desc}"</Card.Description>
                      <div className={cn(
                        "h-1 w-12 rounded-full transition-all duration-700",
                        triggeredAlerts.has(alert.title) ? 'w-full bg-emerald-500' : 'bg-indigo-200 group-hover:w-full'
                      )}></div>
-                  </CardContent>
-                  <CardFooter>
+                  </Card.Content>
+                  <Card.Footer className="border-none mt-4 pt-0">
                     <Button 
                       onClick={() => handleAlertAction(alert.title, alert.desc, alert.count)}
                       disabled={triggeredAlerts.has(alert.title)}
                       variant={triggeredAlerts.has(alert.title) ? 'primary' : 'secondary'}
                       className={cn(
-                        "w-full py-4",
+                        "w-full py-4 h-12",
                         triggeredAlerts.has(alert.title) && 'bg-emerald-600 hover:bg-emerald-600'
                       )}
                     >
                       {triggeredAlerts.has(alert.title) ? 'COMMAND DEPLOYED' : 'RESOLVE & SEND ➔'}
                     </Button>
-                  </CardFooter>
+                  </Card.Footer>
                   {triggeredAlerts.has(alert.title) && (
                     <div className="absolute top-4 right-4 text-emerald-500 text-xl font-black">✓</div>
                   )}
@@ -588,10 +588,10 @@ export const StoreDashboard: React.FC<{ storeId: string }> = ({ storeId }) => {
         <div className="grid lg:grid-cols-2 gap-10 animate-in fade-in duration-700">
           <Card className="p-10 space-y-8">
             <div className="space-y-4">
-               <CardTitle>AI Creative Studio</CardTitle>
-               <CardDescription>
+               <Card.Title>AI Creative Studio</Card.Title>
+               <Card.Description>
                  Professional marketing assets for your shop, designed by Munim's visual engine.
-               </CardDescription>
+               </Card.Description>
             </div>
             
             <div className="space-y-6">

@@ -8,7 +8,8 @@ import {
   SystemManifest, 
   ChatMessage, 
   ParsedTransaction,
-  AgentRoutingResponse
+  AgentRoutingResponse,
+  ChatHistoryMessage
 } from "../types";
 import { SYSTEM_MANIFEST } from "../constants";
 import { memoryService } from "./memoryService";
@@ -57,7 +58,7 @@ export const generateV2Response = async (
   prompt: string, 
   storeId: string, 
   customerName?: string, 
-  history: ChatMessage[] = []
+  history: ChatHistoryMessage[] = []
 ): Promise<string> => {
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
   const model = ai.models.get("gemini-1.5-flash");
@@ -237,10 +238,10 @@ export const searchGroundingQuery = async (query: string): Promise<{ text: strin
 };
 
 export const getTemporalForecast = async (transactions: Transaction[]) => ({ predicted_revenue: [100, 200, 150, 300, 250, 400, 350], confidence_interval: "95%", growth_strategy: "Scaling" });
-export const getSystemOptimization = async (q: string, s: string) => ({ diagnosis: "Load Balanced", patch_code: "OPTIMIZE_SHARD", impact_analysis: "High", architect_note: "Ready" });
-export const generateOpsDailySummary = async (s: OpsHealthSnapshot) => ({ latency: "45ms", throughput: 120, errorRate: "0.01%", activeShards: 4, aiAccuracy: "99%", summary: "Stable", cpuLoad: "20%" });
-export const parseImageBill = async (b: string) => ({ action: 'add_entry' as const, confidence: 0.9, user_message: "Parsed." });
-export const getNearbyLogistics = async (la: number, lo: number) => ({ text: "Available", links: [] });
-export const animateImage = async (b: string, p: string) => "";
-export const analyzeVideo = async (b: string, p: string) => "";
-export const fastChat = async (p: string) => "Fast response.";
+export const getSystemOptimization = async (_q: string, _s: string) => ({ diagnosis: "Load Balanced", patch_code: "OPTIMIZE_SHARD", impact_analysis: "High", architect_note: "Ready" });
+export const generateOpsDailySummary = async (_s: OpsHealthSnapshot) => ({ latency: "45ms", throughput: 120, errorRate: "0.01%", activeShards: 4, aiAccuracy: "99%", summary: "Stable", cpuLoad: "20%" });
+export const parseImageBill = async (_b: string) => ({ action: 'add_entry' as const, confidence: 0.9, user_message: "Parsed." });
+export const getNearbyLogistics = async (_la: number, _lo: number) => ({ text: "Available", links: [] });
+export const animateImage = async (_b: string, _p: string) => "";
+export const analyzeVideo = async (_b: string, _p: string) => "";
+export const fastChat = async (_p: string) => "Fast response.";

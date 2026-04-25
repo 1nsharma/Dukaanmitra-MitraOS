@@ -4,6 +4,7 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { auth, db } from './firebase';
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, User } from 'firebase/auth';
 import { doc, getDoc, setDoc, collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { Card } from './components/ui/Card';
 import LandingPage from './components/LandingPage';
 import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { TermsOfService } from './components/TermsOfService';
@@ -86,9 +87,15 @@ export default function App() {
   };
 
   if (loading) return (
-    <div className="h-screen flex flex-col items-center justify-center bg-slate-50">
-      <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mb-4"></div>
-      <p className="text-indigo-600 font-black uppercase tracking-widest text-xs">Initialising Munim...</p>
+    <div className="h-screen flex flex-col items-center justify-center bg-white">
+      <div className="relative group">
+        <div className="w-20 h-20 bg-indigo-600 rounded-[1.5rem] flex items-center justify-center shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] animate-bounce">
+          <span className="text-white text-4xl font-black italic">D</span>
+        </div>
+        <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 whitespace-nowrap">
+           <p className="text-slate-900 font-black uppercase tracking-[0.3em] text-[10px] italic animate-pulse">Initialising Munim AI v2.0...</p>
+        </div>
+      </div>
     </div>
   );
 
@@ -138,14 +145,32 @@ export default function App() {
         <Route path="/whatsapp" element={
           <ProtectedRoute>
             {role?.storeId ? (
-              <div className="p-10 flex flex-col items-center justify-center min-h-screen">
-                <div className="text-center mb-10 space-y-4">
-                  <h2 className="text-4xl font-black text-gray-900 tracking-tighter italic uppercase">WhatsApp Munim AI</h2>
-                  <p className="text-gray-500 font-medium max-w-md mx-auto">Simulate your WhatsApp chat with the Munim AI. Try logging a sale or udhaar below.</p>
+              <div className="p-10 flex flex-col items-center justify-center min-h-screen bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.05),transparent)]">
+                <div className="text-center mb-12 space-y-6 max-w-2xl">
+                  <div className="inline-flex items-center px-4 py-2 bg-indigo-50 text-indigo-600 rounded-full text-[10px] font-black uppercase tracking-[0.3em] italic border-2 border-indigo-100 shadow-sm">
+                    Simulation Protocol Active
+                  </div>
+                  <h2 className="text-5xl font-black text-slate-900 tracking-tighter italic uppercase leading-none">WhatsApp Munim AI</h2>
+                  <p className="text-slate-500 font-bold italic opacity-70 underline decoration-indigo-200 decoration-offset-4">Try logging a sale (e.g. "Sent 2L milk to Ramesh for 120") or check your ledger in the dashboard after.</p>
                 </div>
-                <WhatsAppSimulation storeId={role.storeId} />
+                <Card className="w-full max-w-2xl h-[700px] p-0 overflow-hidden shadow-[32px_32px_0px_0px_rgba(15,23,42,0.05)] border-4 border-slate-900 relative">
+                   <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+                   <div className="relative z-10 h-full">
+                      <WhatsAppSimulation storeId={role.storeId} />
+                   </div>
+                </Card>
+                <div className="mt-12 flex gap-4">
+                   <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                      <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+                      End-to-End Encrypted
+                   </div>
+                   <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
+                      <div className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse" />
+                      Agent Swarm Routed
+                   </div>
+                </div>
               </div>
-            ) : <div>Loading Store...</div>}
+            ) : <div className="h-screen flex items-center justify-center font-black italic uppercase text-slate-400 text-2xl animate-pulse">Synchronizing Data...</div>}
           </ProtectedRoute>
         } />
 
