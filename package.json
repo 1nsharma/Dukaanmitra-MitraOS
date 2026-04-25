@@ -9,6 +9,7 @@
     "build": "vite build && cp robots.txt dist/ && cp sitemap.xml dist/ || true",
     "preview": "vite preview",
     "lint": "eslint .",
+    "i18n-audit": "python3 scripts/i18n-checker.py",
     "test": "vitest",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
