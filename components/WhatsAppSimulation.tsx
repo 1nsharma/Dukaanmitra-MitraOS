@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, User, Bot, Check, Clock, AlertCircle } from 'lucide-react';
-import { parseWhatsAppMessage } from '../services/geminiService';
-import { ParsedTransaction } from '../types';
+import { Send, User, Bot, Check, Clock, AlertCircle, Sparkles } from 'lucide-react';
+import { generateV2Response, routeMessage } from '../services/geminiService';
+import { ParsedTransaction, AgentRoutingResponse } from '../types';
 import { logTransaction } from '../services/storeService';
 import { cn } from '../lib/utils';
 
@@ -12,64 +12,16 @@ interface Message {
   timestamp: Date;
   status?: 'sent' | 'delivered' | 'read';
   parsed?: ParsedTransaction;
+  triage?: AgentRoutingResponse;
 }
 
 export const WhatsAppSimulation: React.FC<{ storeId: string }> = ({ storeId }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: "Namaste! I'm your Munim AI. Send me your daily transactions like 'Sold 2kg sugar for 100' or 'Gave 500 udhaar to Ramesh'.",
+      text: "Namaste! I'm your DukaanMitra v2.0 AI. Send me your transactions or ask about customer preferences. I remember everything!",
       sender: 'bot',
       timestamp: new Date(Date.now() - 3600000 * 2), // 2 hours ago
-      status: 'read'
-    },
-    {
-      id: '2',
-      text: "Rahul ko 500 ka udhaar diya (Chini aur tel)",
-      sender: 'user',
-      timestamp: new Date(Date.now() - 3600000 * 1.5),
-      status: 'read'
-    },
-    {
-      id: '3',
-      text: "Got it! Logged a udhaar of ₹500 for Rahul.",
-      sender: 'bot',
-      timestamp: new Date(Date.now() - 3600000 * 1.5 + 5000),
-      status: 'read'
-    },
-    {
-      id: '4',
-      text: "Ajeet ne 1500 diye purana hisaab",
-      sender: 'user',
-      timestamp: new Date(Date.now() - 3600000 * 1),
-      status: 'read'
-    },
-    {
-      id: '5',
-      text: "Got it! Logged a payment of ₹1500 for Ajeet. His new balance is updated.",
-      sender: 'bot',
-      timestamp: new Date(Date.now() - 3600000 * 1 + 6000),
-      status: 'read'
-    },
-    {
-      id: '6',
-      text: "Bikri 300 (Doodh aur bread)",
-      sender: 'user',
-      timestamp: new Date(Date.now() - 1800000), // 30 mins ago
-      status: 'read'
-    },
-    {
-      id: '7',
-      text: "Got it! Logged a sale of ₹300.",
-      sender: 'bot',
-      timestamp: new Date(Date.now() - 1800000 + 4000),
-      status: 'read'
-    },
-    {
-      id: '8',
-      text: "Try your turn now! Type a message below 👇",
-      sender: 'bot',
-      timestamp: new Date(),
       status: 'read'
     }
   ]);
@@ -98,49 +50,40 @@ export const WhatsAppSimulation: React.FC<{ storeId: string }> = ({ storeId }) =
     setInput('');
     setIsTyping(true);
 
-    // AI Parsing
-    const parsed = await parseWhatsAppMessage(input);
-    setIsTyping(false);
+    try {
+      // 1. Triage the message (Agent Swarm routing)
+      const triage = await routeMessage(input, storeId);
+      
+      // 2. Generate response with Memory context
+      const botResponse = await generateV2Response(input, storeId, undefined, messages.map(m => ({ 
+        sender: m.sender, 
+        text: m.text, 
+        timestamp: m.timestamp.toISOString(),
+        role: m.sender === 'bot' ? 'model' : 'user'
+      })));
 
-    if (parsed) {
-      // Log to Firestore if not demo mode
-      try {
-        if (storeId !== 'demo-mode') {
-          await logTransaction(storeId, parsed);
-        } else {
-          // Fake delay for demo mode
-          await new Promise(r => setTimeout(r, 800));
-        }
-        
-        const botMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          text: `Got it! Logged a ${parsed.type} of ₹${parsed.amount}${parsed.customerName ? ` for ${parsed.customerName}` : ''}.`,
-          sender: 'bot',
-          timestamp: new Date(),
-          status: 'read',
-          parsed
-        };
-        setMessages(prev => [...prev, botMessage]);
-      } catch (error) {
-        console.error("Error logging transaction:", error);
-        const errorMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          text: "Sorry, I couldn't log that transaction. Please check your connection.",
-          sender: 'bot',
-          timestamp: new Date(),
-          status: 'read'
-        };
-        setMessages(prev => [...prev, errorMessage]);
-      }
-    } else {
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: "I didn't quite catch that. Could you please rephrase? For example: 'Sold sugar for 50' or 'Received 200 from Rahul'.",
+        text: botResponse,
+        sender: 'bot',
+        timestamp: new Date(),
+        status: 'read',
+        triage
+      };
+      
+      setMessages(prev => [...prev, botMessage]);
+    } catch (error) {
+      console.error("AI processing error:", error);
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: "Munim is thinking too hard... Please try again in a bit.",
         sender: 'bot',
         timestamp: new Date(),
         status: 'read'
       };
-      setMessages(prev => [...prev, botMessage]);
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsTyping(false);
     }
   };
 
@@ -175,6 +118,17 @@ export const WhatsAppSimulation: React.FC<{ storeId: string }> = ({ storeId }) =
             )}
           >
             <p className="text-sm text-gray-800">{msg.text}</p>
+            {msg.triage && (
+              <div className="mt-2 pt-2 border-t border-black/5 flex items-center gap-1.5">
+                <Sparkles size={10} className="text-indigo-500 animate-pulse" />
+                <span className="text-[9px] font-black uppercase tracking-tighter text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded">
+                  {msg.triage.intent} Agent
+                </span>
+                <span className="text-[8px] text-gray-400 italic truncate max-w-[120px]">
+                  {msg.triage.reasoning}
+                </span>
+              </div>
+            )}
             <div className="flex items-center justify-end gap-1 mt-1">
               <span className="text-[10px] text-gray-500">
                 {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

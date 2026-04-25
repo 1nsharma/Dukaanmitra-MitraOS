@@ -97,4 +97,4 @@ xmlContent += `</urlset>`;
 
 // Write to public folder usually, but we will write to dist before deploying and to root for keeping track
 fs.writeFileSync(path.resolve('./sitemap.xml'), xmlContent);
-console.log('✅ sitemap.xml generated successfully!');
+

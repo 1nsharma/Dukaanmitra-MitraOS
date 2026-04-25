@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db, auth } from '../firebase';
 import { collection, query, where, getDocs, orderBy, limit, onSnapshot, doc, getDoc } from 'firebase/firestore';
-import { TrendingUp, Users, CreditCard, Clock, ArrowUpRight, ArrowDownRight, IndianRupee, Bell } from 'lucide-react';
+import { TrendingUp, Users, CreditCard, Clock, ArrowUpRight, ArrowDownRight, IndianRupee, Bell, Sparkles } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { cn } from '../lib/utils';
 import { generateAlertAction, generateMarketingContent, generateMarketingPoster } from '../services/geminiService';
@@ -24,8 +24,24 @@ export const StoreDashboard: React.FC<{ storeId: string }> = ({ storeId }) => {
   const [customers, setCustomers] = useState<CustomerType[]>([]);
   const [loading, setLoading] = useState(true);
   
-  const [activeTab, setActiveTab] = useState<'overview' | 'alerts' | 'marketing' | 'qr'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'live-desk' | 'inventory' | 'alerts' | 'marketing' | 'qr'>('overview');
   const [marketingType, setMarketingType] = useState('Festival Greeting');
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
+  const [isScanning, setIsScanning] = useState(false);
+  const [scanResults, setScanResults] = useState<{ item: string, status: string, confidence: number }[]>([]);
+
+  const handleScanShelf = async () => {
+    setIsScanning(true);
+    setScanResults([]);
+    // Simulate Edge-AI processing (ParallelDots/ODIN style)
+    await new Promise(r => setTimeout(r, 2000));
+    setScanResults([
+      { item: "Amul Gold 500ml", status: "Low Stock (2 remaining)", confidence: 0.98 },
+      { item: "Britannia Marie Gold", status: "In Stock (12 remaining)", confidence: 0.95 },
+      { item: "Tata Salt 1kg", status: "Out of Stock", confidence: 0.99 }
+    ]);
+    setIsScanning(false);
+  };
   const [marketingDetails, setMarketingDetails] = useState('');
   const [generatedContent, setGeneratedContent] = useState('');
   const [generatedPoster, setGeneratedPoster] = useState<string | null>(null);
@@ -192,6 +208,18 @@ export const StoreDashboard: React.FC<{ storeId: string }> = ({ storeId }) => {
           Overview
         </button>
         <button
+          onClick={() => setActiveTab('live-desk')}
+          className={`pb-3 text-sm font-bold uppercase tracking-wider transition-colors whitespace-nowrap ${activeTab === 'live-desk' ? 'border-b-2 border-indigo-600 text-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
+        >
+          Live Desk (WhatsApp)
+        </button>
+        <button
+          onClick={() => setActiveTab('inventory')}
+          className={`pb-3 text-sm font-bold uppercase tracking-wider transition-colors whitespace-nowrap ${activeTab === 'inventory' ? 'border-b-2 border-indigo-600 text-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
+        >
+          Inventory Scanner
+        </button>
+        <button
           onClick={() => setActiveTab('alerts')}
           className={`pb-3 text-sm font-bold uppercase tracking-wider transition-colors flex items-center gap-2 whitespace-nowrap ${activeTab === 'alerts' ? 'border-b-2 border-indigo-600 text-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
         >
@@ -211,6 +239,151 @@ export const StoreDashboard: React.FC<{ storeId: string }> = ({ storeId }) => {
           QR Assets
         </button>
       </div>
+
+      {activeTab === 'live-desk' && (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[700px] animate-in fade-in zoom-in duration-500">
+           {/* Chat List */}
+           <Card className="lg:col-span-1 p-0 flex flex-col overflow-hidden">
+              <div className="p-4 border-b bg-slate-900 text-white flex items-center justify-between">
+                 <h3 className="font-black uppercase text-xs tracking-widest">Active Channels</h3>
+                 <span className="bg-emerald-500 text-[8px] font-black px-1.5 py-0.5 rounded">4 LIVE</span>
+              </div>
+              <div className="flex-1 overflow-y-auto divide-y divide-slate-100">
+                 {[
+                   { name: "Rahul (Customer)", lastMsg: "Payment proof sent", time: "2m", status: "unread", color: "indigo" },
+                   { name: "Sunita (Order)", lastMsg: "Add 2kg Sugar", time: "15m", status: "read", color: "emerald" },
+                   { name: "Aman (Udhaar)", lastMsg: "Kitna baki hai?", time: "1h", status: "read", color: "rose" }
+                 ].map((chat, i) => (
+                   <div key={i} className="p-4 hover:bg-slate-50 cursor-pointer flex gap-3 transition-colors">
+                      <div className={`w-10 h-10 rounded-full bg-${chat.color}-600 flex items-center justify-center text-white font-bold`}>{chat.name[0]}</div>
+                      <div className="flex-1 min-w-0">
+                         <div className="flex justify-between items-center">
+                            <h4 className="text-sm font-bold text-slate-800 truncate">{chat.name}</h4>
+                            <span className="text-[10px] text-slate-400">{chat.time} ago</span>
+                         </div>
+                         <p className="text-xs text-slate-500 truncate">{chat.lastMsg}</p>
+                      </div>
+                   </div>
+                 ))}
+              </div>
+           </Card>
+
+           {/* Live Chat Interface */}
+           <Card className="lg:col-span-2 p-0 flex flex-col overflow-hidden border-2 border-indigo-100 shadow-2xl relative">
+              <div className="absolute top-4 right-4 z-20 flex gap-2">
+                 <Button size="sm" variant="secondary" className="bg-emerald-600 hover:bg-emerald-700 h-8 px-3 text-[10px] text-white">CONFIRM ORDER</Button>
+                 <Button size="sm" variant="primary" className="bg-indigo-600 h-8 px-3 text-[10px]">PAYMENT LINK</Button>
+              </div>
+              <div className="p-4 border-b bg-white flex items-center gap-3">
+                 <div className="w-8 h-8 rounded-full bg-slate-900"></div>
+                 <div>
+                    <h3 className="font-black uppercase text-xs tracking-tight">Rahul Khurana</h3>
+                    <p className="text-[8px] font-black text-emerald-500 uppercase tracking-widest">Mem0g Context: Prefers Amul Milk</p>
+                 </div>
+              </div>
+              <div className="flex-1 bg-slate-100 p-6 overflow-y-auto space-y-4">
+                 <div className="bg-white p-4 rounded-3xl rounded-tl-none max-w-[80%] shadow-sm">
+                    <p className="text-sm text-slate-800 font-medium">Bhaiya, pichle mahine ka kitna balance hai? Aur 2 doodh ke packet bhej dena.</p>
+                 </div>
+                 <div className="bg-indigo-600 p-4 rounded-3xl rounded-tr-none max-w-[80%] ml-auto text-white shadow-lg relative">
+                    <div className="absolute -top-6 right-0 bg-indigo-950 text-[8px] font-black uppercase px-2 py-1 rounded-full border border-indigo-500/20">Udhaar Agent Response</div>
+                    <p className="text-sm font-medium">Rahul ji, aapka total ₹450 baki hai. Doodh ke packet bhej raha hoon. Total ₹450 + ₹66 = ₹516 ho jayega.</p>
+                 </div>
+              </div>
+              <div className="p-4 bg-white border-t flex gap-2">
+                 <Input className="flex-1" placeholder="Type a message or use One-Click Actions..." />
+                 <Button variant="primary">SEND</Button>
+              </div>
+           </Card>
+        </div>
+      )}
+
+      {activeTab === 'inventory' && (
+        <div className="space-y-8 animate-in fade-in duration-700">
+           <div className="grid lg:grid-cols-2 gap-10">
+              <Card className="p-10 space-y-8 bg-slate-900 border-none shadow-2xl relative overflow-hidden">
+                 <div className="relative z-10 space-y-6">
+                    <div className="flex items-center gap-4">
+                       <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-white"><Sparkles /></div>
+                       <h3 className="text-3xl font-black text-white italic tracking-tighter uppercase italic">ODIN Edge-AI</h3>
+                    </div>
+                    <p className="text-indigo-200 text-sm font-medium opacity-80 leading-relaxed italic">
+                       Snap a photo of your shelves. DukaanMitra v2.0 uses Visual Inventory logic to auto-detect SKUs and stock-outs.
+                    </p>
+                    
+                    <div className="aspect-video bg-slate-800 rounded-[2.5rem] border-4 border-dashed border-slate-700 flex flex-col items-center justify-center gap-4 relative overflow-hidden group">
+                       {capturedImage ? (
+                         <img src={capturedImage} className="w-full h-full object-cover" alt="Shelf" />
+                       ) : (
+                         <>
+                           <div className="text-6xl group-hover:scale-110 transition-transform">📸</div>
+                           <Button 
+                             onClick={() => setCapturedImage('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800')} 
+                             variant="secondary"
+                           >
+                             OPEN CAMERA
+                           </Button>
+                         </>
+                       )}
+                    </div>
+
+                    <Button 
+                      onClick={handleScanShelf}
+                      isLoading={isScanning}
+                      disabled={!capturedImage}
+                      variant="primary" 
+                      className="w-full py-8 text-lg bg-indigo-600 hover:bg-indigo-500 shadow-2xl shadow-indigo-500/20"
+                    >
+                      {isScanning ? 'ANALYZING SKUs...' : 'SCAN & LOG INVENTORY'}
+                    </Button>
+                 </div>
+                 <div className="absolute bottom-0 right-0 w-64 h-64 bg-indigo-500/20 rounded-full blur-[80px] -translate-x-1/2 translate-y-1/2"></div>
+              </Card>
+
+              <div className="space-y-6 flex flex-col">
+                 <h4 className="font-black text-xs uppercase tracking-widest text-slate-400">Scan Results (Real-time Analytics)</h4>
+                 <Card className="flex-1 p-6 space-y-4 overflow-y-auto">
+                    {scanResults.length > 0 ? (
+                      scanResults.map((res, i) => (
+                        <div key={i} className="flex items-center justify-between p-4 bg-slate-50 border border-slate-100 rounded-[1.5rem] animate-in slide-in-from-right duration-300" style={{ animationDelay: `${i * 100}ms` }}>
+                           <div className="flex items-center gap-4">
+                              <div className={cn(
+                                "w-3 h-3 rounded-full",
+                                res.status.includes('Low') ? "bg-orange-500 animate-pulse" : 
+                                res.status.includes('Out') ? "bg-rose-500" : "bg-emerald-500"
+                              )}></div>
+                              <div>
+                                 <p className="text-sm font-black text-slate-800">{res.item}</p>
+                                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tight">{res.status}</p>
+                              </div>
+                           </div>
+                           <div className="text-right">
+                              <p className="text-[10px] font-black text-indigo-600">{(res.confidence * 100).toFixed(0)}% AI CONF</p>
+                              <Button size="sm" variant="outline" className="h-6 px-2 text-[8px] mt-1 italic">RESTOCK ➔</Button>
+                           </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="h-full flex flex-col items-center justify-center opacity-30 gap-3 grayscale">
+                         <div className="text-6xl animate-bounce">📦</div>
+                         <p className="text-xs font-black uppercase tracking-widest text-center">Ready to process visual data.<br/>Waiting for ingress signal.</p>
+                      </div>
+                    )}
+                 </Card>
+                 
+                 <Card className="bg-emerald-950 p-6 text-white border-none shadow-xl">
+                    <div className="flex items-center gap-4">
+                       <div className="text-2xl">⚡</div>
+                       <div>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-emerald-400 italic leading-none mb-1">Stock Optimization Path</p>
+                          <p className="text-xs font-bold text-indigo-50 leading-tight">Gemini predicts 3 Out-of-Stock events by tomorrow based on current burn rate.</p>
+                       </div>
+                    </div>
+                 </Card>
+              </div>
+           </div>
+        </div>
+      )}
 
       {activeTab === 'overview' && (
         <>
@@ -236,6 +409,18 @@ export const StoreDashboard: React.FC<{ storeId: string }> = ({ storeId }) => {
               icon={<Users size={24} />}
               color="indigo"
             />
+            <Card className="md:col-span-3 bg-blue-50 border-blue-200 border">
+              <CardContent className="py-4 flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">₹</div>
+                  <div>
+                    <p className="text-sm font-black text-blue-900 uppercase tracking-tighter">July 2025 Pricing Guard</p>
+                    <p className="text-xs text-blue-700">92% of your messages are categorized as <span className="font-bold underline text-blue-900">Utility</span> (Free within 24hr window). Smart logic saved you ₹420 this week.</p>
+                  </div>
+                </div>
+                <Button variant="outline" size="sm" className="border-blue-300 text-blue-800 hover:bg-blue-100">OPTIMIZE ➔</Button>
+              </CardContent>
+            </Card>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

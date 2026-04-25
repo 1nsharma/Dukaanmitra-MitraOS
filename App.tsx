@@ -30,6 +30,7 @@ import { GoogleReviewsShop } from './components/GoogleReviewsShop';
 import { UdhaarManagementApp } from './components/UdhaarManagementApp';
 import { ComparisonPage } from './components/ComparisonPage';
 import { ProgrammaticSeoPage } from './components/ProgrammaticSeoPage';
+import { NotFound } from './components/NotFound';
 import { UserRole } from './types';
 
 export default function App() {
@@ -156,7 +157,7 @@ export default function App() {
         } />
 
         {/* Fallback */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>
   );

@@ -1,6 +1,7 @@
 import React from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { NotFound } from './NotFound';
 
 interface ComparisonData {
   title: string;
@@ -62,7 +63,7 @@ export const ComparisonPage: React.FC = () => {
   const data = competitor ? comparisonLibrary[competitor.toLowerCase()] : null;
 
   if (!data) {
-    return <Navigate to="/blog" replace />;
+    return <NotFound />;
   }
 
   return (

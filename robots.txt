@@ -5,5 +5,19 @@ Disallow: /admin
 Disallow: /whatsapp
 Disallow: /seo-dashboard
 
+# AI Bots (Explicitly Allowed for Citations)
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: Google-Extended
+Allow: /
+
 # Sitemaps
 Sitemap: https://dukaanmitra.in/sitemap.xml

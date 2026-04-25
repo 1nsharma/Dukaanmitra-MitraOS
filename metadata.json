@@ -1,6 +1,6 @@
 {
-  "name": "DukaanMitra Mobile App",
-  "description": "A high-fidelity PWA for the DukaanMitra Kirana ledger system, featuring real-time AI parsing and vision-based billing.",
+  "name": "DukaanMitra v2.0",
+  "description": "WhatsApp-Native ‘Bharat OS’ with Edge-AI Inventory, Long-Term Graph Memory (Mem0g), and Hybrid Deterministic Guardrails for local shopkeepers.",
   "requestFramePermissions": [
     "camera",
     "microphone",

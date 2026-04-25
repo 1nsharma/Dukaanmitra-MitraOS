@@ -14,13 +14,16 @@ import {
   Zap,
   Globe,
   ArrowUpRight,
-  Database
+  Database,
+  Sparkles
 } from 'lucide-react';
 import { generateSEOContent } from '../services/geminiService';
 import { seoBlueprintMatrix, generateSampleKeywords } from '../lib/seoBlueprintData';
+import { cn } from '../lib/utils';
+import { Button } from './ui/Button';
 
 const SeoDashboard: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'keywords' | 'backlinks' | 'content' | 'blueprint'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'keywords' | 'backlinks' | 'content' | 'blueprint' | 'ai_visibility'>('overview');
   const [generating, setGenerating] = useState(false);
   const [generatedContent, setGeneratedContent] = useState<{title: string, content: string, meta: string} | null>(null);
 
@@ -79,6 +82,7 @@ const SeoDashboard: React.FC = () => {
             { id: 'overview', label: 'Overview', icon: BarChart3 },
             { id: 'blueprint', label: 'Keyword Blueprint', icon: Database },
             { id: 'keywords', label: 'Keywords', icon: Search },
+            { id: 'ai_visibility', label: 'AI Visibility', icon: Sparkles },
             { id: 'backlinks', label: 'Backlinks', icon: LinkIcon },
             { id: 'content', label: 'Content Engine', icon: FileText },
           ].map((tab) => (
@@ -97,6 +101,113 @@ const SeoDashboard: React.FC = () => {
 
         {/* Content Area */}
         <div className="grid lg:grid-cols-3 gap-12">
+          {activeTab === 'ai_visibility' && (
+            <div className="lg:col-span-3 space-y-12 animate-in fade-in zoom-in duration-500">
+               {/* AI Search Recap */}
+               <div className="bg-slate-900 border-none p-12 rounded-[4rem] text-white space-y-8 relative overflow-hidden">
+                  <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
+                     <div className="space-y-4">
+                        <div className="inline-flex items-center gap-2 bg-indigo-500/20 border border-indigo-500/30 px-4 py-1.5 rounded-full">
+                           <Sparkles size={14} className="text-indigo-400" />
+                           <span className="text-[10px] font-black uppercase tracking-widest text-indigo-300">Answer Engine Optimization (AEO)</span>
+                        </div>
+                        <h2 className="text-5xl font-black italic tracking-tighter uppercase leading-none">Your AI Visibility is <span className="text-emerald-400">Rising.</span></h2>
+                        <p className="text-slate-400 font-bold text-lg max-w-xl italic">
+                           DukaanMitra is being cited as a top "Bharat OS" across Perplexity and ChatGPT Search. 
+                        </p>
+                     </div>
+                     <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-white/5 border border-white/10 p-6 rounded-3xl text-center">
+                           <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Citation Rate</p>
+                           <p className="text-4xl font-black italic">68%</p>
+                        </div>
+                        <div className="bg-white/5 border border-white/10 p-6 rounded-3xl text-center">
+                           <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">AEO Score</p>
+                           <p className="text-4xl font-black italic">84/100</p>
+                        </div>
+                     </div>
+                  </div>
+                  <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-600/20 blur-[100px] -mr-48 -mt-48"></div>
+               </div>
+
+               {/* Platform Breakdown */}
+               <div className="grid md:grid-cols-3 gap-8">
+                  {[
+                    { platform: "ChatGPT (Search)", cited: true, sentiment: "Highly Positive", queries: 124, growth: "+40%" },
+                    { platform: "Perplexity", cited: true, sentiment: "Neutral-Pos", queries: 82, growth: "+15%" },
+                    { platform: "Google AI Overview", cited: false, sentiment: "N/A", queries: 45, growth: "Stable" }
+                  ].map((p, i) => (
+                    <div key={i} className="bg-white p-8 rounded-[3rem] shadow-xl border border-slate-100 space-y-6 hover:translate-y-[-8px] transition-all">
+                       <div className="flex items-center justify-between">
+                          <h4 className="font-black italic text-slate-900 uppercase tracking-tight">{p.platform}</h4>
+                          {p.cited ? (
+                            <span className="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest">Cited</span>
+                          ) : (
+                            <span className="bg-slate-100 text-slate-400 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest">Pending</span>
+                          )}
+                       </div>
+                       <div className="space-y-4 pt-4 border-t border-slate-50">
+                          <div className="flex justify-between items-center text-xs">
+                             <span className="font-bold text-slate-400 italic">Citation Growth</span>
+                             <span className="font-black text-emerald-500">{p.growth}</span>
+                          </div>
+                          <div className="flex justify-between items-center text-xs">
+                             <span className="font-bold text-slate-400 italic">Total Queries</span>
+                             <span className="font-black text-slate-800">{p.queries}</span>
+                          </div>
+                          <div className="flex justify-between items-center text-xs">
+                             <span className="font-bold text-slate-400 italic">Avg Sentiment</span>
+                             <span className="font-black text-indigo-600">{p.sentiment}</span>
+                          </div>
+                       </div>
+                    </div>
+                  ))}
+               </div>
+
+               {/* AEO Optimization Audit */}
+               <div className="grid lg:grid-cols-2 gap-12">
+                  <div className="bg-white p-12 rounded-[4rem] shadow-2xl border border-slate-100 space-y-8">
+                     <h3 className="text-3xl font-black italic text-slate-900 uppercase tracking-tight">AI Extractability Audit</h3>
+                     <div className="space-y-6">
+                        {[
+                          { rule: "Clear 'What is X' Definitions", status: "PASS", boost: "+20%" },
+                          { rule: "Comparison Tables in Blogs", status: "FAIL", boost: "+33%" },
+                          { rule: "Recent Statistics (Dated)", status: "WARN", boost: "+37%" },
+                          { rule: "Expert Attribution (Bios)", status: "PASS", boost: "+30%" },
+                          { rule: "HowTo Schema Markup", status: "PASS", boost: "+15%" }
+                        ].map((r, i) => (
+                           <div key={i} className="flex items-center justify-between p-5 bg-slate-50 rounded-3xl border border-slate-100">
+                              <div className="flex items-center gap-4">
+                                 <span className={cn(
+                                   "w-2 h-2 rounded-full",
+                                   r.status === 'PASS' ? "bg-emerald-500" : r.status === 'FAIL' ? "bg-rose-500" : "bg-amber-500"
+                                 )}></span>
+                                 <span className="text-sm font-bold italic text-slate-700">{r.rule}</span>
+                              </div>
+                              <div className="text-right">
+                                 <span className="text-[10px] font-black text-indigo-600 italic block">{r.boost} CITATION BOOST</span>
+                                 <span className={`text-[8px] font-black uppercase tracking-widest ${r.status === 'PASS' ? 'text-emerald-500' : 'text-slate-400'}`}>{r.status}</span>
+                              </div>
+                           </div>
+                        ))}
+                     </div>
+                  </div>
+
+                  <div className="bg-indigo-600 p-12 rounded-[4rem] text-white space-y-8 relative overflow-hidden shadow-2xl shadow-indigo-200">
+                     <h3 className="text-3xl font-black italic uppercase tracking-tight">Generate Citable Data</h3>
+                     <p className="text-indigo-100 font-bold italic text-lg leading-relaxed">
+                        AI systems love original statistics. Your Kirana data (anonymized) can generate "State of Local Retail 2026" reports that get cited by every major AI platform.
+                     </p>
+                     <div className="space-y-4 pt-4">
+                        <Button className="w-full bg-white text-indigo-600 py-6 text-sm font-black uppercase tracking-widest hover:bg-slate-100">SCRAPE & SUMMARIZE TRENDS</Button>
+                        <p className="text-center text-[10px] font-black text-indigo-300 uppercase tracking-widest italic animate-pulse">Potential +40% visibility boost</p>
+                     </div>
+                     <div className="absolute -left-20 -bottom-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
+                  </div>
+               </div>
+            </div>
+          )}
+
           {activeTab === 'blueprint' && (
             <div className="lg:col-span-3 space-y-12">
               <div className="bg-indigo-600 p-12 rounded-[4rem] text-white space-y-6 relative overflow-hidden">

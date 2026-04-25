@@ -127,9 +127,34 @@ const seoPagesDatabase: Record<string, SeoPageData> = {
   }
 };
 
+import { NotFound } from './NotFound';
+
+// Extract the valid slugs from the database to restrict rendering of fake paths
+const validSlugs = Object.keys(seoPagesDatabase);
+
+// Additional generated slugs from the sitemap list that don't have explicit DB entries yet, 
+// to ensure we don't 404 on them while they use the fallback generator.
+const sitemapSlugs = [
+  'kirana-store-software', 'bahi-khata-alternative', 'inventory-management-kirana',
+  'increase-google-business-rating', 'whatsapp-review-automation', 'dukaan-online-kaise-laye',
+  'whatsapp-se-saman-kaise-beche', 'kirana-store-ko-grow-kaise-kare', 'best-billing-software-for-mobile-shop',
+  'garment-shop-software-free', 'hardware-shop-billing-app', 'medical-store-software-india',
+  'supermarket-billing-software-free-download', 'jewellery-shop-management-software',
+  'sweet-shop-billing-software', 'footwear-shop-software', 'electronics-shop-billing-app',
+  'kirana-khata-app-for-pc', 'bina-internet-ke-billing-machine', 'whatsapp-par-customer-ko-bill-kaise-bheje',
+  'auto-parts-shop-free-billing', 'grocery-shop-inventory-excel', 'retail-shop-accounting-software',
+  'free-gst-billing-software', 'mobile-accessories-shop-software', 'kirana-shop-profit-calculator',
+  'whatsapp-catalog-maker-app', 'digital-payment-tracker-for-shop'
+];
+
 export const ProgrammaticSeoPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  let data = slug ? seoPagesDatabase[slug.toLowerCase()] : null;
+  
+  if (!slug || (!validSlugs.includes(slug.toLowerCase()) && !sitemapSlugs.includes(slug.toLowerCase()))) {
+    return <NotFound />;
+  }
+
+  let data = seoPagesDatabase[slug.toLowerCase()];
 
   if (!data && slug) {
     const formattedTitle = slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');

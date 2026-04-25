@@ -177,10 +177,9 @@ const LandingPage: React.FC = () => {
   ];
 
   const pricing = [
-    { name: "Free Trial", price: "₹0", features: ["50 transactions", "Basic udhaar tracking", "WhatsApp reports"], bestFor: "New shops testing the waters." },
-    { name: "Starter", price: "₹199", features: ["500 transactions", "UPI Lite", "Inventory alerts", "Hindi/English support"], bestFor: "Small kiranas." },
-    { name: "Growth", price: "₹499", features: ["Unlimited transactions", "AI insights", "Multi-language", "SMS fallback"], bestFor: "Growing businesses." },
-    { name: "Enterprise", price: "Custom", features: ["API access", "Custom integrations", "Dedicated support", "Bulk broadcasting"], bestFor: "Chains/franchises." },
+    { name: "Khata Basic", price: "Free Forever", features: ["100 transactions/mo", "Basic udhaar tracking", "WhatsApp reports"], bestFor: "New shops adopting digital." },
+    { name: "Merchant Pro", price: "₹299/mo", features: ["Unlimited transactions", "Inventory alerts", "Google Business Setup", "GST-Ready Billing"], bestFor: "Growing kiranas aiming for more footfall." },
+    { name: "Growth + Supply", price: "₹899/mo", features: ["Advanced FMCG analytics", "B2B Supply chain leads", "Google Cloud Backup", "Distributor Referrals"], bestFor: "Established stores wanting to optimize procurement." }
   ];
 
   return (

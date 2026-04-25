@@ -1,73 +1,117 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { ParsedBill, Transaction, BlogPost, OpsHealthSnapshot, SystemManifest, ChatMessage, ParsedTransaction } from "../types";
+import { 
+  ParsedBill, 
+  Transaction, 
+  BlogPost, 
+  OpsHealthSnapshot, 
+  SystemManifest, 
+  ChatMessage, 
+  ParsedTransaction,
+  AgentRoutingResponse
+} from "../types";
 import { SYSTEM_MANIFEST } from "../constants";
+import { memoryService } from "./memoryService";
 
-const DUKAAN_MITRA_SYSTEM_PROMPT = `
-Role: DukaanMitra Lead Architect & System Expert.
-Tone: Professional, highly knowledgeable, and friendly (Hinglish supported).
+const DUKAAN_MITRA_v2_SYSTEM_PROMPT = `
+Role: DukaanMitra v2.0 "Bharat OS" AI Orchestrator.
+System: WhatsApp-Native CRM for Kirana stores.
+Capabilities:
+1. Mem0g: Graph-based memory for customer preferences.
+2. Swarm Architecture: Specialized agents (Sales, Udhaar, Inventory).
+3. Hybrid Guardrails: Deterministic pricing (strictly forbid hallucinations).
 
-KNOWLEDGE BASE (Live App Manifest):
-${JSON.stringify(SYSTEM_MANIFEST, null, 2)}
-
-DETAILED ARCHITECTURE:
-1. FRONTEND: Built with React 19, Tailwind CSS for styling, Recharts for data viz, and Anime.js for fluid motion. Multi-device frame simulation for testing.
-2. BACKEND: Serverless architecture using Make.com for orchestration, Gupshup for WhatsApp API, and Firebase for Auth.
-3. DATABASE: Hybrid strategy. MVP uses Google Sheets (Sheet 1: Customers, Sheet 2: Ledger, Sheet 3: Logs). Scaling phase uses Supabase (PostgreSQL).
-4. AI ENGINE: Powered by Gemini 3 Pro (Reasoning) and Gemini 2.5 Flash (Vision/Video).
-5. SERVICES: Smart Billing, Smart Recovery, Creative Studio, EOD Reports.
-6. UI DESIGN: "Munim Aesthetic" - High-fidelity slate, indigo, and emerald themes. Bharat-centric.
-
-Task: Answer all technical and functional questions about the system based on this manifest. If asked about version, refer to the manifest.version.
+Tone: Helpful "Digital Dost" (Hinglish/English).
 `;
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-export const generateAssistantResponse = async (prompt: string, role: 'ops' | 'merchant', history: ChatMessage[] = []): Promise<string> => {
+// Agent Swarm: Triage logic
+export const routeMessage = async (text: string, storeId: string): Promise<AgentRoutingResponse> => {
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-  const response = await ai.models.generateContent({
-    model: "gemini-3-pro-preview",
+  const model = ai.models.get("gemini-1.5-flash");
+  
+  const response = await model.generateContent({
+    contents: [{ role: 'user', parts: [{ text: `Triage this user message from a shopkeeper or customer: "${text}"` }] }],
+    config: {
+      systemInstruction: "Classify into ORDER, CREDIT, INVENTORY, or GENERAL. Return JSON. Reasoning must be short.",
+      responseMimeType: "application/json",
+      responseSchema: {
+        type: Type.OBJECT,
+        properties: {
+          intent: { type: Type.STRING, enum: ['ORDER', 'CREDIT', 'INVENTORY', 'GENERAL', 'CLARIFICATION'] },
+          confidence: { type: Type.NUMBER },
+          reasoning: { type: Type.STRING },
+          suggestedAgent: { type: Type.STRING }
+        },
+        required: ["intent", "confidence", "reasoning", "suggestedAgent"]
+      }
+    }
+  });
+  
+  return JSON.parse(response.text || '{}');
+};
+
+// Main Chat with Memory Context
+export const generateV2Response = async (
+  prompt: string, 
+  storeId: string, 
+  customerName?: string, 
+  history: ChatMessage[] = []
+): Promise<string> => {
+  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+  const model = ai.models.get("gemini-1.5-flash");
+
+  // 1. Retrieve Memory Context (Mem0g)
+  let memoryContext = "";
+  if (customerName) {
+    const context = await memoryService.getContext(storeId, customerName);
+    if (context.length > 0) {
+      memoryContext = `\n[LONG_TERM_MEMORY]: ${context.join(", ")}`;
+    }
+  }
+
+  // 2. Deterministic Pricing Check (Placeholder for real DB call)
+  const hybridGuardrail = "\n[GUARDRAIL]: If query is about price, ONLY use prices provided in context. Never guess.";
+
+  const response = await model.generateContent({
     contents: [
-      { role: 'user', parts: [{ text: DUKAAN_MITRA_SYSTEM_PROMPT }] },
+      { role: 'user', parts: [{ text: DUKAAN_MITRA_v2_SYSTEM_PROMPT + memoryContext + hybridGuardrail }] },
       ...history.map(m => ({ 
         role: m.role || (m.sender === 'bot' ? 'model' : 'user'), 
         parts: [{ text: m.text }] 
       })),
       { role: 'user', parts: [{ text: prompt }] }
     ],
-    config: { 
-      thinkingConfig: { thinkingBudget: 4000 },
-      temperature: 0.7
-    }
+    config: { temperature: 0.2 } // High deterministic focus
   });
-  return response.text || "Munim offline. Systems checking...";
+
+  // 3. Post-processing: Extract new memories
+  if (customerName && response.text) {
+     // Trigger background memory extraction (async)
+     extractMemories(storeId, customerName, prompt, response.text);
+  }
+
+  return response.text || "Munim focus kar raha hai...";
 };
 
-export const parseWhatsAppMessage = async (text: string): Promise<ParsedTransaction | null> => {
+const extractMemories = async (storeId: string, customer: string, input: string, output: string) => {
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+  const model = ai.models.get("gemini-1.5-flash");
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-3-pro-preview",
-      contents: [{ parts: [{ text: `Parse this Kirana store message into a transaction JSON: "${text}"` }] }],
+    const res = await model.generateContent({
+      contents: [{ role: 'user', parts: [{ text: `Extract customer preferences or debts from this chat:\nUser: ${input}\nAI: ${output}` }] }],
       config: {
-        systemInstruction: "You are a Kirana store assistant. Parse messages into JSON with fields: type (sale, udhaar, payment), amount (number), customerName (string, optional), items (string, optional).",
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.OBJECT,
-          properties: {
-            type: { type: Type.STRING, enum: ['sale', 'udhaar', 'payment'] },
-            amount: { type: Type.NUMBER },
-            customerName: { type: Type.STRING },
-            items: { type: Type.STRING }
-          },
-          required: ["type", "amount"]
-        }
+        systemInstruction: "Return JSON array of {relationship: string, target: string, type: string}. Example: {relationship: 'prefers', target: 'Amul Milk', type: 'preference'}",
+        responseMimeType: "application/json"
       }
     });
-    return JSON.parse(response.text || 'null');
-  } catch (error) {
-    console.error("Parsing error:", error);
-    return null;
+    const memories = JSON.parse(res.text || '[]');
+    for (const m of memories) {
+      await memoryService.remember(storeId, customer, m.type, m.relationship, m.target);
+    }
+  } catch (e) {
+    console.warn("Memory extraction failed", e);
   }
 };
 

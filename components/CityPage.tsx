@@ -3,6 +3,21 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'motion/react';
+import { NotFound } from './NotFound';
+
+// ... (skipping to the city array)
+const validCities = [
+  'lucknow', 'kanpur', 'delhi', 'mumbai', 'bangalore', 'pune', 'ahmedabad', 'hyderabad', 'chennai', 'kolkata', 'jaipur', 'surat',
+  'agra', 'aligarh', 'allahabad', 'amritsar', 'aurangabad', 'bareilly', 'bhavnagar', 'bhiwandi', 'bhopal', 'bhubaneswar',
+  'bikaner', 'chandigarh', 'coimbatore', 'cuttack', 'dehradun', 'dhanbad', 'bhilai', 'durgapur', 'erode', 'faridabad',
+  'firozabad', 'ghaziabad', 'gorakhpur', 'gulbarga', 'guntur', 'gwalior', 'guwahati', 'hubli', 'indore', 'jabalpur',
+  'jalandhar', 'jalgaon', 'jamnagar', 'jamshedpur', 'jhansi', 'jodhpur', 'kakinada', 'kochi', 'kolhapur', 'kollam',
+  'kota', 'kozhikode', 'kurnool', 'ludhiana', 'madurai', 'malegaon', 'mangalore', 'meerut', 'moradabad', 'mysore',
+  'nagpur', 'nanded', 'nashik', 'nellore', 'noida', 'patna', 'pondicherry', 'raipur', 'rajkot', 'rajahmundry', 'ranchi',
+  'rourkela', 'salem', 'sangli', 'siliguri', 'solapur', 'srinagar', 'thiruvananthapuram', 'thrissur', 'tiruchirappalli',
+  'tirunelveli', 'tiruppur', 'ujjain', 'vadodara', 'varanasi', 'vasai-virar', 'vijayawada', 'visakhapatnam', 'warangal',
+  'gurgaon', 'ajmer', 'akola', 'ulhasnagar', 'saharanpur', 'rohtak', 'mathura', 'gaya'
+];
 
 const cityData = {
   "lucknow": {
@@ -141,9 +156,14 @@ const cityData = {
 
 const CityPage: React.FC = () => {
   const { city } = useParams<{ city: string }>();
-  let data = city ? cityData[city.toLowerCase() as keyof typeof cityData] : null;
+  
+  if (!city || !validCities.includes(city.toLowerCase())) {
+    return <NotFound />;
+  }
 
-  if (!data && city) {
+  let data = cityData[city.toLowerCase() as keyof typeof cityData];
+
+  if (!data) {
     const formattedCity = city.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
     data = {
       name: formattedCity,
@@ -158,21 +178,13 @@ const CityPage: React.FC = () => {
     };
   }
 
-  if (!data) {
-    return (
-      <div className="max-w-4xl mx-auto py-24 px-6 text-center">
-        <h1 className="text-4xl font-black text-slate-900 mb-8 italic uppercase">City Not Found</h1>
-        <Link to="/" className="text-indigo-600 font-black uppercase tracking-widest border-b-2 border-indigo-600 pb-1">Back to Home</Link>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-white">
       <Helmet>
         <title>{data.title}</title>
         <meta name="description" content={data.description} />
         <meta name="keywords" content={data.keywords} />
+        <link rel="canonical" href={`https://dukaanmitra.in/${city.toLowerCase()}`} />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",

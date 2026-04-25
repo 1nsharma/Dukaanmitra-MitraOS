@@ -200,3 +200,30 @@ export interface UserRole {
   role: 'merchant' | 'superadmin';
   storeId?: string;
 }
+
+export interface MemoryNode {
+  id: string;
+  storeId: string;
+  entity: string; // e.g., "Rahul", "Amul Milk"
+  type: 'customer' | 'product' | 'preference' | 'debt';
+  properties: Record<string, any>;
+  lastUpdated: string;
+}
+
+export interface MemoryRelation {
+  id: string;
+  storeId: string;
+  sourceId: string;
+  targetId: string;
+  relationship: string; // e.g., "prefers", "owes", "bought"
+  strength: number;
+}
+
+export type AgentIntent = 'ORDER' | 'CREDIT' | 'INVENTORY' | 'GENERAL' | 'CLARIFICATION';
+
+export interface AgentRoutingResponse {
+  intent: AgentIntent;
+  confidence: number;
+  reasoning: string;
+  suggestedAgent: string;
+}
